@@ -3,6 +3,8 @@
 #include <fstream>
 #include <ostream>
 
+#pragma once
+
 class Calculator {
 
 public: 
