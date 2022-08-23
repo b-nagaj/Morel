@@ -3,7 +3,9 @@
 #include <fstream>
 #include <ostream>
 
-//#include "Calculator.hpp"
+#include "Calculator.hpp"
+
+#pragma once
 
 class Dialog {
 

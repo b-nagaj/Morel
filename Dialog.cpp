@@ -5,6 +5,7 @@
 #include <ostream>
 
 #include "Dialog.hpp"
+#include "Calculator.hpp"
 
 Dialog::Dialog() {
 
