@@ -5,6 +5,7 @@
 #include <ostream>
 
 #include "Calculator.hpp"
+#include "Dialog.hpp"
 
 Calculator::Calculator() {
 
@@ -16,23 +17,57 @@ Calculator::Calculator() {
 
 void Calculator::Prompt() {
 
-    std::string choice;
     std::cout << " __  __                _" 
               << "\n|  \\/  | ___  _ __ ___| |"
               << "\n| |\\/| |/ _ \\| '__/ _ \\ |"
               << "\n| |  | | (_) | | |  __/ |"
               << "\n|_|  |_|\\___/|_|  \\___|_|";
-    std::cout << "\n\nMonth: ";
-    std::cin >> month;
 
-    std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
-    std:: cin >> choice;
+    Dialog myDialog;
+    std::string choice;
+    int option;
 
-    if (choice == "Y" || choice == "Yes" || choice == "y" || choice == "yes"){
-        Calculate();
-    }
-    else {
-        std::cout << "\nBye!\n\n";
+    while (option != 6) {
+        option = myDialog.Menu();
+
+        switch (option) {
+        case 1 :
+            std::cout << "\nGenerate A Report";
+            std::cout << "\n\nMonth: ";
+            std::cin >> month;
+
+            std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
+            std:: cin >> choice;
+
+            if (choice == "Y" || choice == "Yes" || choice == "y" || choice == "yes"){
+                Calculate();
+            }
+            else {
+                myDialog.Menu();
+            }
+        
+            break;
+
+        case 2 : 
+            std::cout << "\nView A Report";
+            break;
+        
+        case 3 :
+            std::cout << "\nUpdate A Report";
+            break;
+        
+        case 4 :
+            std::cout << "\nUpdate An Expense";
+            break;
+        
+        case 5 :
+            std::cout << "\nHelp";
+            break;
+        
+        case 6 :
+            std::cout << "\nQuitting!\n\n";
+            break;
+        }
     }
 
 }
@@ -94,8 +129,8 @@ void Calculator::Calculate() {
 
     Report();
 
-    std::cout << "\n\nDone!";
-    std::cout << "\n\n";
+    std::cout << "\n\nDone!\n\n"
+              << "<><><><><><><><><><><><><><>"; 
     outputFile.close();
 
 }
