@@ -10,18 +10,13 @@
 
 void Calculator::Prompt() {
 
-    std::cout << " __  __                _" 
-              << "\n|  \\/  | ___  _ __ ___| |"
-              << "\n| |\\/| |/ _ \\| '__/ _ \\ |"
-              << "\n| |  | | (_) | | |  __/ |"
-              << "\n|_|  |_|\\___/|_|  \\___|_|";
-    
     Dialog myDialog;
+    myDialog.WelcomeBanner();
     
-    while (option != 6) {
-        option = myDialog.Menu();
+    while (myDialog.option != 6) {
+        myDialog.Menu();
 
-        switch (option) {
+        switch (myDialog.option) {
         case 1 :
             GenerateAReport();
             break;
@@ -56,12 +51,14 @@ void Calculator::GenerateAReport() {
 
     std::cout << "\nGenerate A Report";
     std::cout << "\n\nMonth: ";
+    std::string month;
     std::cin >> month;
 
     std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
-    std:: cin >> choice;
+    std::string yesNo;
+    std:: cin >> yesNo;
 
-    if (choice == "Y" || choice == "Yes" || choice == "y" || choice == "yes"){
+    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
         GenerateReport myReport;
         myReport.SetMonth(month);
         myReport.Calculate();
