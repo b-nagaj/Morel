@@ -53,7 +53,7 @@ double GenerateReport::CalculateExpense(double expenseType, std::string expenseN
 void GenerateReport::Report() {
 
     Dialog newDialog;
-    newDialog.Banner(outputFile);
+    newDialog.ReportBanner(outputFile);
     outputFile << "\n";
     DisplayExpenses();
     outputFile << "\n\n\tTotal:" << std::setw(17) << "$" << std::fixed << std::setprecision(2) << GetTotal() << "\n";
