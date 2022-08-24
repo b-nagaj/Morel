@@ -15,6 +15,7 @@ class Dialog {
         Calculator myCalculator;
 
         Dialog();
+        void Banner(std::ostream& stream);
         int Menu();
 
 };

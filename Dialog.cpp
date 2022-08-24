@@ -13,6 +13,16 @@ Dialog::Dialog() {
 
 }
 
+void Dialog::Banner(std::ostream& stream) {
+
+    stream << " \t __  __                _" 
+              << "\n\t|  \\/  | ___  _ __ ___| |"
+              << "\n\t| |\\/| |/ _ \\| '__/ _ \\ |"
+              << "\n\t| |  | | (_) | | |  __/ |"
+              << "\n\t|_|  |_|\\___/|_|  \\___|_|";
+    
+}
+
 int Dialog::Menu() {
 
     std::cout << "\n\nEnter A Choice From The Menu\n";
