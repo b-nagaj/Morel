@@ -11,11 +11,12 @@ class Dialog {
 
     public:
 
-        std::string option;
+        int option;
         Calculator myCalculator;
 
         Dialog();
-        void Banner(std::ostream& stream);
-        int Menu();
+        void WelcomeBanner();
+        void Menu();
+        void ReportBanner(std::ostream& stream);
 
 };

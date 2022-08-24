@@ -9,21 +9,21 @@
 
 Dialog::Dialog() {
 
-    option = "";
+    option = 0;
 
 }
 
-void Dialog::Banner(std::ostream& stream) {
+void Dialog::WelcomeBanner() {
 
-    stream << " \t __  __                _" 
-              << "\n\t|  \\/  | ___  _ __ ___| |"
-              << "\n\t| |\\/| |/ _ \\| '__/ _ \\ |"
-              << "\n\t| |  | | (_) | | |  __/ |"
-              << "\n\t|_|  |_|\\___/|_|  \\___|_|";
-    
+    std::cout << " __  __                _" 
+              << "\n|  \\/  | ___  _ __ ___| |"
+              << "\n| |\\/| |/ _ \\| '__/ _ \\ |"
+              << "\n| |  | | (_) | | |  __/ |"
+              << "\n|_|  |_|\\___/|_|  \\___|_|";
+
 }
 
-int Dialog::Menu() {
+void Dialog::Menu() {
 
     std::cout << "\n\nEnter A Choice From The Menu\n";
 
@@ -35,8 +35,19 @@ int Dialog::Menu() {
               << "\n\t6. Quit";
 
     std::cout << "\n\nChoice: ";
-    std::cin >> option;
+    std::string choice;
+    std::cin >> choice;
 
-    return stoi(option);
+    option = stoi(choice);
 
+}
+
+void Dialog::ReportBanner(std::ostream& stream) {
+
+    stream << " \t __  __                _" 
+              << "\n\t|  \\/  | ___  _ __ ___| |"
+              << "\n\t| |\\/| |/ _ \\| '__/ _ \\ |"
+              << "\n\t| |  | | (_) | | |  __/ |"
+              << "\n\t|_|  |_|\\___/|_|  \\___|_|";
+    
 }
