@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iomanip>
 #include <ostream>
+#include <cstdlib>
+#include <algorithm>
 
 #include "../lib/Dialog.hpp"
 #include "../lib/Calculator.hpp"
@@ -38,7 +40,34 @@ void Dialog::Menu() {
     std::string choice;
     std::cin >> choice;
 
-    option = stoi(choice);
+    if (ValidateChoice(choice)) {
+        option = std::stoi(choice);
+    }
+    else {
+        std::cout << errorMessage;
+    }
+
+}
+
+bool Dialog::ValidateChoice(std::string c) {
+
+    bool isValid;
+
+    if (std::all_of(c.begin(), c.end(), ::isdigit) == false) {
+        errorMessage = "\nERROR: The value you entered is not an integer";
+        isValid = false;
+    }
+
+    else if (std::stoi(c) < 0 || std::stoi(c) > 6) {
+        errorMessage = "\nERROR: The value entered does not fall within range of 1-6";
+        isValid = false;
+    }
+
+    else {
+        isValid = true;
+    }
+
+    return isValid;
 
 }
 

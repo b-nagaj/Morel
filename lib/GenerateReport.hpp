@@ -10,6 +10,30 @@ class GenerateReport {
 public: 
 
     std::string month;
+    std::string validMonths[24] = { "january",
+                                    "January",
+                                    "february",
+                                    "February",
+                                    "march",
+                                    "March",
+                                    "april",
+                                    "April",
+                                    "may",
+                                    "May",
+                                    "june",
+                                    "June",
+                                    "july",
+                                    "July",
+                                    "august",
+                                    "August",
+                                    "september",
+                                    "September",
+                                    "october",
+                                    "October",
+                                    "november",
+                                    "November",
+                                    "december",
+                                    "December" };
     std::string reportFilename;
     std::ofstream outputFile;
     std::string expenseName;

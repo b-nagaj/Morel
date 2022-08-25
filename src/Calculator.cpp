@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iomanip>
 #include <ostream>
+#include <algorithm>
+#include <vector>
 
 #include "../lib/Calculator.hpp"
 #include "../lib/Dialog.hpp"
@@ -47,24 +49,38 @@ void Calculator::Prompt() {
 
 void Calculator::GenerateAReport() {
 
-    Dialog myDialog;
+    Dialog GenerateReportDialog;
+    GenerateReport myReport;
 
     std::cout << "\nGenerate A Report";
     std::cout << "\n\nMonth: ";
     std::string month;
     std::cin >> month;
 
-    std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
-    std::string yesNo;
-    std:: cin >> yesNo;
+    bool validMonth = false;
+    for (int i = 0; i < 24; i++) {
+        if (myReport.validMonths[i] == month) {
+            validMonth = true;
+            break;
+        }
+    }
 
-    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
-        GenerateReport myReport;
-        myReport.SetMonth(month);
-        myReport.Calculate();
+    if (validMonth) {
+        std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
+        std::string yesNo;
+        std:: cin >> yesNo;
+
+        if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
+            myReport.SetMonth(month);
+            myReport.Calculate();
+        }
+        else {
+            GenerateReportDialog.Menu();
+        }
     }
     else {
-        myDialog.Menu();
+        GenerateReportDialog.errorMessage = "\nERROR: The value you entered is not a real month";
+        std::cout << GenerateReportDialog.errorMessage;
     }
 
 }
