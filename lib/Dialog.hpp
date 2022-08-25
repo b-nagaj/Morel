@@ -3,8 +3,6 @@
 #include <fstream>
 #include <ostream>
 
-#include "../lib/Calculator.hpp"
-
 #pragma once
 
 class Dialog {
@@ -12,11 +10,12 @@ class Dialog {
     public:
 
         int option;
-        Calculator myCalculator;
+        std::string errorMessage;
 
         Dialog();
         void WelcomeBanner();
         void Menu();
+        bool ValidateChoice(std::string c);
         void ReportBanner(std::ostream& stream);
 
 };
