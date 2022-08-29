@@ -58,7 +58,7 @@ bool Dialog::ValidateChoice(std::string c) {
         isValid = false;
     }
 
-    else if (std::stoi(c) < 0 || std::stoi(c) > 6) {
+    else if (std::stoi(c) < 1 || std::stoi(c) > 6) {
         errorMessage = "\nERROR: The value entered does not fall within range of 1-6";
         isValid = false;
     }
