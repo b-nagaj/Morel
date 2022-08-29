@@ -31,10 +31,11 @@ void Dialog::Menu() {
 
     std::cout << "\n\t1. Generate a report"
               << "\n\t2. View a report"
-              << "\n\t3. Update a report"
-              << "\n\t4. Update an expense"
-              << "\n\t5. Help"
-              << "\n\t6. Quit";
+              << "\n\t3. Generate data files"
+              << "\n\t4. Update a report"
+              << "\n\t5. Update an expense"
+              << "\n\t6. Help"
+              << "\n\t7. Quit";
 
     std::cout << "\n\nChoice: ";
     std::string choice;
