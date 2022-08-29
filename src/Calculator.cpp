@@ -43,6 +43,8 @@ void Calculator::Prompt() {
             std::cout << "\nQuitting!\n\n";
             break;
         }
+
+        myDialog.option = 0;
     }
 
 }
@@ -82,5 +84,7 @@ void Calculator::GenerateAReport() {
         GenerateReportDialog.errorMessage = "\nERROR: The value you entered is not a real month";
         std::cout << GenerateReportDialog.errorMessage;
     }
+
+    GenerateReportDialog.option = 0;
 
 }
