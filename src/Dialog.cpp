@@ -7,7 +7,6 @@
 #include <algorithm>
 
 #include "../lib/Dialog.hpp"
-#include "../lib/Calculator.hpp"
 
 Dialog::Dialog() {
 
