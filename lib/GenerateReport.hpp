@@ -11,7 +11,7 @@ class GenerateReport {
 
 public: 
 
-    Dialog GenerateReportDialog;
+    Dialog generateReportDialog;
     std::string month;
     std::string validMonths[24] = { "january",
                                     "January",
@@ -55,6 +55,7 @@ public:
     GenerateReport();
     void Generate();
     void Prompt();
+    bool ValidateMonth();
     void SetMonth(std::string m);
     void Calculate();
     double CalculateExpense(double expenseType, std::string name);

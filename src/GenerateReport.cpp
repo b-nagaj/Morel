@@ -19,15 +19,7 @@ void GenerateReport::Generate() {
 
     Prompt();
 
-    bool validMonth = false;
-    for (int i = 0; i < 24; i++) {
-        if (validMonths[i] == month) {
-            validMonth = true;
-            break;
-        }
-    }
-
-    if (validMonth) {
+    if (ValidateMonth()) {
         std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
         std::string yesNo;
         std:: cin >> yesNo;
@@ -37,15 +29,15 @@ void GenerateReport::Generate() {
             Calculate();
         }
         else {
-            GenerateReportDialog.Menu();
+            std::cout <<"\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+            generateReportDialog.Menu();
         }
     }
     else {
-        GenerateReportDialog.errorMessage = "\nERROR: The month you entered is not a real month\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
-        std::cout << GenerateReportDialog.errorMessage;
+        std::cout << generateReportDialog.errorMessage;
     }
 
-    GenerateReportDialog.option = 0;
+    generateReportDialog.option = 0;
 
 }
 
@@ -54,6 +46,25 @@ void GenerateReport::Prompt() {
     std::cout << "\nGenerate A Report";
     std::cout << "\n\nMonth: ";
     std::cin >> month;
+
+}
+
+bool GenerateReport::ValidateMonth() {
+
+    bool validMonth = false;
+
+    for (int i = 0; i < 24; i++) {
+        if (validMonths[i] == month) {
+            validMonth = true;
+            break;
+        }
+    }
+
+    if (validMonth == false) {
+        generateReportDialog.errorMessage = "\nERROR: The month you entered is not a real month\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+    }
+
+    return validMonth;
 
 }
 
@@ -126,7 +137,7 @@ void GenerateReport::ClearArray() {
 
 void GenerateReport::Report() {
 
-    GenerateReportDialog.ReportBanner(outputFile);
+    generateReportDialog.ReportBanner(outputFile);
     outputFile << "\n";
     DisplayExpenses();
     outputFile << "\n\n\tTotal:" << std::setw(17) << "$" << std::fixed << std::setprecision(2) << GetTotal() << "\n";
