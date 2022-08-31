@@ -3,12 +3,15 @@
 #include <fstream>
 #include <ostream>
 
+#include "../lib/Dialog.hpp"
+
 #pragma once
 
 class GenerateReport {
 
 public: 
 
+    Dialog GenerateReportDialog;
     std::string month;
     std::string validMonths[24] = { "january",
                                     "January",

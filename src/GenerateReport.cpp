@@ -17,8 +17,6 @@ GenerateReport::GenerateReport() {
 
 void GenerateReport::Generate() {
 
-    Dialog myDialog;
-
     Prompt();
 
     bool validMonth = false;
@@ -39,15 +37,15 @@ void GenerateReport::Generate() {
             Calculate();
         }
         else {
-            myDialog.Menu();
+            GenerateReportDialog.Menu();
         }
     }
     else {
-        myDialog.errorMessage = "\nERROR: The value you entered is not a real month";
-        std::cout << myDialog.errorMessage;
+        GenerateReportDialog.errorMessage = "\nERROR: The month you entered is not a real month\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+        std::cout << GenerateReportDialog.errorMessage;
     }
 
-    myDialog.option = 0;
+    GenerateReportDialog.option = 0;
 
 }
 
@@ -78,7 +76,7 @@ void GenerateReport::Calculate() {
 
     Report();
 
-    std::cout << "\n\nDone!\n\n"
+    std::cout << "\n\nDone! ✅\n\n"
               << "<><><><><><><><><><><><><><>"; 
     outputFile.close();
 
@@ -128,8 +126,7 @@ void GenerateReport::ClearArray() {
 
 void GenerateReport::Report() {
 
-    Dialog newDialog;
-    newDialog.ReportBanner(outputFile);
+    GenerateReportDialog.ReportBanner(outputFile);
     outputFile << "\n";
     DisplayExpenses();
     outputFile << "\n\n\tTotal:" << std::setw(17) << "$" << std::fixed << std::setprecision(2) << GetTotal() << "\n";

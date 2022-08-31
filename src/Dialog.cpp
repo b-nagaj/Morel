@@ -50,12 +50,12 @@ bool Dialog::ValidateChoice(std::string c) {
     bool isValid;
 
     if (std::all_of(c.begin(), c.end(), ::isdigit) == false) {
-        errorMessage = "\nERROR: The value you entered is not an integer";
+        errorMessage = "\nERROR: The value you entered is not an integer\n\n<><><><><><><><><><><><><><>";
         isValid = false;
     }
 
     else if (std::stoi(c) < 1 || std::stoi(c) > 7) {
-        errorMessage = "\nERROR: The value entered does not fall within range of 1-6";
+        errorMessage = "\nERROR: The value entered does not fall within range of 1-7\n\n<><><><><><><><><><><><><><>";
         isValid = false;
     }
 
