@@ -31,14 +31,14 @@ void GenerateDataFile::Prompt() {
 
 void GenerateDataFile::Generate() {
 
-    Dialog GenerateDataFilesDialog;
-    GenerateReport myReport2;
+    Dialog myDialog;
+    GenerateReport myReport;
 
     Prompt();
 
     bool validMonth = false;
     for (int i = 0; i < 24; i++) {
-        if (myReport2.validMonths[i] == month) {
+        if (myReport.validMonths[i] == month) {
             validMonth = true;
             break;
         }
@@ -50,8 +50,8 @@ void GenerateDataFile::Generate() {
         std:: cin >> yesNo;
 
         if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
-            for (int i = 0; (i < sizeof(myReport2.expenseNames) / sizeof(myReport2.expenseNames[0])); i++) {
-                dataFilename = month + "_2022_" + myReport2.expenseNames[i] + ".txt"; 
+            for (int i = 0; (i < sizeof(myReport.expenseNames) / sizeof(myReport.expenseNames[0])); i++) {
+                dataFilename = month + "_2022_" + myReport.expenseNames[i] + ".txt"; 
                 std::ofstream outfile;
                 dataFilenamePath = path + "/" + dataFilename;
                 outfile.open(dataFilenamePath);
@@ -62,12 +62,12 @@ void GenerateDataFile::Generate() {
                       << "\n\n<><><><><><><><><><><><><><>"; 
         }
         else {
-            GenerateDataFilesDialog.Menu();
+            myDialog.Menu();
         }    
     }
     else {
-        GenerateDataFilesDialog.errorMessage = "\nERROR: The value you entered is not a real month";
-        std::cout << GenerateDataFilesDialog.errorMessage;
+        myDialog.errorMessage = "\nERROR: The value you entered is not a real month";
+        std::cout << myDialog.errorMessage;
     }
 
 }
