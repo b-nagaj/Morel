@@ -3,12 +3,15 @@
 #include <fstream>
 #include <ostream>
 
+#include "../lib/Dialog.hpp"
+
 #pragma once
 
 class GenerateReport {
 
 public: 
 
+    Dialog generateReportDialog;
     std::string month;
     std::string validMonths[24] = { "january",
                                     "January",
@@ -52,6 +55,7 @@ public:
     GenerateReport();
     void Generate();
     void Prompt();
+    bool ValidateMonth();
     void SetMonth(std::string m);
     void Calculate();
     double CalculateExpense(double expenseType, std::string name);

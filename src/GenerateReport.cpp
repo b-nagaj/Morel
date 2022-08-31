@@ -17,19 +17,9 @@ GenerateReport::GenerateReport() {
 
 void GenerateReport::Generate() {
 
-    Dialog myDialog;
-
     Prompt();
 
-    bool validMonth = false;
-    for (int i = 0; i < 24; i++) {
-        if (validMonths[i] == month) {
-            validMonth = true;
-            break;
-        }
-    }
-
-    if (validMonth) {
+    if (ValidateMonth()) {
         std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
         std::string yesNo;
         std:: cin >> yesNo;
@@ -39,15 +29,15 @@ void GenerateReport::Generate() {
             Calculate();
         }
         else {
-            myDialog.Menu();
+            std::cout <<"\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+            generateReportDialog.Menu();
         }
     }
     else {
-        myDialog.errorMessage = "\nERROR: The value you entered is not a real month";
-        std::cout << myDialog.errorMessage;
+        std::cout << generateReportDialog.errorMessage;
     }
 
-    myDialog.option = 0;
+    generateReportDialog.option = 0;
 
 }
 
@@ -56,6 +46,25 @@ void GenerateReport::Prompt() {
     std::cout << "\nGenerate A Report";
     std::cout << "\n\nMonth: ";
     std::cin >> month;
+
+}
+
+bool GenerateReport::ValidateMonth() {
+
+    bool validMonth = false;
+
+    for (int i = 0; i < 24; i++) {
+        if (validMonths[i] == month) {
+            validMonth = true;
+            break;
+        }
+    }
+
+    if (validMonth == false) {
+        generateReportDialog.errorMessage = "\nERROR: The month you entered is not a real month\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+    }
+
+    return validMonth;
 
 }
 
@@ -78,7 +87,7 @@ void GenerateReport::Calculate() {
 
     Report();
 
-    std::cout << "\n\nDone!\n\n"
+    std::cout << "\n\nDone! ✅\n\n"
               << "<><><><><><><><><><><><><><>"; 
     outputFile.close();
 
@@ -128,8 +137,7 @@ void GenerateReport::ClearArray() {
 
 void GenerateReport::Report() {
 
-    Dialog newDialog;
-    newDialog.ReportBanner(outputFile);
+    generateReportDialog.ReportBanner(outputFile);
     outputFile << "\n";
     DisplayExpenses();
     outputFile << "\n\n\tTotal:" << std::setw(17) << "$" << std::fixed << std::setprecision(2) << GetTotal() << "\n";
