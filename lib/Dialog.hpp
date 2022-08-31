@@ -1,7 +1,5 @@
 #include <iostream> 
 #include <string>
-#include <fstream>
-#include <ostream>
 
 #pragma once
 

@@ -1,10 +1,4 @@
 #include <iostream>
-#include <string>
-#include <fstream>
-#include <iomanip>
-#include <ostream>
-#include <algorithm>
-#include <vector>
 
 #include "../lib/Calculator.hpp"
 #include "../lib/Dialog.hpp"

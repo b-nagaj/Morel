@@ -1,8 +1,3 @@
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <ostream>
-
 #include "../lib/Dialog.hpp"
 #include "../lib/GenerateReport.hpp"
 #include "../lib/GenerateDataFile.hpp"

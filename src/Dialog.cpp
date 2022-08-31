@@ -1,9 +1,5 @@
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <iomanip>
-#include <ostream>
-#include <cstdlib>
 #include <algorithm>
 
 #include "../lib/Dialog.hpp"
