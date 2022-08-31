@@ -17,18 +17,6 @@ GenerateDataFile::GenerateDataFile() {
 
 }
 
-void GenerateDataFile::Prompt() {
-
-    std::cout << "\nGenerate Data Files";
-
-    std::cout << "\n\nWhere? (Include an absolute path): ";
-    std::cin >> path;
-
-    std::cout << "\nMonth: ";
-    std::cin >> month;
-
-}
-
 void GenerateDataFile::Generate() {
 
     Dialog myDialog;
@@ -69,5 +57,17 @@ void GenerateDataFile::Generate() {
         myDialog.errorMessage = "\nERROR: The value you entered is not a real month";
         std::cout << myDialog.errorMessage;
     }
+
+}
+
+void GenerateDataFile::Prompt() {
+
+    std::cout << "\nGenerate Data Files";
+
+    std::cout << "\n\nWhere? (Include an absolute path): ";
+    std::cin >> path;
+
+    std::cout << "\nMonth: ";
+    std::cin >> month;
 
 }
