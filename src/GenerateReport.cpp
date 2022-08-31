@@ -15,14 +15,6 @@ GenerateReport::GenerateReport() {
 
 }
 
-void GenerateReport::Prompt() {
-
-    std::cout << "\nGenerate A Report";
-    std::cout << "\n\nMonth: ";
-    std::cin >> month;
-
-}
-
 void GenerateReport::Generate() {
 
     Dialog myDialog;
@@ -59,11 +51,36 @@ void GenerateReport::Generate() {
 
 }
 
-void GenerateReport::ClearArray() {
+void GenerateReport::Prompt() {
 
-    for (int i = 0; i < 20; i++) {
-        lines[i] = "";
+    std::cout << "\nGenerate A Report";
+    std::cout << "\n\nMonth: ";
+    std::cin >> month;
+
+}
+
+void GenerateReport::SetMonth(std::string m) {
+
+    month = m;
+
+}
+
+void GenerateReport::Calculate() {
+
+    reportFilename = "/home/bryce/Documents/Monthly_Expenses/Reports/" + month + "_2022_Report.txt";
+    outputFile.open(reportFilename);
+
+    std::cout << "\nCreating expense report...\n";
+    
+    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
+        expenses[i] = CalculateExpense(expenses[i], expenseNames[i]);
     }
+
+    Report();
+
+    std::cout << "\n\nDone!\n\n"
+              << "<><><><><><><><><><><><><><>"; 
+    outputFile.close();
 
 }
 
@@ -94,6 +111,21 @@ double GenerateReport::CalculateExpense(double expenseType, std::string expenseN
 
 }
 
+std::string GenerateReport::SetExpenseFilename(std::string expenseName) {
+
+    std::string expenseFilename = "/home/bryce/Documents/Monthly_Expenses/Data/" + month + "_2022/" + month + "_2022_" + expenseName + ".txt";
+    return expenseFilename;
+
+}
+
+void GenerateReport::ClearArray() {
+
+    for (int i = 0; i < 20; i++) {
+        lines[i] = "";
+    }
+
+}
+
 void GenerateReport::Report() {
 
     Dialog newDialog;
@@ -101,32 +133,6 @@ void GenerateReport::Report() {
     outputFile << "\n";
     DisplayExpenses();
     outputFile << "\n\n\tTotal:" << std::setw(17) << "$" << std::fixed << std::setprecision(2) << GetTotal() << "\n";
-
-}
-
-void GenerateReport::Calculate() {
-
-    reportFilename = "/home/bryce/Documents/Monthly_Expenses/Reports/" + month + "_2022_Report.txt";
-    outputFile.open(reportFilename);
-
-    std::cout << "\nCreating expense report...\n";
-    
-    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
-        expenses[i] = CalculateExpense(expenses[i], expenseNames[i]);
-    }
-
-    Report();
-
-    std::cout << "\n\nDone!\n\n"
-              << "<><><><><><><><><><><><><><>"; 
-    outputFile.close();
-
-}
-
-std::string GenerateReport::SetExpenseFilename(std::string expenseName) {
-
-    std::string expenseFilename = "/home/bryce/Documents/Monthly_Expenses/Data/" + month + "_2022/" + month + "_2022_" + expenseName + ".txt";
-    return expenseFilename;
 
 }
 
@@ -148,11 +154,5 @@ double GenerateReport::GetTotal() {
     }
 
     return total;
-
-}
-
-void GenerateReport::SetMonth(std::string m) {
-
-    month = m;
 
 }

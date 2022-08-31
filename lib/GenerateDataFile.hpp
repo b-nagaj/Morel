@@ -16,7 +16,7 @@ class GenerateDataFile {
         std::ofstream outfile;
 
         GenerateDataFile();
-        void Prompt();
         void Generate();
-
+        void Prompt();
+        
 };
