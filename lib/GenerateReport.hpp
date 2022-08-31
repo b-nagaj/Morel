@@ -50,6 +50,8 @@ public:
                                      "Venmo" };
 
     GenerateReport();
+    void Prompt();
+    void Generate();
     void ClearArray();
     double CalculateExpense(double expenseType, std::string name);
     void Report();
