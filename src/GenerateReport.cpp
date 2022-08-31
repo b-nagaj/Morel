@@ -15,6 +15,50 @@ GenerateReport::GenerateReport() {
 
 }
 
+void GenerateReport::Prompt() {
+
+    std::cout << "\nGenerate A Report";
+    std::cout << "\n\nMonth: ";
+    std::cin >> month;
+
+}
+
+void GenerateReport::Generate() {
+
+    Dialog myDialog;
+
+    Prompt();
+
+    bool validMonth = false;
+    for (int i = 0; i < 24; i++) {
+        if (validMonths[i] == month) {
+            validMonth = true;
+            break;
+        }
+    }
+
+    if (validMonth) {
+        std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
+        std::string yesNo;
+        std:: cin >> yesNo;
+
+        if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
+            SetMonth(month);
+            Calculate();
+        }
+        else {
+            myDialog.Menu();
+        }
+    }
+    else {
+        myDialog.errorMessage = "\nERROR: The value you entered is not a real month";
+        std::cout << myDialog.errorMessage;
+    }
+
+    myDialog.option = 0;
+
+}
+
 void GenerateReport::ClearArray() {
 
     for (int i = 0; i < 20; i++) {

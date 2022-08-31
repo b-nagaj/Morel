@@ -18,6 +18,5 @@ class Calculator {
         GenerateDataFile myDataFiles;
 
         void Prompt();
-        void GenerateReports();
 
 };
