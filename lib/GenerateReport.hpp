@@ -62,7 +62,8 @@ public:
     void Calculate();
     double CalculateExpense(double expenseType, std::string name);
     std::string SetExpenseFilename(std::string expenseFilename);
-    void ClearArray();
+    void ClearLinesArray();
+    void ClearExpensesArray();
     void Report();
     void DisplayExpenses();
     double GetTotal();
