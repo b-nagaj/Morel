@@ -17,7 +17,6 @@ class GenerateDataFile {
         std::string month;
         std::string path;
         std::string dataFilename;
-        std::string dataFilenamePath;
         std::ofstream outfile;
 
         GenerateDataFile();

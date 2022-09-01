@@ -37,6 +37,7 @@ public:
                                     "November",
                                     "december",
                                     "December" };
+    std::string path;
     std::string reportFilename;
     std::ofstream outputFile;
     std::string expenseName;
@@ -55,6 +56,7 @@ public:
     GenerateReport();
     void Generate();
     void Prompt();
+    bool ValidatePath();
     bool ValidateMonth();
     void SetMonth(std::string m);
     void Calculate();
