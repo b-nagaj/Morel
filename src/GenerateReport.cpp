@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iomanip>
 #include <ostream>
+#include <boost/filesystem.hpp>
 
 #include "../lib/GenerateReport.hpp"
 #include "../lib/Dialog.hpp"
@@ -19,7 +20,7 @@ void GenerateReport::Generate() {
 
     Prompt();
 
-    if (ValidateMonth()) {
+    if (ValidatePath() && ValidateMonth()) {
         std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
         std::string yesNo;
         std:: cin >> yesNo;
@@ -29,7 +30,7 @@ void GenerateReport::Generate() {
             Calculate();
         }
         else {
-            std::cout <<"\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+            std::cout << generateReportDialog.errorMessage;
             generateReportDialog.Menu();
         }
     }
@@ -44,8 +45,27 @@ void GenerateReport::Generate() {
 void GenerateReport::Prompt() {
 
     std::cout << "\nGenerate A Report";
-    std::cout << "\n\nMonth: ";
+
+    std::cout << "\n\nWhere? (Include an absolute path): ";
+    std::cin >> path;
+
+    std::cout << "\nMonth: ";
     std::cin >> month;
+
+}
+
+bool GenerateReport::ValidatePath() {
+
+    bool validPath = false;
+
+    if (boost::filesystem::exists(path)) {
+        validPath = true;
+    }
+    else {
+        generateReportDialog.errorMessage = "\nERROR: The path you entered does not exist\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+    }
+
+    return validPath;
 
 }
 
@@ -76,7 +96,7 @@ void GenerateReport::SetMonth(std::string m) {
 
 void GenerateReport::Calculate() {
 
-    reportFilename = "/home/bryce/Documents/Monthly_Expenses/Reports/" + month + "_2022_Report.txt";
+    reportFilename = path + month + "_2022_Report.txt";
     outputFile.open(reportFilename);
 
     std::cout << "\nCreating expense report...\n";
