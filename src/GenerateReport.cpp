@@ -106,10 +106,11 @@ void GenerateReport::Calculate() {
     }
 
     Report();
+    outputFile.close();
+    ClearExpensesArray(); 
 
     std::cout << "\n\nDone! ✅\n\n"
               << "<><><><><><><><><><><><><><>"; 
-    outputFile.close();
 
 }
 
@@ -123,7 +124,7 @@ double GenerateReport::CalculateExpense(double expenseType, std::string expenseN
         std::cout << "\n" << expenseName << std::setw(27 - expenseName.length()) << " ❌";
     }
     else {
-        ClearArray();
+        ClearLinesArray();
 
         int index = 0;
         while (!inputFile.eof()) {
@@ -147,7 +148,7 @@ std::string GenerateReport::SetExpenseFilename(std::string expenseName) {
 
 }
 
-void GenerateReport::ClearArray() {
+void GenerateReport::ClearLinesArray() {
 
     for (int i = 0; i < 20; i++) {
         lines[i] = "";
@@ -182,5 +183,13 @@ double GenerateReport::GetTotal() {
     }
 
     return total;
+
+}
+
+void GenerateReport::ClearExpensesArray() {
+
+    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
+        expenses[i] = 0;
+    }
 
 }
