@@ -12,7 +12,6 @@
 GenerateDataFile::GenerateDataFile() {
 
     dataFilename = "";
-    dataFilenamePath = "";
 
 }
 
@@ -27,10 +26,9 @@ void GenerateDataFile::Generate() {
 
         if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
             for (int i = 0; (i < sizeof(generateDataFileReport.expenseNames) / sizeof(generateDataFileReport.expenseNames[0])); i++) {
-                dataFilename = month + "_2022_" + generateDataFileReport.expenseNames[i] + ".txt"; 
+                dataFilename = path + month + "_2022_" + generateDataFileReport.expenseNames[i] + ".txt"; 
                 std::ofstream outfile;
-                dataFilenamePath = path + "/" + dataFilename;
-                outfile.open(dataFilenamePath);
+                outfile.open(dataFilename);
                 outfile.close();
             }
 
@@ -42,7 +40,6 @@ void GenerateDataFile::Generate() {
         std::cout << generateDataFileDialog.errorMessage;
     }
 
-    //generateDataFileDialog.option = 0;
 }
 
 void GenerateDataFile::Prompt() {
