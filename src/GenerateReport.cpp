@@ -10,6 +10,8 @@
 
 GenerateReport::GenerateReport() {
 
+    expenseListSize = 0;
+
     for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
         expenses[i] = 0;
     }
@@ -100,17 +102,54 @@ void GenerateReport::Calculate() {
     outputFile.open(reportFilename);
 
     std::cout << "\nCreating expense report...\n";
-    
-    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
-        expenses[i] = CalculateExpense(expenses[i], expenseNames[i]);
+
+    Read();
+
+    inputFile.open("expenseList.txt");
+    if (inputFile) {
+        for (int i = 0; i < 3; i++) {
+            if (expenseNames[0] == "\n" || expenseNames[0] == "") {
+                generateReportDialog.errorMessage = "\nERROR: Please update your expense list\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+                std::cout << generateReportDialog.errorMessage;
+                break;
+            }
+            else if (expenseNames[i] == "end") {
+                break;
+            }
+            else {
+                expenses[i] = CalculateExpense(expenses[i], expenseNames[i]);
+            }
+        }
+
+        std::cout << "\n\nDone! ✅\n\n"
+                  << "<><><><><><><><><><><><><><>"; 
+
+        Report();
+        inputFile.close();
+        outputFile.close(); 
+    }
+    else {
+        generateReportDialog.errorMessage = "\nERROR: Please update your expense list\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+        std::cout << generateReportDialog.errorMessage;
     }
 
-    Report();
-    outputFile.close();
-    ClearExpensesArray(); 
+    ClearExpensesArray();
 
-    std::cout << "\n\nDone! ✅\n\n"
-              << "<><><><><><><><><><><><><><>"; 
+}
+
+void GenerateReport::Read() {
+
+    inputFile.open("expenseList.txt");
+
+    for (int i = 0; i < 20; i++) {
+        std::getline(inputFile, expenseNames[i], '\n');
+
+        if (!inputFile.eof()) {
+            expenseListSize += 1;
+        }
+    }
+    
+    inputFile.close();
 
 }
 
@@ -167,9 +206,15 @@ void GenerateReport::Report() {
 
 void GenerateReport::DisplayExpenses() {
 
-    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
-        outputFile << "\n\t" << expenseNames[i] << std::setw(23 - expenseNames[i].length()); 
-        outputFile << std::fixed << std::setprecision(2) << "$" << expenses[i];
+    for (int i = 0; i < expenseListSize - 1; i++) {
+
+        if (expenseNames[i] == "end") {
+            break;
+        }
+        else {
+            outputFile << "\n\t" << expenseNames[i] << std::setw(23 - expenseNames[i].length()); 
+            outputFile << std::fixed << std::setprecision(2) << "$" << expenses[i];
+        }
     }
 
 }
@@ -190,6 +235,10 @@ void GenerateReport::ClearExpensesArray() {
 
     for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
         expenses[i] = 0;
+    }
+
+    for (int i = 0; i < sizeof(expenseNames)/sizeof(expenseNames[0]); i++) {
+        expenseNames[i] = "";
     }
 
 }
