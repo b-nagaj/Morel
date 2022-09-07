@@ -17,11 +17,13 @@ class GenerateDataFile {
         std::string month;
         std::string path;
         std::string dataFilename;
+        std::ifstream inputFile;
         std::ofstream outfile;
 
         GenerateDataFile();
         void Generate();
         void Prompt();
+        void Read();
         bool ValidatePath();
         bool ValidateMonth();
         
