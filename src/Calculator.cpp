@@ -14,30 +14,18 @@ void Calculator::Prompt() {
 
         switch (myDialog.option) {
         case 1 :
-            myReport.Generate();
+            myExpenseList.Update();
             break;
 
         case 2 : 
-            std::cout << "\nView A Report";
+            myDataFiles.Generate();
             break;
 
         case 3 :
-            myDataFiles.Generate();
+            myReport.Generate();
             break;
-        
+    
         case 4 :
-            std::cout << "\nUpdate A Report";
-            break;
-        
-        case 5 :
-            std::cout << "\nUpdate An Expense";
-            break;
-        
-        case 6 :
-            std::cout << "\nHelp";
-            break;
-        
-        case 7 :
             std::cout << "\nQuitting!\n\n";
             exit(0);
         }

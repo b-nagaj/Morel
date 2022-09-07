@@ -39,19 +39,22 @@ public:
                                     "December" };
     std::string path;
     std::string reportFilename;
+    std::ifstream inputFile;
     std::ofstream outputFile;
     std::string expenseName;
     std::string lines [50];
-    double expenses [9];
-    std::string expenseNames [9] = { "Groceries",
-                                     "Eating_Out",
-                                     "Gas",
-                                     "Rent",
-                                     "Electricity",
-                                     "Internet",
-                                     "Water",
-                                     "Car",
-                                     "Venmo" };
+    double expenses [20];
+    int expenseListSize;
+    std::string expenseNames[20];
+    // std::string expenseNames [9] = { "Groceries",
+    //                                  "Eating_Out",
+    //                                  "Gas",
+    //                                  "Rent",
+    //                                  "Electricity",
+    //                                  "Internet",
+    //                                  "Water",
+    //                                  "Car",
+    //                                  "Venmo" };
 
     GenerateReport();
     void Generate();
@@ -60,6 +63,7 @@ public:
     bool ValidateMonth();
     void SetMonth(std::string m);
     void Calculate();
+    void Read();
     double CalculateExpense(double expenseType, std::string name);
     std::string SetExpenseFilename(std::string expenseFilename);
     void ClearLinesArray();

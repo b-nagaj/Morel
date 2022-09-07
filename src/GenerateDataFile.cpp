@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <ostream>
 #include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 
 #include "../lib/GenerateDataFile.hpp"
 #include "../lib/Dialog.hpp"
@@ -24,17 +25,34 @@ void GenerateDataFile::Generate() {
         std::string yesNo;
         std:: cin >> yesNo;
 
-        if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
-            for (int i = 0; (i < sizeof(generateDataFileReport.expenseNames) / sizeof(generateDataFileReport.expenseNames[0])); i++) {
-                dataFilename = path + month + "_2022_" + generateDataFileReport.expenseNames[i] + ".txt"; 
-                std::ofstream outfile;
-                outfile.open(dataFilename);
-                outfile.close();
-            }
+        Read();
 
-            std::cout << "\nGenerated" << " ✅"
-                      << "\n\n<><><><><><><><><><><><><><>"; 
-        }
+        if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes") {
+            inputFile.open("expenseList.txt");
+
+            if (inputFile) {
+                for (int i = 0; i < generateDataFileReport.expenseListSize - 1; i++) {
+                    if (generateDataFileReport.expenseNames[0] == "\n") {
+                        generateDataFileDialog.errorMessage = "\nERROR: Please update your expenseList\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+                        std::cout << generateDataFileDialog.errorMessage;
+                        break;
+                    }
+                    else if (generateDataFileReport.expenseNames[i] == "end") {
+                        break;
+                    }
+                    else {
+                        dataFilename = path + month + "_2022_" + generateDataFileReport.expenseNames[i] +".txt"; 
+                        outfile.open(dataFilename);
+                        outfile << "0";
+                        outfile.close();
+                        std::cout << "\n" << month << "_2022_" << generateDataFileReport.expenseNames[i] << ".txt" << " ✅";
+                    }
+                }
+            }
+        
+            std::cout << "\n\nGenerated ✅\n\n<><><><><><><><><><><><><><>";
+            inputFile.close();
+        } 
     }
     else {
         std::cout << generateDataFileDialog.errorMessage;
@@ -51,6 +69,22 @@ void GenerateDataFile::Prompt() {
 
     std::cout << "\nMonth: ";
     std::cin >> month;
+
+}
+
+void GenerateDataFile::Read() {
+
+    inputFile.open("expenseList.txt");
+
+    for (int i = 0; i < 20; i++) {
+        std::getline(inputFile, generateDataFileReport.expenseNames[i], '\n');
+
+        if (!inputFile.eof()) {
+            generateDataFileReport.expenseListSize += 1;
+        }
+    }
+    
+    inputFile.close();
 
 }
 
