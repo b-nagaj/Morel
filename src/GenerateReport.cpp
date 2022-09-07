@@ -33,7 +33,6 @@ void GenerateReport::Generate() {
         }
         else {
             std::cout << generateReportDialog.errorMessage;
-            generateReportDialog.Menu();
         }
     }
     else {
