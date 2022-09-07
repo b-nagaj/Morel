@@ -24,13 +24,10 @@ void Dialog::Menu() {
 
     std::cout << "\n\nEnter A Choice From The Menu\n";
 
-    std::cout << "\n\t1. Generate a report"
-              << "\n\t2. View a report"
-              << "\n\t3. Generate data files"
-              << "\n\t4. Update a report"
-              << "\n\t5. Update an expense"
-              << "\n\t6. Help"
-              << "\n\t7. Quit";
+    std::cout << "\n\t1. Update List Of Expenses"
+              << "\n\t2. Generate Data Files"
+              << "\n\t3. Generate A Report"
+              << "\n\t4. Quit";
 
     std::cout << "\n\nChoice: ";
     std::string choice;
@@ -54,7 +51,7 @@ bool Dialog::ValidateChoice(std::string c) {
         isValid = false;
     }
 
-    else if (std::stoi(c) < 1 || std::stoi(c) > 7) {
+    else if (std::stoi(c) < 1 || std::stoi(c) > 4) {
         errorMessage = "\nERROR: The value entered does not fall within range of 1-7\n\n<><><><><><><><><><><><><><>";
         isValid = false;
     }
