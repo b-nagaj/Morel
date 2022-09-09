@@ -1,22 +1,14 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <fstream>
 
 #include "../lib/Dialog.hpp"
 
 Dialog::Dialog() {
 
+    username = "";
     option = 0;
-
-}
-
-void Dialog::WelcomeBanner() {
-
-    std::cout << " __  __                _" 
-              << "\n|  \\/  | ___  _ __ ___| |"
-              << "\n| |\\/| |/ _ \\| '__/ _ \\ |"
-              << "\n| |  | | (_) | | |  __/ |"
-              << "\n|_|  |_|\\___/|_|  \\___|_|";
 
 }
 
@@ -36,9 +28,26 @@ void Dialog::Menu() {
     if (ValidateChoice(choice)) {
         option = std::stoi(choice);
     }
-    else {
-        std::cout << errorMessage;
-    }
+
+}
+
+void Dialog::WelcomeBanner() {
+
+    GetUsername();
+    std::cout << "\nHello, " << username << "!" << std::endl;
+    std::cout << " __  __                _" 
+              << "\n|  \\/  | ___  _ __ ___| |"
+              << "\n| |\\/| |/ _ \\| '__/ _ \\ |"
+              << "\n| |  | | (_) | | |  __/ |"
+              << "\n|_|  |_|\\___/|_|  \\___|_|";
+
+}
+
+void Dialog::GetUsername() {
+
+    inputFile.open("config.txt"); 
+    std::getline(inputFile, username);
+    inputFile.close();
 
 }
 
@@ -47,12 +56,12 @@ bool Dialog::ValidateChoice(std::string c) {
     bool isValid;
 
     if (std::all_of(c.begin(), c.end(), ::isdigit) == false) {
-        errorMessage = "\nERROR: The value you entered is not an integer\n\n<><><><><><><><><><><><><><>";
+        std::cout << "\nERROR: The value you entered is not an integer\n\n<><><><><><><><><><><><><><>";
         isValid = false;
     }
 
     else if (std::stoi(c) < 1 || std::stoi(c) > 4) {
-        errorMessage = "\nERROR: The value entered does not fall within range of 1-7\n\n<><><><><><><><><><><><><><>";
+        std::cout << "\nERROR: The value entered does not fall within range of 1-7\n\n<><><><><><><><><><><><><><>";
         isValid = false;
     }
 

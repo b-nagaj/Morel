@@ -1,22 +1,27 @@
 #include <fstream>
 #include <string>
 
-#include "../lib/GenerateReport.hpp"
-
 #pragma once
 
 class UpdateExpenseList {
 
     public:
 
-        std::ofstream outputFile;
+        std::string lines [23];
+        std::string expenses [20];
         std::string expense;
-        std::string expenses[20];
-        int expenseListSize;
+        int numExpenses;
+        std::string username;
+        std::string dataFilesPath;
+        std::string reportFilesPath;
+        std::ifstream inputFile;
+        std::ofstream outputFile;
         
         UpdateExpenseList();
         void Update();
         void Prompt();
+        void GetUsername();
+        void GetPaths();
         void Write();
         
 };

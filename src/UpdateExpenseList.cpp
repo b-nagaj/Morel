@@ -5,10 +5,18 @@
 
 UpdateExpenseList::UpdateExpenseList() {
 
-    expense = "";
-    for (int i = 0; i < sizeof(expenses) / sizeof(expenses[0]); i++) {
+    for (int i = 0; i < (sizeof(lines) / sizeof(lines[i])); i++) {
+        lines[i] = "";
+    }
+    for (int i = 0; i < (sizeof(expenses) / sizeof(expenses[0])); i++) {
         expenses[i] = "";
     }
+
+    expense = "";
+    numExpenses = 0;
+    username = "";
+    dataFilesPath = "";
+    reportFilesPath = "";
 
 }
 
@@ -16,20 +24,31 @@ void UpdateExpenseList::Update() {
 
     Prompt();
 
-    int count = 0;
     while (expense != "end") {
-        std::cout << "Expense" << "[" << (count + 1) << "]: ";
+        std::cout << "Expense" << "[" << (numExpenses + 1) << "]: ";
         std::cin >> expense;
         std::cout << "\n";
-        expenses[count] = expense;
-        count++;
+        expenses[numExpenses] = expense;
+        numExpenses++;
     }
+    numExpenses--;
 
-    expenseListSize = count;
-    Write();
+    std::cout << "Update your list of expenses?(Y/N): ";
+    std::string yesNo;
+    std::cin >> yesNo;
 
-    std::cout << "Updated" << " ✅"
-              << "\n\n<><><><><><><><><><><><><><>";
+    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes") {
+        GetUsername();
+        GetPaths();
+        Write();
+
+        std::cout << "\nUpdated" << " ✅"
+                  << "\n\n<><><><><><><><><><><><><><>";
+    }
+    else {
+        std::cout << "\nUpdated" << " ❌"
+                  << "\n\n<><><><><><><><><><><><><><>";
+    }   
 
 }
 
@@ -43,12 +62,42 @@ void UpdateExpenseList::Prompt() {
 
 }
 
+void UpdateExpenseList::GetUsername() {
+
+    inputFile.open("config.txt"); 
+    std::getline(inputFile, username);
+    inputFile.close();
+
+}
+
+void UpdateExpenseList::GetPaths() {
+
+    inputFile.open("config.txt");
+
+    int i = 0;
+    while (i < 3) {
+        std::getline(inputFile, lines[i], '\n');
+        i++;
+    }
+
+    dataFilesPath = lines[1];
+    reportFilesPath = lines[2];
+    inputFile.close();
+
+}
+
 void UpdateExpenseList::Write() {
 
-    outputFile.open("expenseList.txt");
+    outputFile.open("config.txt");
 
-    for (int i = 0; i < expenseListSize; i++) {
-        outputFile << expenses[i] << "\n";
+    if (outputFile) {
+        outputFile << username << std::endl;
+        outputFile << dataFilesPath << std::endl;
+        outputFile << reportFilesPath << std::endl;
+
+        for (int i = 0; i < numExpenses; i++) {
+            outputFile << expenses[i] << std::endl;
+        }
     }
 
     outputFile.close();

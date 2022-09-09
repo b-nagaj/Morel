@@ -24,5 +24,11 @@ UpdateExpenseList.o: src/UpdateExpenseList.cpp
 Dialog.o: src/Dialog.cpp
 	$(GCC) -c src/Dialog.cpp
 
+setup: setup.o
+	$(GCC) setup.o -o setup $(BOOST)
+
+setup.o: setup.cpp
+	$(GCC) -c setup.cpp
+
 clean:
-	rm -f *.o app
+	rm -f *.o setup app
