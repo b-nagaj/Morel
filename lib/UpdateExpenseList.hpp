@@ -1,21 +1,16 @@
+#ifndef UPDATE_EXPENSE_LIST_HPP
+#define UPDATE_EXPENSE_LIST_HPP
+
 #include <fstream>
 #include <string>
 
-#pragma once
+#include "Helper.hpp"
 
-class UpdateExpenseList {
+class UpdateExpenseList : public Helper {
 
     public:
 
         std::string lines [23];
-        std::string expenses [20];
-        std::string expense;
-        int numExpenses;
-        std::string username;
-        std::string dataFilesPath;
-        std::string reportFilesPath;
-        std::ifstream inputFile;
-        std::ofstream outputFile;
         
         UpdateExpenseList();
         void Update();
@@ -25,3 +20,5 @@ class UpdateExpenseList {
         void Write();
         
 };
+
+#endif

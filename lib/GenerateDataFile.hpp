@@ -1,47 +1,19 @@
+#ifndef GENERATE_DATA_FILE_HPP
+#define GENERATE_DATA_FILE_HPP
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <ostream>
 
-#pragma once
+#include "Helper.hpp"
 
-class GenerateDataFile {
+class GenerateDataFile : public Helper {
 
     public:
 
-        std::string validMonths[24] = { "january",
-                                    "January",
-                                    "february",
-                                    "February",
-                                    "march",
-                                    "March",
-                                    "april",
-                                    "April",
-                                    "may",
-                                    "May",
-                                    "june",
-                                    "June",
-                                    "july",
-                                    "July",
-                                    "august",
-                                    "August",
-                                    "september",
-                                    "September",
-                                    "october",
-                                    "October",
-                                    "november",
-                                    "November",
-                                    "december",
-                                    "December" };
-        std::string expenses [20];
         std::string lines [3];
-        std::string expense;
-        int numExpenses;
-        std::string month;
-        std::string dataFilesPath;
         std::string dataFilename;
-        std::ifstream inputFile;
-        std::ofstream outFile;
 
         GenerateDataFile();
         void Generate();
@@ -51,3 +23,5 @@ class GenerateDataFile {
         void GetExpenses();
         
 };
+
+#endif

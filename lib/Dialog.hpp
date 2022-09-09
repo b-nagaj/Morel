@@ -1,15 +1,17 @@
+#ifndef DIALOG_HPP
+#define DIALOG_HPP
+
 #include <iostream> 
 #include <string>
 #include <fstream>
 #include <ostream>
 
-#pragma once
+#include "Helper.hpp"
 
-class Dialog {
+class Dialog : public Helper{
 
     public:
 
-        std::string username;
         int option;
         std::ifstream inputFile;
 
@@ -21,3 +23,5 @@ class Dialog {
         void ReportBanner(std::ostream& stream);
 
 };
+
+#endif

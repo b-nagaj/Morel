@@ -12,8 +12,8 @@ GenerateReport::GenerateReport() {
 
     numExpenses = 0;
 
-    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
-        expenses[i] = 0;
+    for (int i = 0; i < sizeof(expenseValues)/sizeof(expenseValues[0]); i++) {
+        expenseValues[i] = 0;
     }
 
 }
@@ -87,7 +87,7 @@ void GenerateReport::Calculate() {
     GetExpenses();
 
     for (int i = 0; i < numExpenses; i++) {
-        expenses[i] = CalculateExpense(expenses[i], expenseNames[i]);
+        expenses[i] = CalculateExpense(expenseValues[i], expenseNames[i]);
     } 
 
 }
@@ -115,7 +115,9 @@ void GenerateReport::GetPath() {
     else {
         reportFilesPath = lines[1];
     }
-    
+
+    dataFilesPath = lines[1];
+    reportFilesPath = lines[2];
     inputFile.close();
 
 }
@@ -188,7 +190,7 @@ void GenerateReport::Report() {
 void GenerateReport::DisplayExpenses() {
 
     for (int i = 0; i < numExpenses; i++) {
-        outputFile << "\n\t" << expenseNames[i] << std::setw(23 - expenseNames[i].length()); 
+        outputFile << "\n\t" << expenses[i] << std::setw(23 - expenses[i].length()); 
         outputFile << std::fixed << std::setprecision(2) << "$" << expenses[i];
     }
 
@@ -199,7 +201,7 @@ double GenerateReport::GetTotal() {
     double total;
 
     for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
-        total += expenses[i]; 
+        total += expenseValues[i]; 
     }
 
     return total;
@@ -209,10 +211,10 @@ double GenerateReport::GetTotal() {
 void GenerateReport::ClearExpenseArrays() {
 
     for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
-        expenses[i] = 0;
+        expenseValues[i] = 0;
     }
 
-    for (int i = 0; i < sizeof(expenseNames)/sizeof(expenseNames[0]); i++) {
+    for (int i = 0; i < sizeof(expenses)/sizeof(expenseNames[0]); i++) {
         expenseNames[i] = "";
     }
 

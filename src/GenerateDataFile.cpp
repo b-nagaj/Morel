@@ -38,9 +38,9 @@ void GenerateDataFile::Generate() {
     if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes") {
         for (int i = 0; i < numExpenses; i++) {
                 dataFilename = dataFilesPath + month + "/" + month + "_" + expenses[i] + ".txt";
-                outFile.open(dataFilename);
-                outFile << "0";
-                outFile.close();
+                outputFile.open(dataFilename);
+                outputFile << "0";
+                outputFile.close();
                 std::cout << "\n" << month << "_2022_" << expenses[i] << ".txt" << " ✅";
             }
             std::cout << "\n\nGenerated ✅\n\n<><><><><><><><><><><><><><>";
