@@ -7,11 +7,20 @@
 #include <experimental/filesystem>
 
 #include "../lib/GenerateDataFile.hpp"
-#include "../lib/Dialog.hpp"
-#include "../lib/GenerateReport.hpp"
 
 GenerateDataFile::GenerateDataFile() {
 
+    for (int i = 0; i < (sizeof(expenses) / sizeof(expenses[0])); i++) {
+        expenses[i] = "";
+    }
+    for (int i = 0; i < (sizeof(lines) / sizeof(lines[i])); i++) {
+        lines[i] = "";
+    }
+
+    expense = "";
+    numExpenses = 0;
+    month = "";
+    dataFilesPath = "";
     dataFilename = "";
 
 }
@@ -19,87 +28,40 @@ GenerateDataFile::GenerateDataFile() {
 void GenerateDataFile::Generate() {
 
     Prompt();
+    GetPath();
+    GetExpenses();
 
-    if (ValidatePath() == true && ValidateMonth() == true) { 
-        std::cout << "\nGenerate data files at " << "\"" << path << "\" for the month of " << month << "?" << "(Y/N) ";
+    std::cout << "\nGenerate data files for the month of " << month << "?" << "(Y/N) ";
         std::string yesNo;
         std:: cin >> yesNo;
-
-        Read();
-
-        if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes") {
-            inputFile.open("expenseList.txt");
-
-            if (inputFile) {
-                for (int i = 0; i < generateDataFileReport.expenseListSize - 1; i++) {
-                    if (generateDataFileReport.expenseNames[0] == "\n") {
-                        generateDataFileDialog.errorMessage = "\nERROR: Please update your expenseList\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
-                        std::cout << generateDataFileDialog.errorMessage;
-                        break;
-                    }
-                    else if (generateDataFileReport.expenseNames[i] == "end") {
-                        break;
-                    }
-                    else {
-                        dataFilename = path + month + "_2022_" + generateDataFileReport.expenseNames[i] +".txt"; 
-                        outfile.open(dataFilename);
-                        outfile << "0";
-                        outfile.close();
-                        std::cout << "\n" << month << "_2022_" << generateDataFileReport.expenseNames[i] << ".txt" << " ✅";
-                    }
-                }
+    
+    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes") {
+        for (int i = 0; i < numExpenses; i++) {
+                dataFilename = dataFilesPath + month + "/" + month + "_" + expenses[i] + ".txt";
+                outFile.open(dataFilename);
+                outFile << "0";
+                outFile.close();
+                std::cout << "\n" << month << "_2022_" << expenses[i] << ".txt" << " ✅";
             }
-        
             std::cout << "\n\nGenerated ✅\n\n<><><><><><><><><><><><><><>";
-            inputFile.close();
-        } 
-    }
+    } 
     else {
-        std::cout << generateDataFileDialog.errorMessage;
+        std::cout << "\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
     }
 
+    numExpenses = 0;
 }
 
 void GenerateDataFile::Prompt() {
 
     std::cout << "\nGenerate Data Files";
 
-    std::cout << "\n\nWhere? (Include an absolute path): ";
-    std::cin >> path;
-
-    std::cout << "\nMonth: ";
+    std::cout << "\n\nMonth: ";
     std::cin >> month;
 
-}
-
-void GenerateDataFile::Read() {
-
-    inputFile.open("expenseList.txt");
-
-    for (int i = 0; i < 20; i++) {
-        std::getline(inputFile, generateDataFileReport.expenseNames[i], '\n');
-
-        if (!inputFile.eof()) {
-            generateDataFileReport.expenseListSize += 1;
-        }
+    if (!ValidateMonth()) {
+        Prompt();
     }
-    
-    inputFile.close();
-
-}
-
-bool GenerateDataFile::ValidatePath() {
-
-    bool validPath = false;
-
-    if (boost::filesystem::exists(path)) {
-        validPath = true;
-    }
-    else {
-        generateDataFileDialog.errorMessage = "\nERROR: The path you entered does not exist\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
-    }
-
-    return validPath;
 
 }
 
@@ -108,16 +70,58 @@ bool GenerateDataFile::ValidateMonth() {
     bool validMonth = false;
 
     for (int i = 0; i < 24; i++) {
-        if (generateDataFileReport.validMonths[i] == month) {
+        if (validMonths[i] == month) {
             validMonth = true;
             break;
         }
     }
 
     if (validMonth == false) {
-        generateDataFileDialog.errorMessage = "\nERROR: The month you entered is not a real month\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+        std::cout << "\nERROR: The month you entered is not a real month\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
     }
 
     return validMonth;
+
+}
+
+void GenerateDataFile::GetPath() {
+
+    inputFile.open("config.txt");
+
+    int i = 0;
+    while (i < 3) {
+        std::getline(inputFile, lines[i], '\n');
+        i++;
+    }
+
+    if (lines[1].back() != '/') {
+        dataFilesPath = lines[1] + "/";
+    }
+    else {
+        dataFilesPath = lines[1];
+    }
+    
+    inputFile.close();
+
+}
+
+void GenerateDataFile::GetExpenses() {
+
+    inputFile.open("config.txt");
+
+    for (int i = 0; i < 3; i++) {
+        std::getline(inputFile, expense);
+    }
+
+    if (inputFile) {
+        while (expense != "" && numExpenses < 20) {
+            std::getline(inputFile, expense);
+            expenses[numExpenses] = expense;
+            numExpenses++;
+        }
+        numExpenses--;
+    }
+
+    inputFile.close();
 
 }

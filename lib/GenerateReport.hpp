@@ -12,7 +12,6 @@ class GenerateReport {
 public: 
 
     Dialog generateReportDialog;
-    std::string month;
     std::string validMonths[24] = { "january",
                                     "January",
                                     "february",
@@ -37,39 +36,31 @@ public:
                                     "November",
                                     "december",
                                     "December" };
-    std::string path;
-    std::string reportFilename;
-    std::ifstream inputFile;
-    std::ofstream outputFile;
-    std::string expenseName;
     std::string lines [50];
     double expenses [20];
-    int expenseListSize;
     std::string expenseNames[20];
-    // std::string expenseNames [9] = { "Groceries",
-    //                                  "Eating_Out",
-    //                                  "Gas",
-    //                                  "Rent",
-    //                                  "Electricity",
-    //                                  "Internet",
-    //                                  "Water",
-    //                                  "Car",
-    //                                  "Venmo" };
+    std::string expenseName;
+    int numExpenses;
+    std::string month;
+    std::string dataFilesPath;
+    std::string reportFilesPath;
+    std::string reportFilename;
+    std::string expenseFilename;
+    std::ifstream inputFile;
+    std::ofstream outputFile;
 
     GenerateReport();
     void Generate();
     void Prompt();
-    bool ValidatePath();
     bool ValidateMonth();
-    void SetMonth(std::string m);
     void Calculate();
-    void Read();
+    void GetPath();
+    void GetExpenses();
     double CalculateExpense(double expenseType, std::string name);
-    std::string SetExpenseFilename(std::string expenseFilename);
     void ClearLinesArray();
-    void ClearExpensesArray();
     void Report();
     void DisplayExpenses();
     double GetTotal();
+    void ClearExpenseArrays();
 
 };
