@@ -18,7 +18,6 @@ class Dialog : public Helper{
         Dialog();
         void Menu();
         void WelcomeBanner();
-        void GetUsername();
         bool ValidateChoice(std::string c);
         void ReportBanner(std::ostream& stream);
 

@@ -18,9 +18,7 @@ class GenerateDataFile : public Helper {
         GenerateDataFile();
         void Generate();
         void Prompt();
-        bool ValidateMonth();
-        void GetPath();
-        void GetExpenses();
+        //void GetExpenses();
         
 };
 

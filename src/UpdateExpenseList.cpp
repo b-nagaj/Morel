@@ -62,30 +62,6 @@ void UpdateExpenseList::Prompt() {
 
 }
 
-void UpdateExpenseList::GetUsername() {
-
-    inputFile.open("config.txt"); 
-    std::getline(inputFile, username);
-    inputFile.close();
-
-}
-
-void UpdateExpenseList::GetPaths() {
-
-    inputFile.open("config.txt");
-
-    int i = 0;
-    while (i < 3) {
-        std::getline(inputFile, lines[i], '\n');
-        i++;
-    }
-
-    dataFilesPath = lines[1];
-    reportFilesPath = lines[2];
-    inputFile.close();
-
-}
-
 void UpdateExpenseList::Write() {
 
     outputFile.open("config.txt");

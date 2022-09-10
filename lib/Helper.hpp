@@ -32,6 +32,7 @@ class Helper {
                                     "december",
                                     "December" };
         std::string expenses [20];
+        double expenseValues [20];
         std::string expense;
         int numExpenses;
         std::string username;
@@ -40,6 +41,14 @@ class Helper {
         std::string month;
         std::ifstream inputFile;
         std::ofstream outputFile;
+
+    public: 
+
+        void GetUsername();
+        void GetPaths();
+        bool ValidateMonth();
+        void GetExpenses();
+
         
 };
 

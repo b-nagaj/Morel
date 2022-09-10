@@ -16,6 +16,10 @@ GenerateReport::GenerateReport() {
         expenseValues[i] = 0;
     }
 
+    for (int i = 0; i < sizeof(expenses) / sizeof(expenses[i]); i++) {
+        expenses[i] = "";
+    }
+
 }
 
 void GenerateReport::Generate() {
@@ -57,89 +61,19 @@ void GenerateReport::Prompt() {
 
 }
 
-bool GenerateReport::ValidateMonth() {
-
-    bool validMonth = false;
-
-    for (int i = 0; i < 24; i++) {
-        if (validMonths[i] == month) {
-            validMonth = true;
-            break;
-        }
-    }
-
-    if (validMonth == false) {
-        std::cout << "\nERROR: The month you entered is not a real month\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
-    }
-
-    return validMonth;
-
-}
-
 void GenerateReport::Calculate() {
 
-    reportFilename = "/home/bryce/Documents/Monthly_Expenses/Reports/" + month + "/" + month + "_Report.txt";
+    GetPaths();
+    GetExpenses();
+
+    reportFilename = reportFilesPath + month + "/" + month + "_Report.txt";
     outputFile.open(reportFilename);
 
     std::cout << "\nCreating expense report...\n";
 
-    GetPath();
-    GetExpenses();
-
     for (int i = 0; i < numExpenses; i++) {
-        expenses[i] = CalculateExpense(expenseValues[i], expenseNames[i]);
+        expenseValues[i] = CalculateExpense(expenseValues[i], expenses[i]);
     } 
-
-}
-
-void GenerateReport::GetPath() {
-
-    inputFile.open("config.txt");
-
-    int i = 0;
-    while (i < 3) {
-        std::getline(inputFile, lines[i], '\n');
-        i++;
-    }
-
-    if (lines[1].back() != '/') {
-        dataFilesPath = lines[1] + "/";
-    }
-    else {
-        dataFilesPath = lines[1];
-    }
-
-    if (lines[2].back() != '/') {
-        reportFilesPath = lines[1] + "/";
-    }
-    else {
-        reportFilesPath = lines[1];
-    }
-
-    dataFilesPath = lines[1];
-    reportFilesPath = lines[2];
-    inputFile.close();
-
-}
-
-void GenerateReport::GetExpenses() {
-
-    inputFile.open("config.txt");
-
-    for (int i = 0; i < 3; i++) {
-        std::getline(inputFile, expenseName);
-    }
-
-    if (inputFile) {
-        while (expenseName != "" && numExpenses < 20) {
-            std::getline(inputFile, expenseName);
-            expenseNames[numExpenses] = expenseName;
-            numExpenses++;
-        }
-        numExpenses--;
-    }
-
-    inputFile.close();
 
 }
 
@@ -191,7 +125,7 @@ void GenerateReport::DisplayExpenses() {
 
     for (int i = 0; i < numExpenses; i++) {
         outputFile << "\n\t" << expenses[i] << std::setw(23 - expenses[i].length()); 
-        outputFile << std::fixed << std::setprecision(2) << "$" << expenses[i];
+        outputFile << std::fixed << std::setprecision(2) << "$" << expenseValues[i];
     }
 
 }
@@ -200,7 +134,7 @@ double GenerateReport::GetTotal() {
 
     double total;
 
-    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
+    for (int i = 0; i < sizeof(expenseValues)/sizeof(expenseValues[0]); i++) {
         total += expenseValues[i]; 
     }
 
@@ -214,8 +148,8 @@ void GenerateReport::ClearExpenseArrays() {
         expenseValues[i] = 0;
     }
 
-    for (int i = 0; i < sizeof(expenses)/sizeof(expenseNames[0]); i++) {
-        expenseNames[i] = "";
+    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
+        expenses[i] = "";
     }
 
 }

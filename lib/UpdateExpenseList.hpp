@@ -15,8 +15,6 @@ class UpdateExpenseList : public Helper {
         UpdateExpenseList();
         void Update();
         void Prompt();
-        void GetUsername();
-        void GetPaths();
         void Write();
         
 };

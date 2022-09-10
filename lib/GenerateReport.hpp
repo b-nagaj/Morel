@@ -14,8 +14,7 @@ class GenerateReport : public Helper {
 
         Dialog generateReportDialog;
         std::string lines [50];
-        double expenseValues [20];
-        std::string expenseNames [20];
+        //double expenseValues [20];
         std::string expenseName;
         std::string reportFilename;
         std::string expenseFilename;
@@ -23,10 +22,7 @@ class GenerateReport : public Helper {
         GenerateReport();
         void Generate();
         void Prompt();
-        bool ValidateMonth();
         void Calculate();
-        void GetPath();
-        void GetExpenses();
         double CalculateExpense(double expenseType, std::string name);
         void ClearLinesArray();
         void Report();

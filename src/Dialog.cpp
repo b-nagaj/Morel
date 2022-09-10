@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 
+#include "../lib/Helper.hpp"
 #include "../lib/Dialog.hpp"
 
 Dialog::Dialog() {
@@ -40,14 +41,6 @@ void Dialog::WelcomeBanner() {
               << "\n| |\\/| |/ _ \\| '__/ _ \\ |"
               << "\n| |  | | (_) | | |  __/ |"
               << "\n|_|  |_|\\___/|_|  \\___|_|";
-
-}
-
-void Dialog::GetUsername() {
-
-    inputFile.open("config.txt"); 
-    std::getline(inputFile, username);
-    inputFile.close();
 
 }
 
