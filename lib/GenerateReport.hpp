@@ -1,66 +1,34 @@
+#ifndef GENERATE_REPORT_HPP
+#define GENERATE_REPORT_HPP
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <ostream>
 
-#include "../lib/Dialog.hpp"
+#include "Dialog.hpp"
 
-#pragma once
+class GenerateReport : public Helper {
 
-class GenerateReport {
+    public: 
 
-public: 
+        Dialog generateReportDialog;
+        std::string lines [50];
+        std::string expenseName;
+        std::string reportFilename;
+        std::string expenseFilename;
 
-    Dialog generateReportDialog;
-    std::string validMonths[24] = { "january",
-                                    "January",
-                                    "february",
-                                    "February",
-                                    "march",
-                                    "March",
-                                    "april",
-                                    "April",
-                                    "may",
-                                    "May",
-                                    "june",
-                                    "June",
-                                    "july",
-                                    "July",
-                                    "august",
-                                    "August",
-                                    "september",
-                                    "September",
-                                    "october",
-                                    "October",
-                                    "november",
-                                    "November",
-                                    "december",
-                                    "December" };
-    std::string lines [50];
-    double expenses [20];
-    std::string expenseNames[20];
-    std::string expenseName;
-    int numExpenses;
-    std::string month;
-    std::string dataFilesPath;
-    std::string reportFilesPath;
-    std::string reportFilename;
-    std::string expenseFilename;
-    std::ifstream inputFile;
-    std::ofstream outputFile;
-
-    GenerateReport();
-    void Generate();
-    void Prompt();
-    bool ValidateMonth();
-    void Calculate();
-    void GetPath();
-    void GetExpenses();
-    double CalculateExpense(double expenseType, std::string name);
-    void ClearLinesArray();
-    void Report();
-    void DisplayExpenses();
-    double GetTotal();
-    void ClearExpenseArrays();
+        GenerateReport();
+        void Generate();
+        void Prompt();
+        void Calculate();
+        double CalculateExpense(double expenseType, std::string name);
+        void ClearLinesArray();
+        void Report();
+        void DisplayExpenses();
+        double GetTotal();
+        void ClearExpenseArrays();
 
 };
+
+#endif

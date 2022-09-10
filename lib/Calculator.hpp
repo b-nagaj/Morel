@@ -1,9 +1,10 @@
-#include "../lib/Dialog.hpp"
-#include "../lib/UpdateExpenseList.hpp"
-#include "../lib/GenerateDataFile.hpp"
-#include "../lib/GenerateReport.hpp"
+#ifndef CALCULATOR_HPP
+#define CALCULATOR_HPP
 
-#pragma once
+#include "Dialog.hpp"
+#include "UpdateExpenseList.hpp"
+#include "GenerateDataFile.hpp"
+#include "GenerateReport.hpp"
 
 class Calculator {
 
@@ -17,3 +18,5 @@ class Calculator {
         void Prompt();
 
 };
+
+#endif

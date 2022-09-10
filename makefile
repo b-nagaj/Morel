@@ -1,5 +1,5 @@
 BINARY = app
-FILE_OBJECTS = app.o Calculator.o GenerateReport.o GenerateDataFile.o UpdateExpenseList.o Dialog.o
+FILE_OBJECTS = app.o Calculator.o GenerateReport.o GenerateDataFile.o UpdateExpenseList.o Dialog.o Helper.o
 BOOST = -lboost_system -lboost_filesystem
 GCC = g++ -std=c++17
 
@@ -23,6 +23,9 @@ UpdateExpenseList.o: src/UpdateExpenseList.cpp
 
 Dialog.o: src/Dialog.cpp
 	$(GCC) -c src/Dialog.cpp
+
+Helper.o: src/Helper.cpp
+	$(GCC) -c src/Helper.cpp
 
 setup: setup.o
 	$(GCC) setup.o -o setup $(BOOST)
