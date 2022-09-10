@@ -18,7 +18,6 @@ class GenerateDataFile : public Helper {
         GenerateDataFile();
         void Generate();
         void Prompt();
-        //void GetExpenses();
         
 };
 

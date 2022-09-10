@@ -14,7 +14,6 @@ class GenerateReport : public Helper {
 
         Dialog generateReportDialog;
         std::string lines [50];
-        //double expenseValues [20];
         std::string expenseName;
         std::string reportFilename;
         std::string expenseFilename;
