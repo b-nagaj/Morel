@@ -37,7 +37,7 @@ void GenerateDataFile::Generate() {
     
     if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes") {
         for (int i = 0; i < numExpenses; i++) {
-                dataFilename = dataFilesPath + month + "/" + month + "_" + expenses[i] + ".txt";
+                dataFilename = dataFilesPath + month + "_" + expenses[i] + ".txt";
                 outputFile.open(dataFilename);
                 outputFile << "0";
                 outputFile.close();

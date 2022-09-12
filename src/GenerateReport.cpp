@@ -65,7 +65,7 @@ void GenerateReport::Calculate() {
     GetPaths();
     GetExpenses();
 
-    reportFilename = reportFilesPath + month + "/" + month + "_Report.txt";
+    reportFilename = reportFilesPath + month + "_Report.txt";
     outputFile.open(reportFilename);
 
     for (int i = 0; i < numExpenses; i++) {
