@@ -34,7 +34,7 @@ void GenerateReport::Generate() {
         Calculate();
     }
     else {
-        std::cout << "\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
+        std::cout << "\n\nGenerated" << std::setw(20) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
     }
 
     Report();
@@ -43,8 +43,7 @@ void GenerateReport::Generate() {
     ClearExpenseArrays();
     numExpenses = 0;
 
-    std::cout << "\n\nGenerated ✅\n\n"
-              << "<><><><><><><><><><><><><><>";
+    std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
 
 }
 
@@ -69,8 +68,6 @@ void GenerateReport::Calculate() {
     reportFilename = reportFilesPath + month + "/" + month + "_Report.txt";
     outputFile.open(reportFilename);
 
-    std::cout << "\nCreating expense report...\n";
-
     for (int i = 0; i < numExpenses; i++) {
         expenseValues[i] = CalculateExpense(expenseValues[i], expenses[i]);
     } 
@@ -84,7 +81,7 @@ double GenerateReport::CalculateExpense(double expenseType, std::string expenseN
     std::ifstream inputFile;
     inputFile.open(expenseFilename);
     if (!inputFile) {
-        std::cout << "\n" << expenseName << std::setw(27 - expenseName.length()) << " ❌";
+        std::cout << "\n" << expenseName << std::setw(29 - expenseName.length()) << " ❌";
     }
     else {
         ClearLinesArray();
@@ -97,7 +94,7 @@ double GenerateReport::CalculateExpense(double expenseType, std::string expenseN
         }
 
         inputFile.close();
-        std::cout << "\n" << expenseName << std::setw(27 - expenseName.length()) << " ✅";
+        std::cout << "\n" << expenseName << std::setw(29 - expenseName.length()) << " ✅";
     }
 
     return expenseType;

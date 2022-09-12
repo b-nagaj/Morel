@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 #include "../lib/UpdateExpenseList.hpp"
 
@@ -42,12 +43,10 @@ void UpdateExpenseList::Update() {
         GetPaths();
         Write();
 
-        std::cout << "\nUpdated" << " ✅"
-                  << "\n\n<><><><><><><><><><><><><><>";
+        std::cout << "\nUpdated" << std::setw(22) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
     }
     else {
-        std::cout << "\nUpdated" << " ❌"
-                  << "\n\n<><><><><><><><><><><><><><>";
+        std::cout << "\nUpdated" << std::setw(22) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
     }   
 
 }
