@@ -76,7 +76,7 @@ void GenerateReport::Calculate() {
 
 double GenerateReport::CalculateExpense(double expenseType, std::string expenseName) {
 
-    expenseFilename = dataFilesPath + month + "/" + month + "_" + expenseName + ".txt"; 
+    expenseFilename = dataFilesPath + month + "_" + expenseName + ".txt"; 
 
     std::ifstream inputFile;
     inputFile.open(expenseFilename);
