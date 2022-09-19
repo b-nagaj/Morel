@@ -1,10 +1,12 @@
 # compile settings
 GCC = g++ -std=c++17
 BUILD_BINARY = morel
+TEST_BINARIES = testSetup
 BOOST = -lboost_system -lboost_filesystem
 
 # directories
 SRC_DIR = src
+TEST_DIR = test
 OBJ_DIR = obj
 
 # file collections
@@ -15,6 +17,7 @@ OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 MKDIR_OBJ = make_object_directory
 
 all: $(MKDIR_OBJ) $(BUILD_BINARY)
+	./morel
 
 $(BUILD_BINARY): $(OBJ_FILES)
 	$(GCC) -o $@ $^ $(BOOST)
@@ -25,6 +28,16 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(MKDIR_OBJ):
 	mkdir -p $(OBJ_DIR)
 
+test: $(TEST_BINARIES)
+	./$(TEST_BINARIES)
+
+test%: test%.o
+	$(GCC) test$*.o -o test$* $(BOOST)
+
+test%.o: $(TEST_DIR)/test%.cpp
+	$(GCC) -c $(TEST_DIR)/test$*.cpp
+
 clean:
-	rm -r $(OBJ_FILES) $(OBJ_DIR)
 	rm $(BUILD_BINARY)
+	rm $(TEST_BINARIES)
+	rm -r $(OBJ_FILES) $(OBJ_DIR)
