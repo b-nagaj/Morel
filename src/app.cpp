@@ -5,7 +5,6 @@
 
 int main() {
 
-
     if (!std::filesystem::exists("config.txt")) {
         Setup s;
         s.BeginSetup();
