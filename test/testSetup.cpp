@@ -76,8 +76,8 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
         std::ifstream inputFile;
         inputFile.open("test/testConfig.txt");
 
+        std::string lines [s.numExpenses + 3];
         if (inputFile) {
-            std::string lines [s.numExpenses + 3];
             for (int i = 0; i < (s.numExpenses + 3); i++) {
                 std::getline(inputFile, lines[i]);
             }
