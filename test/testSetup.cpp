@@ -14,11 +14,11 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
 
         Setup s;
 
-        BOOST_TEST(s.expense == "");
-        BOOST_TEST(s.numExpenses == 0);
-        BOOST_TEST(s.username == "");
-        BOOST_TEST(s.dataFilesPath == "");
-        BOOST_TEST(s.reportFilesPath == "");
+        BOOST_CHECK_EQUAL( s.expense, "" );
+        BOOST_CHECK_EQUAL( s.numExpenses, 0 );
+        BOOST_CHECK_EQUAL( s.username, "" );
+        BOOST_CHECK_EQUAL( s.dataFilesPath, "" );
+        BOOST_CHECK_EQUAL( s.reportFilesPath, "" );
 
     }
 
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
         bool validPath;
         validPath = s.ValidatePaths();
 
-        BOOST_TEST( validPath == true );
+        BOOST_CHECK_EQUAL( validPath, true );
 
         Setup s2;
         s2.dataFilesPath = "/not/a/real/data/path";
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
         std::cout.rdbuf(NULL);
         validPath = s2.ValidatePaths();
 
-        BOOST_TEST( validPath == false );
+        BOOST_CHECK_EQUAL( validPath, false );
 
     }
 
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
         std::ofstream outputFile;
         outputFile.open("test/testConfig.txt");
 
-        if(outputFile) {
+        if (outputFile) {
             outputFile << s.username << std::endl
                     << s.dataFilesPath << std::endl
                     << s.reportFilesPath << std::endl;
@@ -76,11 +76,13 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
         std::ifstream inputFile;
         inputFile.open("test/testConfig.txt");
 
-        std::string lines [s.numExpenses + 3];
-        for (int i = 0; i < (s.numExpenses + 3); i++) {
-            std::getline(inputFile, lines[i]);
+        if (inputFile) {
+            std::string lines [s.numExpenses + 3];
+            for (int i = 0; i < (s.numExpenses + 3); i++) {
+                std::getline(inputFile, lines[i]);
+            }
+            inputFile.close();
         }
-        inputFile.close();
 
         BOOST_CHECK_EQUAL( s.username, lines[0] );
         BOOST_CHECK_EQUAL( s.dataFilesPath, lines[1] );
