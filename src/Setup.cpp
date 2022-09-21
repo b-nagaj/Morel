@@ -113,7 +113,7 @@ void Setup::Write() {
                     << dataFilesPath << std::endl
                     << reportFilesPath << std::endl;
         
-        for (int i = 0; i < (numExpenses); i++) {
+        for (int i = 0; i < numExpenses; i++) {
             outputFile << expenses[i] << std::endl;
         }
 
