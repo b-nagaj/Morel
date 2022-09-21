@@ -1,0 +1,6 @@
+/.vscode
+/*.o
+config.txt
+test/testConfig.txt
+morel
+testSetup
