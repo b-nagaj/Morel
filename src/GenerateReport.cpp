@@ -32,18 +32,17 @@ void GenerateReport::Generate() {
 
     if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
         Calculate();
+        Report();
+        inputFile.close();
+        outputFile.close(); 
+        ClearExpenseArrays();
+        numExpenses = 0;
+
+        std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
     }
     else {
         std::cout << "\n\nGenerated" << std::setw(20) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
     }
-
-    Report();
-    inputFile.close();
-    outputFile.close(); 
-    ClearExpenseArrays();
-    numExpenses = 0;
-
-    std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
 
 }
 
