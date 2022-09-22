@@ -99,7 +99,6 @@ BOOST_AUTO_TEST_SUITE ( helperTestSuite )
                 h.expenses[h.numExpenses] = h.expense;
                 h.numExpenses++;
             }
-            std::cout << h.numExpenses;
             h.numExpenses--;
         }
 
