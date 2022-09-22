@@ -67,6 +67,7 @@ void Helper::GetExpenses() {
         std::getline(inputFile, expense);
     }
 
+    numExpenses = 0;
     if (inputFile) {
         while (expense != "" && numExpenses < 20) {
             std::getline(inputFile, expense);
