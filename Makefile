@@ -1,7 +1,7 @@
 # compile settings
 GCC = g++ -std=c++17
 BUILD_BINARY = morel
-TEST_BINARIES = testSetup testHelper
+TEST_BINARIES = testSetup testHelper testCalculator
 BOOST = -lboost_system -lboost_filesystem
 
 # directories
@@ -31,6 +31,7 @@ $(MKDIR_OBJ):
 test: $(TEST_BINARIES)
 	./testSetup
 	./testHelper
+	./testCalculator
 
 test%: test%.o
 	$(GCC) test$*.o -o test$* $(BOOST)
@@ -40,6 +41,8 @@ test%.o: $(TEST_DIR)/test%.cpp
 
 clean:
 	rm $(BUILD_BINARY)
+	rm -r $(OBJ_FILES) $(OBJ_DIR)
+
+cleanTests:
 	rm $(TEST_BINARIES)
 	rm $(TEST_DIR)/testConfig.txt
-	rm -r $(OBJ_FILES) $(OBJ_DIR)

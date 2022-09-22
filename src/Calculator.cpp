@@ -9,7 +9,7 @@ void Calculator::Prompt() {
 
     myDialog.WelcomeBanner();
     
-    while (myDialog.option != 7) {
+    while (myDialog.option != 4) {
         myDialog.Menu();
 
         switch (myDialog.option) {
@@ -27,10 +27,9 @@ void Calculator::Prompt() {
     
         case 4 :
             std::cout << "\nQuitting!\n\n";
-            exit(0);
         }
-
-        myDialog.option = 0;
     }
+
+    myDialog.option = 0;
 
 }
