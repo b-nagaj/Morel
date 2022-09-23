@@ -1,7 +1,7 @@
 # compile settings
 GCC = g++ -std=c++17
 BUILD_BINARY = morel
-TEST_BINARIES = testSetup testHelper testCalculator
+TEST_BINARIES = testSetup testHelper testCalculator testDialog
 BOOST = -lboost_system -lboost_filesystem
 
 # directories
@@ -32,6 +32,7 @@ test: $(TEST_BINARIES)
 	./testSetup
 	./testHelper
 	./testCalculator
+	./testDialog
 
 test%: test%.o
 	$(GCC) test$*.o -o test$* $(BOOST)
