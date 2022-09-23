@@ -7,7 +7,7 @@ A monthly expenses calculator CLI application for generating customized monthly 
 1. Open a terminal
 2. Install dependencies
 ```
-sudo apt-get install git libboost-all-dev cmake make g++
+sudo apt-get install git libboost-all-dev make g++
 ```
 3. clone the repo inside of the Ubuntu environment
 ```
@@ -28,15 +28,26 @@ wsl --install -d Ubuntu
 4. Ensure that you are inside your user's home directory (i.e. /home/yourUsername)
 5. Install dependencies
 ```
-sudo apt-get install git libboost-all-dev cmake make g++
+sudo apt-get install git libboost-all-dev make g++
 ```
 6. clone the repo inside of the Ubuntu environment
 ```
 git clone https://github.com/b-nagaj/Morel.git
 ```
 ## Usage
+
+Running the Application
 ```
-cmake . 
 make
-./Morel
 ```
+Running the Automated Test Suite
+```
+make test
+```
+Cleaning Auto-Generated Files
+```
+make clean
+make cleanTests
+```
+
+
