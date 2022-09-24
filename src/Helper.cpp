@@ -44,7 +44,7 @@ bool Helper::ValidateMonth() {
 
     bool validMonth = false;
 
-    for (int i = 0; i < 24; i++) {
+    for (int i = 0; i < NUM_VALID_MONTHS; i++) {
         if (validMonths[i] == month) {
             validMonth = true;
             break;
@@ -69,12 +69,30 @@ void Helper::GetExpenses() {
 
     numExpenses = 0;
     if (inputFile) {
-        while (expense != "" && numExpenses < 20) {
+        while (expense != "" && numExpenses < MAX_EXPENSE_SIZE) {
             std::getline(inputFile, expense);
             expenses[numExpenses] = expense;
             numExpenses++;
         }
         numExpenses--;
+    }
+
+    inputFile.close();
+
+}
+
+void Helper::GetTransactions(std::string dataFilename) {
+
+    inputFile.open(dataFilename);
+    
+    std::string transaction = "";
+    numTransactions = 0;
+    if (inputFile) {
+        while (std::getline(inputFile, transaction)) {
+            transactions[numTransactions] = transaction;
+            numTransactions++;
+        } 
+        numTransactions--;
     }
 
     inputFile.close();

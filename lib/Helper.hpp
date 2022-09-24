@@ -33,8 +33,13 @@ class Helper {
                                     "December" };
         std::string expenses [20];
         double expenseValues [20];
+        std::string  transactions [50];
+        const int NUM_VALID_MONTHS = 24;
+        const int MAX_EXPENSE_SIZE = 20;
+        const int MAX_TRANSACTIONS = 50;
         std::string expense;
         int numExpenses;
+        int numTransactions;
         std::string username;
         std::string dataFilesPath;
         std::string reportFilesPath;
@@ -48,8 +53,8 @@ class Helper {
         void GetPaths();
         bool ValidateMonth();
         void GetExpenses();
+        void GetTransactions(std::string dataFilename);
 
-        
 };
 
 #endif
