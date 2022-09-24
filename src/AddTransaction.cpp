@@ -4,7 +4,7 @@
 #include <fstream>
 #include <algorithm>
 
-#include "../lib/addTransaction.hpp"
+#include "../lib/AddTransaction.hpp"
 
 AddTransaction::AddTransaction() {
 
