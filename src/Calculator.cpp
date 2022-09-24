@@ -9,7 +9,7 @@ void Calculator::Prompt() {
 
     myDialog.WelcomeBanner();
     
-    while (myDialog.option != 4) {
+    while (myDialog.option != myDialog.NUM_MENU_OPTIONS) {
         myDialog.Menu();
 
         switch (myDialog.option) {
@@ -22,10 +22,14 @@ void Calculator::Prompt() {
             break;
 
         case 3 :
+            myTransactionAddition.Add();
+            break;
+
+        case 4 :
             myReport.Generate();
             break;
     
-        case 4 :
+        case 5 :
             std::cout << "\nQuitting!\n\n";
         }
     }

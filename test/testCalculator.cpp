@@ -11,6 +11,8 @@
 #include "../src/UpdateExpenseList.cpp"
 #include "../lib/GenerateDataFile.hpp"
 #include "../src/GenerateDataFile.cpp"
+#include "../lib/addTransaction.hpp"
+#include "../src/addTransaction.cpp"
 #include "../lib/GenerateReport.hpp"
 #include "../src/GenerateReport.cpp"
 
@@ -22,15 +24,14 @@ BOOST_AUTO_TEST_SUITE ( calculatorTestSuite )
 
         Calculator d;
 
-        const int NUM_MENU_OPTIONS = 4;
-        std::string messages [NUM_MENU_OPTIONS];
-        for (int i = 0; i < NUM_MENU_OPTIONS; i++) {
+        std::string messages [d.myDialog.NUM_MENU_OPTIONS];
+        for (int i = 0; i < d.myDialog.NUM_MENU_OPTIONS; i++) {
             std::string message = "Menu option " + std::to_string(i + 1) + " selected";
             messages[i] = message; 
         }
 
         std::string message = "";
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < (d.myDialog.NUM_MENU_OPTIONS + 1); i++) {
             d.myDialog.option = i;
 
             switch (d.myDialog.option) {
@@ -48,7 +49,11 @@ BOOST_AUTO_TEST_SUITE ( calculatorTestSuite )
         
             case 4 :
                 message = messages[3];
-            }
+                break;
+
+            case 5 :
+                message = messages[4];
+        }
 
             if ( d.myDialog.option == 1 ) {
                 BOOST_CHECK_EQUAL ( message, messages[0] );
@@ -59,8 +64,11 @@ BOOST_AUTO_TEST_SUITE ( calculatorTestSuite )
             else if ( d.myDialog.option == 3 ) {
                 BOOST_CHECK_EQUAL ( message, messages[2] );
             }
-            else {
+            else if ( d.myDialog.option == 4 ) {
                 BOOST_CHECK_EQUAL ( message, messages[3] );
+            }
+            else {
+                BOOST_CHECK_EQUAL ( message, messages[4] );
             }
         }
 
