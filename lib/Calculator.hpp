@@ -4,6 +4,7 @@
 #include "Dialog.hpp"
 #include "UpdateExpenseList.hpp"
 #include "GenerateDataFile.hpp"
+#include "addTransaction.hpp"
 #include "GenerateReport.hpp"
 
 class Calculator {
@@ -12,8 +13,9 @@ class Calculator {
 
         Dialog myDialog;
         UpdateExpenseList myExpenseList;
-        GenerateReport myReport;
         GenerateDataFile myDataFiles;
+        AddTransaction myTransactionAddition;
+        GenerateReport myReport;
 
         void Prompt();
 
