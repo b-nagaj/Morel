@@ -24,6 +24,8 @@ GenerateReport::GenerateReport() {
 
 void GenerateReport::Generate() {
 
+    std::cout << "\nGenerate A Report";
+
     Prompt();
 
     std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
@@ -47,8 +49,6 @@ void GenerateReport::Generate() {
 }
 
 void GenerateReport::Prompt() {
-
-    std::cout << "\nGenerate A Report";
 
     std::cout << "\n\nMonth: ";
     std::cin >> month;

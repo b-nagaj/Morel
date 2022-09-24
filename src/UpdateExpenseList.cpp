@@ -23,6 +23,8 @@ UpdateExpenseList::UpdateExpenseList() {
 
 void UpdateExpenseList::Update() {
 
+    std::cout << "\nGenerate Data Files";
+
     Prompt();
 
     while (expense != "end") {
@@ -52,8 +54,6 @@ void UpdateExpenseList::Update() {
 }
 
 void UpdateExpenseList::Prompt() {
-
-    std::cout << "\nGenerate Data Files";
 
     std::cout << "\n\nPlease give a list of up to 20 expenses"
               << "\nInclude each expense on a seperate line"
