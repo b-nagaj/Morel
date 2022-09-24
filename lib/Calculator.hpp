@@ -4,7 +4,7 @@
 #include "Dialog.hpp"
 #include "UpdateExpenseList.hpp"
 #include "GenerateDataFile.hpp"
-#include "addTransaction.hpp"
+#include "AddTransaction.hpp"
 #include "GenerateReport.hpp"
 
 class Calculator {
