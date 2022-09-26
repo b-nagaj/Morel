@@ -9,14 +9,18 @@ class AddTransaction : public Helper {
 
         std::string newTransactions [50];
         std::string transaction;
+        std::string expenseName;
         int numNewTransactions;
         std::string dataFilename;
 
         AddTransaction();
         void Add();
-        void Prompt();
-        // bool ValidateExpense();
-        // bool ValidateTransaction();
+        //void Prompt();
+        void GetMonth();
+        void GetExpenseName();
+        bool ValidateExpenseName();
+        void GetNewTransactions();
+        bool ValidateNewTransactions();
         void Write();
 
 };

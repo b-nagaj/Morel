@@ -20,7 +20,7 @@ class GenerateReport : public Helper {
 
         GenerateReport();
         void Generate();
-        void Prompt();
+        void GetMonth();
         void Calculate();
         double CalculateExpense(double expenseType, std::string name);
         void ClearLinesArray();

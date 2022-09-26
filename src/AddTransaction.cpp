@@ -16,6 +16,7 @@ AddTransaction::AddTransaction() {
     dataFilesPath = "";
     dataFilename = "";
     transaction = "";
+    expenseName = "";
     numNewTransactions = 0;
 
 }
@@ -24,10 +25,12 @@ void AddTransaction::Add() {
 
     std::cout << "\nAdd a Transaction";
 
-    Prompt();
+    GetMonth();
+    GetExpenseName();
+    GetNewTransactions();
     GetPaths();
 
-    std::cout << "Add (" << numNewTransactions << ") new transactions for the month of " << month << "?" << "(Y/N) "; 
+    std::cout << "\nAdd (" << numNewTransactions << ") new transactions for the month of " << month << "?" << "(Y/N) "; 
     std::string yesNo;
     std:: cin >> yesNo;
 
@@ -41,76 +44,95 @@ void AddTransaction::Add() {
 
 }
 
-void AddTransaction::Prompt() {
+void AddTransaction::GetMonth() {
 
     std::cout << "\n\nMonth: ";
     std::cin >> month;
 
-    std::cout << "Expense Type: ";
-    std::cin >> expense;
-
-    std::cout << "\nNew Transactions: \n\n";
-
-    numNewTransactions = 0;
-    while (transaction != "end") {
-        std::cout << "Transaction" << "[" << (numNewTransactions + 1) << "] Amount: ";
-        std::cin >> transaction;
-        std::cout << "\n";
-        newTransactions[numNewTransactions] = transaction;
-        numNewTransactions++;
-    }
-
     if (!ValidateMonth()) {
-        Prompt();
-    }
-    else {
-        numNewTransactions--;
-        transaction = "";
+        month = "";
+        GetMonth();
     }
 
 }
 
-// bool AddTransaction::ValidateExpense() {
+void AddTransaction::GetExpenseName() {
 
-//     bool validExpense = false;
+    std::cout << "Expense Type: ";
+    std::cin >> expenseName;
 
-//     GetExpenses();
+    if (!ValidateExpenseName()) {
+        expenseName = "";
+        GetExpenseName();
+    }
 
-//     for (int i = 0; i < numExpenses; i++) {
-//         if (expenses[i] == expense) {
-//             validExpense = true;
-//             break;
-//         }
-//     }
+}
 
-//     if (!validExpense) {
-//         std::cout << "\nERROR: The expense you entered is not listed in your expense list\n\nGenerated ❌\n\n<><><><><><><><><><><><><><>";
-//     }
+bool AddTransaction::ValidateExpenseName() {
 
-//     return validExpense;
+    bool validExpense = false;
 
-// }
+    GetExpenses();
 
-// bool AddTransaction::ValidateTransaction() {
+    for (int i = 0; i < numExpenses; i++) {
+        if (expenses[i] == expenseName) {
+            validExpense = true;
+            break;
+        }
+    }
 
-//     bool isValid;
+    if (!validExpense) {
+        std::cout << "\nERROR: The expense you entered is not listed in your expense list\n\n";
+    }
 
-//     if (std::all_of(month.begin(), month.end(), ::isdigit) == false) {
-//         std::cout << "\nERROR: The value(s) you entered is not an integer\n\n<><><><><><><><><><><><><><>";
-//         isValid = false;
-//     }
+    return validExpense;
 
-//     return isValid;
+}
 
-// }
+void AddTransaction::GetNewTransactions() {
+
+    transaction = "";
+    numNewTransactions = 0;
+
+    std::cout << "\nNew Transactions (type 'end' to indicate the end of the list): \n\n";
+
+    numNewTransactions = -1;
+    while (transaction != "end") {
+        numNewTransactions++;
+        std::cout << "Transaction" << "[" << (numNewTransactions + 1) << "] Amount: ";
+        std::cin >> transaction;
+
+        if (transaction != "end" && !ValidateNewTransactions()) {
+            numNewTransactions--;
+        }
+        else {
+            newTransactions[numNewTransactions] = transaction;
+        }
+    }
+    transaction = ""; 
+
+}
+
+bool AddTransaction::ValidateNewTransactions() {
+
+    bool isValid = true;
+    
+    if (std::all_of(transaction.begin(), transaction.end(), ::isdigit) == false) {
+        std::cout << "\nERROR: The transaction(s) you entered is not a numerical value\n\n";
+        isValid = false;
+    }
+    
+    return isValid;
+
+}
 
 void AddTransaction::Write() {
 
-    dataFilename = dataFilesPath + month + "_" + expense + ".txt";
-    GetTransactions(dataFilename);
+    dataFilename = dataFilesPath + month + "_" + expenseName + ".txt";
+    GetExistingTransactions(dataFilename);
     
     if (numTransactions + numNewTransactions >= MAX_TRANSACTIONS) {
-        std::cout << "\nError: you've reached the maximum amount of transactions\n\n<><><><><><><><><><><><><><>";
+        std::cout << "\nError: you've reached the maximum amount of transactions\n";
     }
     else {
         for (int i = 0; i < numNewTransactions; i++) {

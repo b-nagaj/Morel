@@ -26,7 +26,9 @@ void GenerateReport::Generate() {
 
     std::cout << "\nGenerate A Report";
 
-    Prompt();
+    GetMonth();
+    GetPaths();
+    GetExpenses();
 
     std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
     std::string yesNo;
@@ -48,21 +50,18 @@ void GenerateReport::Generate() {
 
 }
 
-void GenerateReport::Prompt() {
+void GenerateReport::GetMonth() {
 
     std::cout << "\n\nMonth: ";
     std::cin >> month;
 
     if (!ValidateMonth()) {
-        Prompt();
+        GetMonth();
     }
 
 }
 
 void GenerateReport::Calculate() {
-
-    GetPaths();
-    GetExpenses();
 
     reportFilename = reportFilesPath + month + "_Report.txt";
     outputFile.open(reportFilename);

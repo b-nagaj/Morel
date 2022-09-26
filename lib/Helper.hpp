@@ -53,7 +53,7 @@ class Helper {
         void GetPaths();
         bool ValidateMonth();
         void GetExpenses();
-        void GetTransactions(std::string dataFilename);
+        void GetExistingTransactions(std::string dataFilename);
 
 };
 

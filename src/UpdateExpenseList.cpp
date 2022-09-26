@@ -23,20 +23,11 @@ UpdateExpenseList::UpdateExpenseList() {
 
 void UpdateExpenseList::Update() {
 
-    std::cout << "\nGenerate Data Files";
+    std::cout << "\nUpdate Expense List";
 
-    Prompt();
+    GetNewExpenses();
 
-    while (expense != "end") {
-        std::cout << "Expense" << "[" << (numExpenses + 1) << "]: ";
-        std::cin >> expense;
-        std::cout << "\n";
-        expenses[numExpenses] = expense;
-        numExpenses++;
-    }
-    numExpenses--;
-
-    std::cout << "Update your list of expenses?(Y/N): ";
+    std::cout << "\nUpdate your list of expenses?(Y/N): ";
     std::string yesNo;
     std::cin >> yesNo;
 
@@ -53,11 +44,20 @@ void UpdateExpenseList::Update() {
 
 }
 
-void UpdateExpenseList::Prompt() {
+void UpdateExpenseList::GetNewExpenses() {
 
     std::cout << "\n\nPlease give a list of up to 20 expenses"
               << "\nInclude each expense on a seperate line"
               << "\nType 'end' to indicate the end of the list\n\n";
+
+    numExpenses = -1;
+    while (expense != "end") {
+        numExpenses++;
+        std::cout << "Expense" << "[" << (numExpenses + 1) << "]: ";
+        std::cin >> expense;
+        expenses[numExpenses] = expense;
+    }
+    //numExpenses--;
 
 }
 

@@ -12,6 +12,7 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
 
     BOOST_AUTO_TEST_CASE ( constructor ) {
 
+        std::cout.rdbuf(NULL);
         Setup s;
 
         BOOST_CHECK_EQUAL( s.expense, "" );
@@ -24,6 +25,7 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
 
     BOOST_AUTO_TEST_CASE ( validatePaths ) {
 
+        std::cout.rdbuf(NULL);
         Setup s;
         s.dataFilesPath = "/home/bryce/Desktop";
         s.reportFilesPath = "/home/bryce/Documents";
@@ -46,6 +48,7 @@ BOOST_AUTO_TEST_SUITE ( setupTestSuite );
 
     BOOST_AUTO_TEST_CASE ( write ) {
 
+        std::cout.rdbuf(NULL);
         Setup s;
         s.numExpenses = 3;
         s.username = "testUsername";

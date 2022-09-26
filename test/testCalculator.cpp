@@ -11,8 +11,8 @@
 #include "../src/UpdateExpenseList.cpp"
 #include "../lib/GenerateDataFile.hpp"
 #include "../src/GenerateDataFile.cpp"
-#include "../lib/addTransaction.hpp"
-#include "../src/addTransaction.cpp"
+#include "../lib/AddTransaction.hpp"
+#include "../src/AddTransaction.cpp"
 #include "../lib/GenerateReport.hpp"
 #include "../src/GenerateReport.cpp"
 
