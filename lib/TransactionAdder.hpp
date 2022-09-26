@@ -1,9 +1,9 @@
-#ifndef ADD_TRANSACTION_HPP
-#define ADD_TRANSACTION_HPP
+#ifndef TRANSACTION_ADDER_HPP
+#define TRANSACTION_ADDER_HPP
 
 #include "Helper.hpp"
 
-class AddTransaction : public Helper {
+class TransactionAdder : public Helper {
 
     public:
 
@@ -13,9 +13,8 @@ class AddTransaction : public Helper {
         int numNewTransactions;
         std::string dataFilename;
 
-        AddTransaction();
+        TransactionAdder();
         void Add();
-        //void Prompt();
         void GetMonth();
         void GetExpenseName();
         bool ValidateExpenseName();

@@ -6,9 +6,9 @@
 #include <boost/filesystem.hpp>
 #include <experimental/filesystem>
 
-#include "../lib/GenerateDataFile.hpp"
+#include "../lib/DataFileGenerator.hpp"
 
-GenerateDataFile::GenerateDataFile() {
+DataFileGenerator::DataFileGenerator() {
 
     for (int i = 0; i < (sizeof(expenses) / sizeof(expenses[0])); i++) {
         expenses[i] = "";
@@ -25,7 +25,7 @@ GenerateDataFile::GenerateDataFile() {
 
 }
 
-void GenerateDataFile::Generate() {
+void DataFileGenerator::Generate() {
 
     std::cout << "\nGenerate Data Files";
 
@@ -54,7 +54,7 @@ void GenerateDataFile::Generate() {
     numExpenses = 0;
 }
 
-void GenerateDataFile::GetMonth() {
+void DataFileGenerator::GetMonth() {
 
     std::cout << "\n\nMonth: ";
     std::cin >> month;

@@ -5,10 +5,10 @@
 #include <ostream>
 #include <boost/filesystem.hpp>
 
-#include "../lib/GenerateReport.hpp"
+#include "../lib/ReportGenerator.hpp"
 #include "../lib/Dialog.hpp"
 
-GenerateReport::GenerateReport() {
+ReportGenerator::ReportGenerator() {
 
     numExpenses = 0;
 
@@ -22,7 +22,7 @@ GenerateReport::GenerateReport() {
 
 }
 
-void GenerateReport::Generate() {
+void ReportGenerator::Generate() {
 
     std::cout << "\nGenerate A Report";
 
@@ -50,7 +50,7 @@ void GenerateReport::Generate() {
 
 }
 
-void GenerateReport::GetMonth() {
+void ReportGenerator::GetMonth() {
 
     std::cout << "\n\nMonth: ";
     std::cin >> month;
@@ -61,7 +61,7 @@ void GenerateReport::GetMonth() {
 
 }
 
-void GenerateReport::Calculate() {
+void ReportGenerator::Calculate() {
 
     reportFilename = reportFilesPath + month + "_Report.txt";
     outputFile.open(reportFilename);
@@ -72,7 +72,7 @@ void GenerateReport::Calculate() {
 
 }
 
-double GenerateReport::CalculateExpense(double expenseType, std::string expenseName) {
+double ReportGenerator::CalculateExpense(double expenseType, std::string expenseName) {
 
     expenseFilename = dataFilesPath + month + "_" + expenseName + ".txt"; 
 
@@ -99,7 +99,7 @@ double GenerateReport::CalculateExpense(double expenseType, std::string expenseN
 
 }
 
-void GenerateReport::ClearLinesArray() {
+void ReportGenerator::ClearLinesArray() {
 
     for (int i = 0; i < 20; i++) {
         lines[i] = "";
@@ -107,16 +107,16 @@ void GenerateReport::ClearLinesArray() {
 
 }
 
-void GenerateReport::Report() {
+void ReportGenerator::Report() {
 
-    generateReportDialog.ReportBanner(outputFile);
+    reportGeneratorDialog.ReportBanner(outputFile);
     outputFile << "\n";
     DisplayExpenses();
     outputFile << "\n\n\tTotal:" << std::setw(17) << "$" << std::fixed << std::setprecision(2) << GetTotal() << "\n";
 
 }
 
-void GenerateReport::DisplayExpenses() {
+void ReportGenerator::DisplayExpenses() {
 
     for (int i = 0; i < numExpenses; i++) {
         outputFile << "\n\t" << expenses[i] << std::setw(23 - expenses[i].length()); 
@@ -125,7 +125,7 @@ void GenerateReport::DisplayExpenses() {
 
 }
 
-double GenerateReport::GetTotal() {
+double ReportGenerator::GetTotal() {
 
     double total;
 
@@ -137,7 +137,7 @@ double GenerateReport::GetTotal() {
 
 }
 
-void GenerateReport::ClearExpenseArrays() {
+void ReportGenerator::ClearExpenseArrays() {
 
     for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
         expenseValues[i] = 0;

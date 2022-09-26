@@ -2,20 +2,20 @@
 #define CALCULATOR_HPP
 
 #include "Dialog.hpp"
-#include "UpdateExpenseList.hpp"
-#include "GenerateDataFile.hpp"
-#include "AddTransaction.hpp"
-#include "GenerateReport.hpp"
+#include "ExpenseListUpdater.hpp"
+#include "DataFileGenerator.hpp"
+#include "TransactionAdder.hpp"
+#include "ReportGenerator.hpp"
 
 class Calculator {
 
     public:
 
         Dialog myDialog;
-        UpdateExpenseList myExpenseList;
-        GenerateDataFile myDataFiles;
-        AddTransaction myTransactionAddition;
-        GenerateReport myReport;
+        ExpenseListUpdater myExpenseListUpdater;
+        DataFileGenerator myDataFileGenerator;
+        TransactionAdder myTransactionAdder;
+        ReportGenerator myReportGenerator;
 
         void Prompt();
 

@@ -1,5 +1,5 @@
-#ifndef GENERATE_DATA_FILE_HPP
-#define GENERATE_DATA_FILE_HPP
+#ifndef DATA_FILE_GENERATOR_HPP
+#define DATA_FILE_GENERATOR_HPP
 
 #include <iostream>
 #include <string>
@@ -8,14 +8,14 @@
 
 #include "Helper.hpp"
 
-class GenerateDataFile : public Helper {
+class DataFileGenerator : public Helper {
 
     public:
 
         std::string lines [3];
         std::string dataFilename;
 
-        GenerateDataFile();
+        DataFileGenerator();
         void Generate();
         void GetMonth();
         

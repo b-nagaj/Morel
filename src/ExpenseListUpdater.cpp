@@ -2,9 +2,9 @@
 #include <fstream>
 #include <iomanip>
 
-#include "../lib/UpdateExpenseList.hpp"
+#include "../lib/ExpenseListUpdater.hpp"
 
-UpdateExpenseList::UpdateExpenseList() {
+ExpenseListUpdater::ExpenseListUpdater() {
 
     for (int i = 0; i < (sizeof(lines) / sizeof(lines[i])); i++) {
         lines[i] = "";
@@ -21,7 +21,7 @@ UpdateExpenseList::UpdateExpenseList() {
 
 }
 
-void UpdateExpenseList::Update() {
+void ExpenseListUpdater::Update() {
 
     std::cout << "\nUpdate Expense List";
 
@@ -44,7 +44,7 @@ void UpdateExpenseList::Update() {
 
 }
 
-void UpdateExpenseList::GetNewExpenses() {
+void ExpenseListUpdater::GetNewExpenses() {
 
     std::cout << "\n\nPlease give a list of up to 20 expenses"
               << "\nInclude each expense on a seperate line"
@@ -61,7 +61,7 @@ void UpdateExpenseList::GetNewExpenses() {
 
 }
 
-void UpdateExpenseList::Write() {
+void ExpenseListUpdater::Write() {
 
     outputFile.open("config.txt");
 

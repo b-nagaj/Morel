@@ -4,9 +4,9 @@
 #include <fstream>
 #include <algorithm>
 
-#include "../lib/AddTransaction.hpp"
+#include "../lib/TransactionAdder.hpp"
 
-AddTransaction::AddTransaction() {
+TransactionAdder::TransactionAdder() {
 
     for (int i = 0; i < MAX_TRANSACTIONS; i++) {
         newTransactions[i] = "";
@@ -21,7 +21,7 @@ AddTransaction::AddTransaction() {
 
 }
 
-void AddTransaction::Add() {
+void TransactionAdder::Add() {
 
     std::cout << "\nAdd a Transaction";
 
@@ -44,7 +44,7 @@ void AddTransaction::Add() {
 
 }
 
-void AddTransaction::GetMonth() {
+void TransactionAdder::GetMonth() {
 
     std::cout << "\n\nMonth: ";
     std::cin >> month;
@@ -56,7 +56,7 @@ void AddTransaction::GetMonth() {
 
 }
 
-void AddTransaction::GetExpenseName() {
+void TransactionAdder::GetExpenseName() {
 
     std::cout << "Expense Type: ";
     std::cin >> expenseName;
@@ -68,7 +68,7 @@ void AddTransaction::GetExpenseName() {
 
 }
 
-bool AddTransaction::ValidateExpenseName() {
+bool TransactionAdder::ValidateExpenseName() {
 
     bool validExpense = false;
 
@@ -89,7 +89,7 @@ bool AddTransaction::ValidateExpenseName() {
 
 }
 
-void AddTransaction::GetNewTransactions() {
+void TransactionAdder::GetNewTransactions() {
 
     transaction = "";
     numNewTransactions = 0;
@@ -113,7 +113,7 @@ void AddTransaction::GetNewTransactions() {
 
 }
 
-bool AddTransaction::ValidateNewTransactions() {
+bool TransactionAdder::ValidateNewTransactions() {
 
     bool isValid = true;
     
@@ -126,7 +126,7 @@ bool AddTransaction::ValidateNewTransactions() {
 
 }
 
-void AddTransaction::Write() {
+void TransactionAdder::Write() {
 
     dataFilename = dataFilesPath + month + "_" + expenseName + ".txt";
     GetExistingTransactions(dataFilename);

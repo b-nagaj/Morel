@@ -1,5 +1,5 @@
-#ifndef GENERATE_REPORT_HPP
-#define GENERATE_REPORT_HPP
+#ifndef REPORT_GENERATOR_HPP
+#define REPORT_GENERATOR_HPP
 
 #include <iostream>
 #include <string>
@@ -8,17 +8,17 @@
 
 #include "Dialog.hpp"
 
-class GenerateReport : public Helper {
+class ReportGenerator : public Helper {
 
     public: 
 
-        Dialog generateReportDialog;
+        Dialog reportGeneratorDialog;
         std::string lines [50];
         std::string expenseName;
         std::string reportFilename;
         std::string expenseFilename;
 
-        GenerateReport();
+        ReportGenerator();
         void Generate();
         void GetMonth();
         void Calculate();
