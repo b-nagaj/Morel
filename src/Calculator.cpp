@@ -2,8 +2,8 @@
 
 #include "../lib/Calculator.hpp"
 #include "../lib/Dialog.hpp"
-#include "../lib/GenerateReport.hpp"
-#include "../lib/GenerateDataFile.hpp"
+#include "../lib/ReportGenerator.hpp"
+#include "../lib/DataFileGenerator.hpp"
 
 void Calculator::Prompt() {
 
@@ -14,19 +14,19 @@ void Calculator::Prompt() {
 
         switch (myDialog.option) {
         case 1 :
-            myExpenseList.Update();
+            myExpenseListUpdater.Update();
             break;
 
         case 2 : 
-            myDataFiles.Generate();
+            myDataFileGenerator.Generate();
             break;
 
         case 3 :
-            myTransactionAddition.Add();
+            myTransactionAdder.Add();
             break;
 
         case 4 :
-            myReport.Generate();
+            myReportGenerator.Generate();
             break;
     
         case 5 :

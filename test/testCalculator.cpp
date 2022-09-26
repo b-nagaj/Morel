@@ -7,14 +7,14 @@
 #include "../src/Helper.cpp"
 #include "../lib/Dialog.hpp"
 #include "../src/Dialog.cpp"
-#include "../lib/UpdateExpenseList.hpp"
-#include "../src/UpdateExpenseList.cpp"
+#include "../lib/ExpenseListUpdater.hpp"
+#include "../src/ExpenseListUpdater.cpp"
 #include "../lib/GenerateDataFile.hpp"
 #include "../src/GenerateDataFile.cpp"
-#include "../lib/AddTransaction.hpp"
-#include "../src/AddTransaction.cpp"
-#include "../lib/GenerateReport.hpp"
-#include "../src/GenerateReport.cpp"
+#include "../lib/TransactionAdder.hpp"
+#include "../src/TransactionAdder.cpp"
+#include "../lib/ReportGenerator.hpp"
+#include "../src/ReportGenerator.cpp"
 
 #include <string>
 
