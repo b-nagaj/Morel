@@ -81,7 +81,7 @@ void Helper::GetExpenses() {
 
 }
 
-void Helper::GetTransactions(std::string dataFilename) {
+void Helper::GetExistingTransactions(std::string dataFilename) {
 
     inputFile.open(dataFilename);
     
