@@ -18,7 +18,6 @@ class Setup {
 
         Setup();
         void BeginSetup();
-        void Prompt();
         void WelcomeBanner();
         void GetUsername();
         void GetPaths();

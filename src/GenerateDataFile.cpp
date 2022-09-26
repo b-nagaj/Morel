@@ -29,7 +29,7 @@ void GenerateDataFile::Generate() {
 
     std::cout << "\nGenerate Data Files";
 
-    Prompt();
+    GetMonth();
     GetPaths();
     GetExpenses();
 
@@ -54,13 +54,13 @@ void GenerateDataFile::Generate() {
     numExpenses = 0;
 }
 
-void GenerateDataFile::Prompt() {
+void GenerateDataFile::GetMonth() {
 
     std::cout << "\n\nMonth: ";
     std::cin >> month;
 
     if (!ValidateMonth()) {
-        Prompt();
+        GetMonth();
     }
 
 }

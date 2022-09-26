@@ -18,17 +18,11 @@ Setup::Setup() {
     dataFilesPath = "";
     reportFilesPath = "";
 
+    WelcomeBanner();
+
 }
 
 void Setup::BeginSetup() {
-
-    Setup mySetup;
-    mySetup.WelcomeBanner();
-    mySetup.Prompt();
-
-}
-
-void Setup::Prompt() {
 
     GetUsername();
     GetPaths();
@@ -38,7 +32,12 @@ void Setup::Prompt() {
         Write();
     }
     else {
-        Prompt();
+        while (!ValidatePaths()) {
+            GetPaths();
+        }
+
+        GetExpenseList();
+        Write();
     }
 
 }
@@ -80,7 +79,7 @@ bool Setup::ValidatePaths() {
         validPath = true;
     }
     else {
-        std::cout << "\nERROR: The path(s) you entered does not exist";
+        std::cout << "\nERROR: The path(s) you entered does not exist\n";
     }
 
     return validPath;
@@ -96,7 +95,6 @@ void Setup::GetExpenseList() {
     while (expense != "end" && numExpenses < 20) {
         std::cout << "Expense" << "[" << (numExpenses + 1) << "]: ";
         std::cin >> expense;
-        std::cout << "\n";
         expenses[numExpenses] = expense;
         numExpenses++;
     }
