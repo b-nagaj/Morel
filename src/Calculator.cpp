@@ -24,12 +24,16 @@ void Calculator::Prompt() {
         case 3 :
             myTransactionAdder.Add();
             break;
-
+        
         case 4 :
+            myTransactionDeleter.Delete();
+            break;
+
+        case 5 :
             myReportGenerator.Generate();
             break;
     
-        case 5 :
+        case 6 :
             std::cout << "\nQuitting!\n\n";
         }
     }
