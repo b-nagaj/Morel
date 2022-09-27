@@ -20,8 +20,9 @@ void Dialog::Menu() {
     std::cout << "\n\t1. Update List Of Expenses"
               << "\n\t2. Generate Data Files"
               << "\n\t3. Add a Transaction"
-              << "\n\t4. Generate A Report"
-              << "\n\t5. Quit";
+              << "\n\t4. Delete a Transaction"
+              << "\n\t5. Generate A Report"
+              << "\n\t6. Quit";
 
     std::cout << "\n\nChoice: ";
     std::string choice;
