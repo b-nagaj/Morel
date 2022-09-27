@@ -5,6 +5,7 @@
 #include "ExpenseListUpdater.hpp"
 #include "DataFileGenerator.hpp"
 #include "TransactionAdder.hpp"
+#include "TransactionDeleter.hpp"
 #include "ReportGenerator.hpp"
 
 class Calculator {
@@ -15,6 +16,7 @@ class Calculator {
         ExpenseListUpdater myExpenseListUpdater;
         DataFileGenerator myDataFileGenerator;
         TransactionAdder myTransactionAdder;
+        TransactionDeleter myTransactionDeleter;
         ReportGenerator myReportGenerator;
 
         void Prompt();

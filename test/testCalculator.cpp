@@ -9,10 +9,12 @@
 #include "../src/Dialog.cpp"
 #include "../lib/ExpenseListUpdater.hpp"
 #include "../src/ExpenseListUpdater.cpp"
-#include "../lib/GenerateDataFile.hpp"
-#include "../src/GenerateDataFile.cpp"
+#include "../lib/DataFileGenerator.hpp"
+#include "../src/DataFileGenerator.cpp"
 #include "../lib/TransactionAdder.hpp"
 #include "../src/TransactionAdder.cpp"
+#include "../lib/TransactionDeleter.hpp"
+#include "../src/TransactionDeleter.cpp"
 #include "../lib/ReportGenerator.hpp"
 #include "../src/ReportGenerator.cpp"
 
@@ -53,6 +55,10 @@ BOOST_AUTO_TEST_SUITE ( calculatorTestSuite )
 
             case 5 :
                 message = messages[4];
+                break;
+            
+            case 6 :
+                message = messages[5];
         }
 
             if ( d.myDialog.option == 1 ) {
@@ -67,8 +73,11 @@ BOOST_AUTO_TEST_SUITE ( calculatorTestSuite )
             else if ( d.myDialog.option == 4 ) {
                 BOOST_CHECK_EQUAL ( message, messages[3] );
             }
-            else {
+            else if (d.myDialog.option == 5 ) {
                 BOOST_CHECK_EQUAL ( message, messages[4] );
+            }
+            else {
+                BOOST_CHECK_EQUAL( message, messages[5] );
             }
         }
 

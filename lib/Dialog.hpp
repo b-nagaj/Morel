@@ -13,7 +13,7 @@ class Dialog : public Helper{
     public:
 
         int option;
-        const int NUM_MENU_OPTIONS = 5;
+        const int NUM_MENU_OPTIONS = 6;
         std::ifstream inputFile;
 
         Dialog();
