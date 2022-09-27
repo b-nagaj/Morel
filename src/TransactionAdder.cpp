@@ -117,8 +117,11 @@ bool TransactionAdder::ValidateNewTransactions() {
 
     bool isValid = true;
     
-    if (std::all_of(transaction.begin(), transaction.end(), ::isdigit) == false) {
-        std::cout << "\nERROR: The transaction(s) you entered is not a numerical value\n\n";
+    std::string transactionWithoutDecimal = transaction;
+    transactionWithoutDecimal.erase(remove(transactionWithoutDecimal.begin(), transactionWithoutDecimal.end(), '.'), transactionWithoutDecimal.end());
+    
+    if (std::all_of(transactionWithoutDecimal.begin(), transactionWithoutDecimal.end(), ::isdigit) == false) {
+        std::cout << "\nERROR: The transaction you entered is not a numerical value\n\n";
         isValid = false;
     }
     
@@ -143,7 +146,7 @@ void TransactionAdder::Write() {
         outputFile.open(dataFilename);
 
         if (outputFile) {
-            for (int i = 0; i < numTransactions + 1; i++) {
+            for (int i = 0; i <= numTransactions ; i++) {
                 if (i == 0) {
                     outputFile << transactions[i];
                 }
