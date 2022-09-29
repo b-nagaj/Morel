@@ -29,20 +29,23 @@ void DataFileGenerator::Generate() {
     GetPaths();
     GetExpenses();
 
-    std::cout << "\nGenerate data files for the month of " << month << "?" << "(Y/N) ";
-        std::string yesNo;
-        std:: cin >> yesNo;
-    
-    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes") {
+    if (Confirm("\nGenerate data files for the month of " + month + "?" + "(Y/N): ")) {
         for (int i = 0; i < numExpenses; i++) {
-                dataFilename = dataFilesPath + month + "_" + expenses[i] + ".txt";
-                outputFile.open(dataFilename);
+            dataFilename = dataFilesPath + month + "_" + expenses[i] + ".txt";
+            outputFile.open(dataFilename);
+
+            if (outputFile) {
                 outputFile << "0.00";
-                outputFile.close();
-                std::cout << "\n" << month << "_" << expenses[i] << ".txt" << std::setw(21 - (expenses[i] + ".txt").length()) << " ✅"; 
+                std::cout << "\n" << month << "_" << expenses[i] << ".txt" << std::setw(21 - (expenses[i] + ".txt").length()) << " ✅";
+                std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>"; 
             }
-            std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
-    } 
+            else {
+                std::cout << "\nGenerated " <<  std::setw(20) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
+            }
+
+            outputFile.close();
+        }
+    }
     else {
         std::cout << "\nGenerated " <<  std::setw(20) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
     }

@@ -34,16 +34,14 @@ void ReportGenerator::Generate() {
     GetPaths();
     GetExpenses();
 
-    std::cout << "\nMake an expense report for " << month << "?" << "(Y/N) ";
-    std::string yesNo;
-    std:: cin >> yesNo;
-
-    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
+    std::string prompt = "\nMake an expense report for " + month + "?" + "(Y/N): ";
+    if (Confirm(prompt)) {
         Calculate();
         Report();
+
+        numExpenses = 0;
         inputFile.close();
         outputFile.close(); 
-        numExpenses = 0;
 
         std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
     }

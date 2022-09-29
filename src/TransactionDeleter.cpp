@@ -30,11 +30,8 @@ void TransactionDeleter::Delete() {
     GetUnwantedTransactions();
     GetPaths();
 
-    std::cout << "\nDelete (" << numUnwantedTransactions << ") existing transaction for the month of " << month << "?" << "(Y/N) "; 
-    std::string yesNo;
-    std:: cin >> yesNo;
-
-    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
+    std::string prompt = "\nDelete (" + std::to_string(numUnwantedTransactions) + ") existing transaction for the month of " + month + "?" + "(Y/N): ";
+    if (Confirm(prompt)) {
         dataFilename = dataFilesPath + month + "_" + expense + ".txt";
         //DisplayTransactions();
         GetExistingTransactions();
@@ -49,7 +46,7 @@ void TransactionDeleter::Delete() {
         std::cout << "\nDeleted" << std::setw(21) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
     }
     else {
-        std::cout << "\nDeleted" << std::setw(21) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
+        std::cout << "\nDeleted" << std::setw(21) << " ❌" << "\n\n<><><><><><><><><><><><><><>"; 
     }
 
     Clear();
