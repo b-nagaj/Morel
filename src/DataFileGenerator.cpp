@@ -10,18 +10,14 @@
 
 DataFileGenerator::DataFileGenerator() {
 
+    month = "";
+    dataFilesPath = "";
+    numExpenses = 0;
+    expense = "";
+
     for (int i = 0; i < (sizeof(expenses) / sizeof(expenses[0])); i++) {
         expenses[i] = "";
     }
-    for (int i = 0; i < (sizeof(lines) / sizeof(lines[i])); i++) {
-        lines[i] = "";
-    }
-
-    expense = "";
-    numExpenses = 0;
-    month = "";
-    dataFilesPath = "";
-    dataFilename = "";
 
 }
 
@@ -52,6 +48,7 @@ void DataFileGenerator::Generate() {
     }
 
     numExpenses = 0;
+    Clear();
 }
 
 void DataFileGenerator::GetMonth() {

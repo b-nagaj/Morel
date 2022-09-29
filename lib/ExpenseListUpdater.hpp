@@ -12,6 +12,8 @@ class ExpenseListUpdater : public Helper {
 
         std::string lines [23];
         
+    public:
+    
         ExpenseListUpdater();
         void Update();
         void GetNewExpenses();

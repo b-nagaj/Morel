@@ -19,6 +19,9 @@ class Calculator {
         TransactionDeleter myTransactionDeleter;
         ReportGenerator myReportGenerator;
 
+    public:
+
+        Calculator();
         void Prompt();
 
 };
