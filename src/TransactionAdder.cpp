@@ -31,11 +31,8 @@ void TransactionAdder::Add() {
     GetNewTransactions();
     GetPaths();
 
-    std::cout << "\nAdd (" << numNewTransactions << ") new transactions for the month of " << month << "?" << "(Y/N) "; 
-    std::string yesNo;
-    std:: cin >> yesNo;
-
-    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
+    std::string prompt = "\nAdd (" + std::to_string(numNewTransactions) + ") new transactions for the month of " + month + "?" + "(Y/N): ";
+    if (Confirm(prompt)) {
         Write();
         std::cout << "\nAdded" << std::setw(23) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
     }

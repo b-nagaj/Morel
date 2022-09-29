@@ -7,7 +7,6 @@
 ExpenseListUpdater::ExpenseListUpdater() {
 
     numExpenses = 0;
-    //expenseName = "";
     expense = "";
 
     for (int i = 0; i < (sizeof(expenses) / sizeof(expenses[0])); i++) {
@@ -23,14 +22,10 @@ ExpenseListUpdater::ExpenseListUpdater() {
 void ExpenseListUpdater::Update() {
 
     std::cout << "\nUpdate Expense List";
-
     GetNewExpenses();
 
-    std::cout << "\nUpdate your list of expenses?(Y/N): ";
-    std::string yesNo;
-    std::cin >> yesNo;
-
-    if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes") {
+    std::string prompt = "\nUpdate your list of expenses?(Y/N): ";
+    if (Confirm(prompt)) {
         GetUsername();
         GetPaths();
         Write();
@@ -39,7 +34,7 @@ void ExpenseListUpdater::Update() {
     }
     else {
         std::cout << "\nUpdated" << std::setw(22) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
-    }   
+    }
 
     Clear();
 
