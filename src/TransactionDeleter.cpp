@@ -7,16 +7,17 @@
 
 TransactionDeleter::TransactionDeleter() {
 
+    month = "";
+    transaction = "";
+    numUnwantedTransactions = 0;
+    expense = "";
+
     for (int i = 0; i < MAX_TRANSACTIONS; i++) {
         unwantedTransactions[i] = "";
     }
 
-    month = "";
     dataFilesPath = "";
     dataFilename = "";
-    transaction = "";
-    numUnwantedTransactions = 0;
-    expenseName = "";
 
 }
 
@@ -34,11 +35,10 @@ void TransactionDeleter::Delete() {
     std:: cin >> yesNo;
 
     if (yesNo == "Y" || yesNo == "Yes" || yesNo == "y" || yesNo == "yes"){
-        dataFilename = dataFilesPath + month + "_" + expenseName + ".txt";
-        GetExistingTransactions(dataFilename);
+        dataFilename = dataFilesPath + month + "_" + expense + ".txt";
+        //DisplayTransactions();
+        GetExistingTransactions();
         numTransactions = (numTransactions + 1);
-
-        DisplayTransactions();
 
         for (int i = 0; i <= numUnwantedTransactions && unwantedTransactions[i] != "end"; i++) {
             transaction = unwantedTransactions[i];
@@ -52,57 +52,11 @@ void TransactionDeleter::Delete() {
         std::cout << "\nDeleted" << std::setw(21) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
     }
 
-}
-
-void TransactionDeleter::GetMonth() {
-
-    std::cout << "\n\nMonth: ";
-    std::cin >> month;
-
-    if (!ValidateMonth()) {
-        month = "";
-        GetMonth();
-    }
-
-}
-
-void TransactionDeleter::GetExpenseName() {
-
-    std::cout << "Expense Type: ";
-    std::cin >> expenseName;
-
-    if (!ValidateExpenseName()) {
-        expenseName = "";
-        GetExpenseName();
-    }
-
-}
-
-bool TransactionDeleter::ValidateExpenseName() {
-
-    bool validExpense = false;
-
-    GetExpenses();
-
-    for (int i = 0; i < numExpenses; i++) {
-        if (expenses[i] == expenseName) {
-            validExpense = true;
-            break;
-        }
-    }
-
-    if (!validExpense) {
-        std::cout << "\nERROR: The expense you entered is not listed in your expense list\n\n";
-    }
-
-    return validExpense;
+    Clear();
 
 }
 
 void TransactionDeleter::GetUnwantedTransactions() {
-
-    transaction = "";
-    numUnwantedTransactions = 0;
 
     std::cout << "\nTransactions to be deleted (type 'end' to indicate the end of the list): \n\n";
 
@@ -119,7 +73,6 @@ void TransactionDeleter::GetUnwantedTransactions() {
             unwantedTransactions[numUnwantedTransactions] = transaction;
         }
     }
-    transaction = ""; 
 
 }
 
@@ -139,35 +92,34 @@ bool TransactionDeleter::ValidateUnwantedTransactions() {
 
 }
 
-void TransactionDeleter::DisplayTransactions() {
+// void TransactionDeleter::DisplayTransactions() {
 
-    std::cout << "\nTransactions for " << expenseName;
+//     std::cout << "\nTransactions for (" << expense << ")\n";
 
-    for (int i = 0; i < numTransactions; i++) {
-        std::cout << "\n" << transactions[i];
-    }
+//     for (int i = 0; i < numTransactions; i++) {
+//         std::cout << "\n" << transactions[i];
+//     }
 
-}
+// }
 
 int TransactionDeleter::RemoveTransaction() {
 
     int i;
 
-    for (i = 0; i < numTransactions; i++)
-        if (transactions[i] == transaction)
+    for (i = 0; i < numTransactions; i++) {
+        if (transactions[i] == transaction) {
             break;
-    
-    // If x found in array
-    if (i < numTransactions && transaction != "end")
-    {
-        // reduce size of array and move all
-        // elements on space ahead
+        }
+    }
+        
+    if (i < numTransactions && transaction != "end") {
         numTransactions = (numTransactions - 1);
-        for (int j = i; j < numTransactions; j++)
+        for (int j = i; j < numTransactions; j++) {
             transactions[j] = transactions[j+1];
+        }
     }
     else {
-        std::cout << "\nERROR: There are no " << expenseName << " transactions for $" << transaction << "\n"; 
+        std::cout << "\nERROR: There are no " << expense << " transactions for $" << transaction << "\n"; 
     }
     
     return numTransactions;

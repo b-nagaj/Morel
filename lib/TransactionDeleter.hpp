@@ -5,24 +5,20 @@
 
 #include "Helper.hpp"
 
-class TransactionDeleter : Helper {
+class TransactionDeleter : public Helper {
 
     public:
 
         std::string unwantedTransactions [50];
-        std::string transaction;
-        std::string expenseName;
         int numUnwantedTransactions;
-        std::string dataFilename;
+
+    public:
 
         TransactionDeleter();
         void Delete();
-        void GetMonth();
-        void GetExpenseName();
-        bool ValidateExpenseName();
         void GetUnwantedTransactions(); 
         bool ValidateUnwantedTransactions();
-        void DisplayTransactions();
+        //void DisplayTransactions();
         int RemoveTransaction();
         void Write();
 

@@ -6,15 +6,14 @@
 
 ExpenseListUpdater::ExpenseListUpdater() {
 
-    for (int i = 0; i < (sizeof(lines) / sizeof(lines[i])); i++) {
-        lines[i] = "";
-    }
+    numExpenses = 0;
+    //expenseName = "";
+    expense = "";
+
     for (int i = 0; i < (sizeof(expenses) / sizeof(expenses[0])); i++) {
         expenses[i] = "";
     }
 
-    expense = "";
-    numExpenses = 0;
     username = "";
     dataFilesPath = "";
     reportFilesPath = "";
@@ -42,6 +41,8 @@ void ExpenseListUpdater::Update() {
         std::cout << "\nUpdated" << std::setw(22) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
     }   
 
+    Clear();
+
 }
 
 void ExpenseListUpdater::GetNewExpenses() {
@@ -57,7 +58,6 @@ void ExpenseListUpdater::GetNewExpenses() {
         std::cin >> expense;
         expenses[numExpenses] = expense;
     }
-    //numExpenses--;
 
 }
 

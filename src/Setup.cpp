@@ -8,15 +8,18 @@
 
 Setup::Setup() {
 
+    username = "";
+    dataFilesPath = "";
+    reportFilesPath = "";
+
     for (int i = 0; i < 20; i++) {
         expenses[i] = "";
     }
 
     expense = "";
     numExpenses = 0;
-    username = "";
-    dataFilesPath = "";
-    reportFilesPath = "";
+
+
 
     WelcomeBanner();
 

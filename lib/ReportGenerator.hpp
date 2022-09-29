@@ -6,6 +6,7 @@
 #include <fstream>
 #include <ostream>
 
+#include "Helper.hpp"
 #include "Dialog.hpp"
 
 class ReportGenerator : public Helper {
@@ -13,21 +14,17 @@ class ReportGenerator : public Helper {
     public: 
 
         Dialog reportGeneratorDialog;
-        std::string lines [50];
-        std::string expenseName;
-        std::string reportFilename;
-        std::string expenseFilename;
+    
+    public:
 
         ReportGenerator();
         void Generate();
         void GetMonth();
         void Calculate();
-        double CalculateExpense(double expenseType, std::string name);
-        void ClearLinesArray();
+        double CalculateExpense();
         void Report();
         void DisplayExpenses();
         double GetTotal();
-        void ClearExpenseArrays();
 
 };
 

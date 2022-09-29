@@ -5,6 +5,12 @@
 #include "../lib/ReportGenerator.hpp"
 #include "../lib/DataFileGenerator.hpp"
 
+Calculator::Calculator() {
+
+    myDialog.option = 0;
+
+}
+
 void Calculator::Prompt() {
 
     myDialog.WelcomeBanner();

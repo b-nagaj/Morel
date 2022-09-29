@@ -13,7 +13,6 @@ class DataFileGenerator : public Helper {
     public:
 
         std::string lines [3];
-        std::string dataFilename;
 
         DataFileGenerator();
         void Generate();

@@ -41,8 +41,8 @@ test%.o: $(TEST_DIR)/test%.cpp
 	$(GCC) -c $(TEST_DIR)/test$*.cpp
 
 clean:
-	rm $(BUILD_BINARY)
 	rm -r $(OBJ_FILES) $(OBJ_DIR)
+	rm $(BUILD_BINARY)
 
 cleanTests:
 	rm $(TEST_BINARIES)

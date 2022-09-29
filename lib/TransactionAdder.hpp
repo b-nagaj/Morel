@@ -8,16 +8,12 @@ class TransactionAdder : public Helper {
     public:
 
         std::string newTransactions [50];
-        std::string transaction;
-        std::string expenseName;
         int numNewTransactions;
-        std::string dataFilename;
+    
+    public:
 
         TransactionAdder();
         void Add();
-        void GetMonth();
-        void GetExpenseName();
-        bool ValidateExpenseName();
         void GetNewTransactions();
         bool ValidateNewTransactions();
         void Write();

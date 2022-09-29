@@ -8,16 +8,17 @@
 
 TransactionAdder::TransactionAdder() {
 
+    month = "";
+    expense = "";
+    transaction = "";
+    numNewTransactions = 0;
+
     for (int i = 0; i < MAX_TRANSACTIONS; i++) {
         newTransactions[i] = "";
     }
 
-    month = "";
     dataFilesPath = "";
     dataFilename = "";
-    transaction = "";
-    expenseName = "";
-    numNewTransactions = 0;
 
 }
 
@@ -42,58 +43,12 @@ void TransactionAdder::Add() {
         std::cout << "\nAdded" << std::setw(23) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
     }
 
-}
-
-void TransactionAdder::GetMonth() {
-
-    std::cout << "\n\nMonth: ";
-    std::cin >> month;
-
-    if (!ValidateMonth()) {
-        month = "";
-        GetMonth();
-    }
-
-}
-
-void TransactionAdder::GetExpenseName() {
-
-    std::cout << "Expense Type: ";
-    std::cin >> expenseName;
-
-    if (!ValidateExpenseName()) {
-        expenseName = "";
-        GetExpenseName();
-    }
-
-}
-
-bool TransactionAdder::ValidateExpenseName() {
-
-    bool validExpense = false;
-
-    GetExpenses();
-
-    for (int i = 0; i < numExpenses; i++) {
-        if (expenses[i] == expenseName) {
-            validExpense = true;
-            break;
-        }
-    }
-
-    if (!validExpense) {
-        std::cout << "\nERROR: The expense you entered is not listed in your expense list\n\n";
-    }
-
-    return validExpense;
+    Clear();
 
 }
 
 void TransactionAdder::GetNewTransactions() {
-
-    transaction = "";
-    numNewTransactions = 0;
-
+    
     std::cout << "\nNew Transactions (type 'end' to indicate the end of the list): \n\n";
 
     numNewTransactions = -1;
@@ -109,7 +64,6 @@ void TransactionAdder::GetNewTransactions() {
             newTransactions[numNewTransactions] = transaction;
         }
     }
-    transaction = ""; 
 
 }
 
@@ -131,8 +85,8 @@ bool TransactionAdder::ValidateNewTransactions() {
 
 void TransactionAdder::Write() {
 
-    dataFilename = dataFilesPath + month + "_" + expenseName + ".txt";
-    GetExistingTransactions(dataFilename);
+    dataFilename = dataFilesPath + month + "_" + expense + ".txt";
+    GetExistingTransactions();
     
     if (numTransactions + numNewTransactions >= MAX_TRANSACTIONS) {
         std::cout << "\nError: you've reached the maximum amount of transactions\n";
