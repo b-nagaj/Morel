@@ -81,7 +81,7 @@ void Helper::GetExpenses() {
 
 }
 
-void Helper::GetExistingTransactions(std::string dataFilename) {
+void Helper::GetExistingTransactions() {
 
     inputFile.open(dataFilename);
     
@@ -96,5 +96,68 @@ void Helper::GetExistingTransactions(std::string dataFilename) {
     }
 
     inputFile.close();
+
+}
+
+void Helper::GetMonth() {
+
+    std::cout << "\n\nMonth: ";
+    std::cin >> month;
+
+    if (!ValidateMonth()) {
+        month = "";
+        GetMonth();
+    }
+
+}
+
+void Helper::GetExpenseName() {
+
+    std::cout << "Expense Name: ";
+    std::cin >> expense;
+
+    if (!ValidateExpenseName()) {
+        GetExpenseName();
+    }
+
+}
+
+bool Helper::ValidateExpenseName() {
+
+    bool validExpense = false;
+    std::string expenseName = expense;
+
+    GetExpenses();
+
+    for (int i = 0; i < numExpenses; i++) {
+        if (expenses[i] == expenseName) {
+            validExpense = true;
+            break;
+        }
+    }
+
+    if (!validExpense) {
+        std::cout << "\nERROR: The expense you entered is not listed in your expense list\n\n";
+    }
+
+    expense = expenseName;
+
+    return validExpense;
+
+}
+
+void Helper::Clear() {
+
+    for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
+        expenses[i] = "";
+    }
+
+    for (int i = 0; i < sizeof(expenseValues)/sizeof(expenseValues[0]); i++) {
+        expenseValues[i] = 0;
+    }
+
+    for (int i = 0; i < sizeof(transactions)/sizeof(transactions[0]); i++) {
+        transactions[i] = "";
+    }
 
 }
