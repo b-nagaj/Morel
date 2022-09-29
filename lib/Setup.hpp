@@ -16,6 +16,8 @@ class Setup {
         std::string reportFilesPath;
         std::ofstream outputFile;
 
+    public: 
+    
         Setup();
         void BeginSetup();
         void WelcomeBanner();
