@@ -55,6 +55,7 @@ class Helper {
         // utilities
         void GetMonth();
         void Clear();
+        bool Confirm(std::string prompt);
 
 };
 

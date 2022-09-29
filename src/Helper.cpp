@@ -2,6 +2,63 @@
 
 #include "../lib/Helper.hpp"
 
+// Expenses
+
+void Helper::GetExpenses() {
+
+    inputFile.open("config.txt");
+
+    for (int i = 0; i < 3; i++) {
+        std::getline(inputFile, expense);
+    }
+
+    numExpenses = 0;
+    if (inputFile) {
+        while (expense != "" && numExpenses < MAX_EXPENSE_SIZE) {
+            std::getline(inputFile, expense);
+            expenses[numExpenses] = expense;
+            numExpenses++;
+        }
+        numExpenses--;
+    }
+
+    inputFile.close();
+
+}
+
+// Transactions
+
+void Helper::GetExistingTransactions() {
+
+    inputFile.open(dataFilename);
+    
+    std::string transaction = "";
+    numTransactions = 0;
+    if (inputFile) {
+        while (std::getline(inputFile, transaction)) {
+            transactions[numTransactions] = transaction;
+            numTransactions++;
+        } 
+        numTransactions--;
+    }
+
+    inputFile.close();
+
+}
+
+void Helper::GetExpenseName() {
+
+    std::cout << "Expense Name: ";
+    std::cin >> expense;
+
+    if (!ValidateExpenseName()) {
+        GetExpenseName();
+    }
+
+}
+
+// Data
+
 void Helper::GetUsername() {
 
     inputFile.open("config.txt"); 
@@ -40,6 +97,8 @@ void Helper::GetPaths() {
 
 }
 
+// Validation
+
 bool Helper::ValidateMonth() {
 
     bool validMonth = false;
@@ -56,69 +115,6 @@ bool Helper::ValidateMonth() {
     }
 
     return validMonth;
-
-}
-
-void Helper::GetExpenses() {
-
-    inputFile.open("config.txt");
-
-    for (int i = 0; i < 3; i++) {
-        std::getline(inputFile, expense);
-    }
-
-    numExpenses = 0;
-    if (inputFile) {
-        while (expense != "" && numExpenses < MAX_EXPENSE_SIZE) {
-            std::getline(inputFile, expense);
-            expenses[numExpenses] = expense;
-            numExpenses++;
-        }
-        numExpenses--;
-    }
-
-    inputFile.close();
-
-}
-
-void Helper::GetExistingTransactions() {
-
-    inputFile.open(dataFilename);
-    
-    std::string transaction = "";
-    numTransactions = 0;
-    if (inputFile) {
-        while (std::getline(inputFile, transaction)) {
-            transactions[numTransactions] = transaction;
-            numTransactions++;
-        } 
-        numTransactions--;
-    }
-
-    inputFile.close();
-
-}
-
-void Helper::GetMonth() {
-
-    std::cout << "\n\nMonth: ";
-    std::cin >> month;
-
-    if (!ValidateMonth()) {
-        month = "";
-        GetMonth();
-    }
-
-}
-
-void Helper::GetExpenseName() {
-
-    std::cout << "Expense Name: ";
-    std::cin >> expense;
-
-    if (!ValidateExpenseName()) {
-        GetExpenseName();
-    }
 
 }
 
@@ -146,6 +142,20 @@ bool Helper::ValidateExpenseName() {
 
 }
 
+// Utilities
+
+void Helper::GetMonth() {
+
+    std::cout << "\n\nMonth: ";
+    std::cin >> month;
+
+    if (!ValidateMonth()) {
+        month = "";
+        GetMonth();
+    }
+
+}
+
 void Helper::Clear() {
 
     for (int i = 0; i < sizeof(expenses)/sizeof(expenses[0]); i++) {
@@ -159,5 +169,21 @@ void Helper::Clear() {
     for (int i = 0; i < sizeof(transactions)/sizeof(transactions[0]); i++) {
         transactions[i] = "";
     }
+
+}
+
+bool Helper::Confirm(std::string prompt) {
+
+    bool confirmed = false;
+
+    std::string yesOrNo;
+    std::cout << prompt;
+    std::cin >> yesOrNo;
+
+    if (yesOrNo == "Y" || yesOrNo == "Yes" || yesOrNo == "y" || yesOrNo == "yes") {
+        confirmed = true;
+    }
+
+    return confirmed;
 
 }
