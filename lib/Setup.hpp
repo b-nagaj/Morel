@@ -22,8 +22,6 @@ class Setup {
         void BeginSetup();
         void WelcomeBanner();
         void GetUsername();
-        void GetPaths();
-        bool ValidatePaths();
         void GetExpenseList();
         void Write();
 
