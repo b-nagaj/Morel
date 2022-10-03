@@ -1,6 +1,7 @@
 /.vscode
-/*.o
+/data
 /obj
+/reports
 config.txt
 test/testConfig.txt
 morel
