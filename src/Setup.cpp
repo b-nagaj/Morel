@@ -9,8 +9,8 @@
 Setup::Setup() {
 
     username = "";
-    dataFilesPath = "";
-    reportFilesPath = "";
+    dataFilesPath = "./data/";
+    reportFilesPath = "./reports/";
 
     for (int i = 0; i < 20; i++) {
         expenses[i] = "";
@@ -19,8 +19,6 @@ Setup::Setup() {
     expense = "";
     numExpenses = 0;
 
-
-
     WelcomeBanner();
 
 }
@@ -28,20 +26,8 @@ Setup::Setup() {
 void Setup::BeginSetup() {
 
     GetUsername();
-    GetPaths();
-
-    if (ValidatePaths()) {
-        GetExpenseList();
-        Write();
-    }
-    else {
-        while (!ValidatePaths()) {
-            GetPaths();
-        }
-
-        GetExpenseList();
-        Write();
-    }
+    GetExpenseList();
+    Write();
 
 }
 
@@ -61,31 +47,6 @@ void Setup::GetUsername() {
 
     std::cout << "\n\nUsername: ";
     std::cin >> username;
-
-}
-
-void Setup::GetPaths() {
-
-    std::cout << "\nPath to store data files (include an absolute path): ";
-    std::cin >> dataFilesPath;
-
-    std::cout << "\nPath to store report files (include an absolute path): ";
-    std::cin >> reportFilesPath;
-
-}
-
-bool Setup::ValidatePaths() {
-
-    bool validPath = false;
-
-    if (boost::filesystem::exists(dataFilesPath) && boost::filesystem::exists(reportFilesPath)) {
-        validPath = true;
-    }
-    else {
-        std::cout << "\nERROR: The path(s) you entered does not exist\n";
-    }
-
-    return validPath;
 
 }
 
@@ -118,10 +79,10 @@ void Setup::Write() {
             outputFile << expenses[i] << std::endl;
         }
 
-        std::cout << "Setup Passed ✅\n";
+        std::cout << "\nSetup Passed ✅\n";
     }
     else {
-        std::cout << "Setup Failed ❌\n";
+        std::cout << "\nSetup Failed ❌\n";
     }
 
     outputFile.close();

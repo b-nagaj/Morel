@@ -69,29 +69,18 @@ void Helper::GetUsername() {
 
 void Helper::GetPaths() {
 
-    std::string lines [3];
+    std::string paths [3];
 
     inputFile.open("config.txt");
 
     int i = 0;
     while (i < 3) {
-        std::getline(inputFile, lines[i], '\n');
+        std::getline(inputFile, paths[i], '\n');
         i++;
     }
 
-    if (lines[1].back() != '/') {
-        dataFilesPath = lines[1] + "/";
-    }
-    else {
-        dataFilesPath = lines[1];
-    }
-
-    if (lines[2].back() != '/') {
-        reportFilesPath = lines[2] + "/";
-    }
-    else {
-        reportFilesPath = lines[2];
-    }
+    dataFilesPath = paths[1];
+    reportFilesPath = paths[2];
 
     inputFile.close();
 
