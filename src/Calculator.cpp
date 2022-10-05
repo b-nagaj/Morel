@@ -8,6 +8,7 @@
 Calculator::Calculator() {
 
     myDialog.option = 0;
+    Prompt();
 
 }
 

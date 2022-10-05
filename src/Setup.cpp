@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <ostream>
+#include <filesystem>
 #include <boost/filesystem.hpp>
 
 #include "../lib/Setup.hpp"
@@ -19,7 +20,10 @@ Setup::Setup() {
     expense = "";
     numExpenses = 0;
 
-    WelcomeBanner();
+    if (!std::filesystem::exists("config.txt")) {
+        WelcomeBanner();
+        BeginSetup();
+    }
 
 }
 

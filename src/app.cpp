@@ -5,15 +5,8 @@
 
 int main() {
 
-    if (!std::filesystem::exists("config.txt")) {
-        Setup s;
-        s.BeginSetup();
-        main();
-    }
-    else {
-        Calculator c;
-        c.Prompt();
-    }
+    Setup s;
+    Calculator c;
 
     return 0;
 
