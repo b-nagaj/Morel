@@ -16,7 +16,7 @@ class DataFileGenerator : public Helper {
 
         DataFileGenerator();
         void Generate();
-        void GetMonth();
+        void Write();
         
 };
 
