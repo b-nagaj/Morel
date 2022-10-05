@@ -46,7 +46,9 @@ void TransactionAdder::Add() {
 
 void TransactionAdder::GetNewTransactions() {
     
-    std::cout << "\nNew Transactions (type 'end' to indicate the end of the list): \n\n";
+    std::cout << "\nPlease give a list of new transactions"
+              << "\nInclude each expense on a seperate line"
+              << "\nType 'end' to indicate the end of the list\n\n";
 
     numNewTransactions = -1;
     while (transaction != "end") {
