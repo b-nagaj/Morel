@@ -37,30 +37,17 @@ void ReportGenerator::Generate() {
     std::string prompt = "\nMake an expense report for " + month + "?" + "(Y/N): ";
     if (Confirm(prompt)) {
         Calculate();
-        Report();
-
-        numExpenses = 0;
-        inputFile.close();
-        outputFile.close(); 
-
+        Report(); 
         std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>";
     }
     else {
         std::cout << "\n\nGenerated" << std::setw(20) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
     }
-    
+
+    numExpenses = 0;
+    inputFile.close();
+    outputFile.close();
     Clear();
-
-}
-
-void ReportGenerator::GetMonth() {
-
-    std::cout << "\n\nMonth: ";
-    std::cin >> month;
-
-    if (!ValidateMonth()) {
-        GetMonth();
-    }
 
 }
 
@@ -109,17 +96,13 @@ void ReportGenerator::Report() {
 
     reportGeneratorDialog.ReportBanner(outputFile);
     outputFile << "\n";
-    DisplayExpenses();
-    outputFile << "\n\n\tTotal:" << std::setw(17) << "$" << std::fixed << std::setprecision(2) << GetTotal() << "\n";
-
-}
-
-void ReportGenerator::DisplayExpenses() {
-
+    
     for (int i = 0; i < numExpenses; i++) {
         outputFile << "\n\t" << expenses[i] << std::setw(23 - expenses[i].length()); 
         outputFile << std::fixed << std::setprecision(2) << "$" << expenseValues[i];
     }
+
+    outputFile << "\n\n\tTotal:" << std::setw(17) << "$" << std::fixed << std::setprecision(2) << GetTotal() << "\n";
 
 }
 

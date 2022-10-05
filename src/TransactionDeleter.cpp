@@ -106,7 +106,6 @@ bool TransactionDeleter::ValidateUnwantedTransactions() {
 int TransactionDeleter::RemoveTransaction() {
 
     int i;
-
     for (i = 0; i < numTransactions; i++) {
         if (transactions[i] == transaction) {
             break;

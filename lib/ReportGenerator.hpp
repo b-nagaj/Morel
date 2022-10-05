@@ -19,11 +19,9 @@ class ReportGenerator : public Helper {
 
         ReportGenerator();
         void Generate();
-        void GetMonth();
         void Calculate();
         double CalculateExpense();
         void Report();
-        void DisplayExpenses();
         double GetTotal();
 
 };

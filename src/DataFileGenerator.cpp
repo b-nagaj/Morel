@@ -30,20 +30,7 @@ void DataFileGenerator::Generate() {
     GetExpenses();
 
     if (Confirm("\nGenerate data files for the month of " + month + "?" + "(Y/N): ")) {
-        for (int i = 0; i < numExpenses; i++) {
-            dataFilename = dataFilesPath + month + "_" + expenses[i] + ".txt";
-            outputFile.open(dataFilename);
-
-            if (outputFile) {
-                outputFile << "0.00";
-                std::cout << "\n" << month << "_" << expenses[i] << ".txt" << std::setw(21 - (expenses[i] + ".txt").length()) << " ✅";
-            }
-            else {
-                std::cout << "\nGenerated " <<  std::setw(20) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
-            }
-
-            outputFile.close();
-        }
+        Write();
         std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>"; 
     }
     else {
@@ -54,13 +41,21 @@ void DataFileGenerator::Generate() {
     Clear();
 }
 
-void DataFileGenerator::GetMonth() {
+void DataFileGenerator::Write() {
 
-    std::cout << "\n\nMonth: ";
-    std::cin >> month;
+    for (int i = 0; i < numExpenses; i++) {
+        dataFilename = dataFilesPath + month + "_" + expenses[i] + ".txt";
+        outputFile.open(dataFilename);
 
-    if (!ValidateMonth()) {
-        GetMonth();
+        if (outputFile) {
+            outputFile << "0.00";
+            std::cout << "\n" << month << "_" << expenses[i] << ".txt" << std::setw(21 - (expenses[i] + ".txt").length()) << " ✅";
+        }
+        else {
+            std::cout << "\n" << month << "_" << expenses[i] << ".txt" << std::setw(21 - (expenses[i] + ".txt").length()) << " ❌";
+        }
+
+        outputFile.close();
     }
 
 }
