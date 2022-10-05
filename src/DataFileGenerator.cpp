@@ -37,7 +37,6 @@ void DataFileGenerator::Generate() {
             if (outputFile) {
                 outputFile << "0.00";
                 std::cout << "\n" << month << "_" << expenses[i] << ".txt" << std::setw(21 - (expenses[i] + ".txt").length()) << " ✅";
-                std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>"; 
             }
             else {
                 std::cout << "\nGenerated " <<  std::setw(20) << " ❌" << "\n\n<><><><><><><><><><><><><><>";
@@ -45,6 +44,7 @@ void DataFileGenerator::Generate() {
 
             outputFile.close();
         }
+        std::cout << "\n\nGenerated" << std::setw(20) << " ✅" << "\n\n<><><><><><><><><><><><><><>"; 
     }
     else {
         std::cout << "\nGenerated " <<  std::setw(20) << " ❌" << "\n\n<><><><><><><><><><><><><><>";

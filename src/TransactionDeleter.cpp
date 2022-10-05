@@ -55,7 +55,9 @@ void TransactionDeleter::Delete() {
 
 void TransactionDeleter::GetUnwantedTransactions() {
 
-    std::cout << "\nTransactions to be deleted (type 'end' to indicate the end of the list): \n\n";
+    std::cout << "\nPlease give a list of transactions you'd like to delete"
+              << "\nInclude each expense on a seperate line"
+              << "\nType 'end' to indicate the end of the list\n\n";
 
     numUnwantedTransactions = -1;
     while (transaction != "end") {
@@ -70,6 +72,8 @@ void TransactionDeleter::GetUnwantedTransactions() {
             unwantedTransactions[numUnwantedTransactions] = transaction;
         }
     }
+
+    transaction = "";
 
 }
 

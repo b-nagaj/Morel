@@ -54,6 +54,8 @@ void ExpenseListUpdater::GetNewExpenses() {
         expenses[numExpenses] = expense;
     }
 
+    expense = "";
+
 }
 
 void ExpenseListUpdater::Write() {
