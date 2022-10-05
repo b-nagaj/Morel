@@ -62,6 +62,8 @@ void TransactionAdder::GetNewTransactions() {
         }
     }
 
+    transaction = "";
+
 }
 
 bool TransactionAdder::ValidateNewTransactions() {

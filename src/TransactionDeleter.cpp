@@ -71,6 +71,8 @@ void TransactionDeleter::GetUnwantedTransactions() {
         }
     }
 
+    transaction = "";
+
 }
 
 bool TransactionDeleter::ValidateUnwantedTransactions() {
