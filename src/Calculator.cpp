@@ -4,6 +4,7 @@
 #include "../lib/Dialog.hpp"
 #include "../lib/ReportGenerator.hpp"
 #include "../lib/DataFileGenerator.hpp"
+#include "../lib/ReportViewer.hpp"
 
 Calculator::Calculator() {
 
@@ -41,6 +42,10 @@ void Calculator::Prompt() {
             break;
     
         case 6 :
+            myReportViewer.View();
+            break;
+
+        case 7 :
             std::cout << "\nQuitting!\n\n";
         }
     }
