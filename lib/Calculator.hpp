@@ -7,6 +7,7 @@
 #include "TransactionAdder.hpp"
 #include "TransactionDeleter.hpp"
 #include "ReportGenerator.hpp"
+#include "ReportViewer.hpp"
 
 class Calculator {
 
@@ -18,6 +19,7 @@ class Calculator {
         TransactionAdder myTransactionAdder;
         TransactionDeleter myTransactionDeleter;
         ReportGenerator myReportGenerator;
+        ReportViewer myReportViewer;
 
     public:
 
