@@ -8,41 +8,49 @@
 
 Calculator::Calculator() {
 
-    myDialog.option = 0;
+    myDialog = new Dialog;
+    myExpenseListUpdater = new ExpenseListUpdater;
+    myDataFileGenerator = new DataFileGenerator;
+    myTransactionAdder = new TransactionAdder;
+    myTransactionDeleter = new TransactionDeleter;
+    myReportGenerator = new ReportGenerator;
+    myReportViewer = new ReportViewer;
+
+    myDialog->option = 0;
     Prompt();
 
 }
 
 void Calculator::Prompt() {
 
-    myDialog.WelcomeBanner();
+    myDialog->WelcomeBanner();
     
-    while (myDialog.option != myDialog.NUM_MENU_OPTIONS) {
-        myDialog.Menu();
+    while (myDialog->option != myDialog->NUM_MENU_OPTIONS) {
+        myDialog->Menu();
 
-        switch (myDialog.option) {
+        switch (myDialog->option) {
         case 1 :
-            myExpenseListUpdater.Update();
+            myExpenseListUpdater->Update();
             break;
 
         case 2 : 
-            myDataFileGenerator.Generate();
+            myDataFileGenerator->Generate();
             break;
 
         case 3 :
-            myTransactionAdder.Add();
+            myTransactionAdder->Add();
             break;
         
         case 4 :
-            myTransactionDeleter.Delete();
+            myTransactionDeleter->Delete();
             break;
 
         case 5 :
-            myReportGenerator.Generate();
+            myReportGenerator->Generate();
             break;
     
         case 6 :
-            myReportViewer.View();
+            myReportViewer->View();
             break;
 
         case 7 :
@@ -50,6 +58,18 @@ void Calculator::Prompt() {
         }
     }
 
-    myDialog.option = 0;
+    myDialog->option = 0;
+
+}
+
+Calculator::~Calculator() {
+
+    delete myDialog;
+    delete myExpenseListUpdater;
+    delete myDataFileGenerator;
+    delete myTransactionAdder;
+    delete myTransactionDeleter;
+    delete myReportGenerator;
+    delete myReportViewer;
 
 }
