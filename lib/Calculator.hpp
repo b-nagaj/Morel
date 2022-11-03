@@ -13,18 +13,27 @@ class Calculator {
 
     public:
 
-        Dialog myDialog;
-        ExpenseListUpdater myExpenseListUpdater;
-        DataFileGenerator myDataFileGenerator;
-        TransactionAdder myTransactionAdder;
-        TransactionDeleter myTransactionDeleter;
-        ReportGenerator myReportGenerator;
-        ReportViewer myReportViewer;
+        Dialog * myDialog;
+        ExpenseListUpdater * myExpenseListUpdater;
+        DataFileGenerator * myDataFileGenerator;
+        TransactionAdder * myTransactionAdder;
+        TransactionDeleter * myTransactionDeleter;
+        ReportGenerator * myReportGenerator;
+        ReportViewer * myReportViewer;
+
+        //Dialog myDialog;
+        // ExpenseListUpdater myExpenseListUpdater;
+        // DataFileGenerator myDataFileGenerator;
+        // TransactionAdder myTransactionAdder;
+        // TransactionDeleter myTransactionDeleter;
+        // ReportGenerator myReportGenerator;
+        // ReportViewer myReportViewer;
 
     public:
 
         Calculator();
         void Prompt();
+        ~Calculator();
 
 };
 

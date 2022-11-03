@@ -8,7 +8,7 @@
 
 #include "Helper.hpp"
 
-class Dialog : public Helper{
+class Dialog : public Helper {
 
     public:
 
