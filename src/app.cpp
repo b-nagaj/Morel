@@ -5,8 +5,8 @@
 
 int main() {
 
-    Setup s;
-    Calculator c;
+    Setup mySetup;
+    Calculator * myCalculator = new Calculator;
 
     return 0;
 
