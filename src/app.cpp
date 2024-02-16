@@ -1,13 +1,16 @@
 #include "../lib/Setup.hpp"
+#include "../lib/Dialog.hpp"
 #include "../lib/Calculator.hpp"
 
 #include <filesystem>
 
 int main() {
+    Setup setup;
+    Dialog dialog;
+    Calculator calculator;
 
-    Setup mySetup;
-    Calculator * myCalculator = new Calculator;
+    dialog.WelcomeBanner();
+    calculator.Calculate();
 
     return 0;
-
 }
