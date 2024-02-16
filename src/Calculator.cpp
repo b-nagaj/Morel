@@ -1,75 +1,95 @@
 #include <iostream>
 
 #include "../lib/Calculator.hpp"
-#include "../lib/Dialog.hpp"
-#include "../lib/ReportGenerator.hpp"
-#include "../lib/DataFileGenerator.hpp"
-#include "../lib/ReportViewer.hpp"
 
 Calculator::Calculator() {
-
-    myDialog = new Dialog;
-    myExpenseListUpdater = new ExpenseListUpdater;
-    myDataFileGenerator = new DataFileGenerator;
-    myTransactionAdder = new TransactionAdder;
-    myTransactionDeleter = new TransactionDeleter;
-    myReportGenerator = new ReportGenerator;
-    myReportViewer = new ReportViewer;
-
-    myDialog->option = 0;
-    Prompt();
-
+    SetOperation(0);
 }
 
-void Calculator::Prompt() {
+void Calculator::Calculate() {
+    while(GetOperation() != NUM_OPERATIONS) {
+        DisplayOperations();
+        GetOperationFromUser();
 
-    myDialog->WelcomeBanner();
-    
-    while (myDialog->option != myDialog->NUM_MENU_OPTIONS) {
-        myDialog->Menu();
+        switch(GetOperation()) {
+            case 1:
+                expenseListUpdater.Update();
+                break;
+            case 2:
+                dataFileGenerator.Generate();
+                break;
+            case 3:
+                transactionAdder.Add();
+                break;
+            case 4:
+                transactionDeleter.Delete();
+                break;
+            case 5:
+                reportGenerator.Generate();
+                break;
+            case 6:
+                reportViewer.View();
+                break;
+        }
+    }
+}
 
-        switch (myDialog->option) {
-        case 1 :
-            myExpenseListUpdater->Update();
-            break;
+int Calculator::GetOperation() {
+    return operation;
+}
 
-        case 2 : 
-            myDataFileGenerator->Generate();
-            break;
+void Calculator::SetOperation(int num) {
+    operation = num;
+}
 
-        case 3 :
-            myTransactionAdder->Add();
-            break;
-        
-        case 4 :
-            myTransactionDeleter->Delete();
-            break;
+void Calculator::DisplayOperations() {
+    std::cout << "\n\nEnter the # of an operation from the list\n";
 
-        case 5 :
-            myReportGenerator->Generate();
-            break;
-    
-        case 6 :
-            myReportViewer->View();
-            break;
+    std::cout << "\n\t1. Update List Of Expenses"
+              << "\n\t2. Generate Data Files"
+              << "\n\t3. Add a Transaction"
+              << "\n\t4. Delete a Transaction"
+              << "\n\t5. Generate A Report"
+              << "\n\t6. View A Report"
+              << "\n\t7. Quit";
+}
 
-        case 7 :
-            std::cout << "\nQuitting!\n\n";
+void Calculator::GetOperationFromUser() {
+    std::cout << "\n\nOperation: ";
+    std::string uncheckedOperation;
+    std::cin >> uncheckedOperation;
+
+    if (ValidateOperation(uncheckedOperation)) {
+        std::string checkedOperation = uncheckedOperation;
+        SetOperation(std::stoi(checkedOperation));
+    }
+    else {
+        SetOperation(0);
+        Calculate();
+    }
+}
+
+bool Calculator::ValidateOperation(std::string uncheckedOperation) {
+    // check if the users input is empty
+    if (uncheckedOperation.empty()) {
+        std::cout << "\nERROR: Please choose an operation from the list\n\n<><><><><><><><><><><><><><>";
+        return false;
+    }
+
+    // check if every character in the users input is a digit
+    for (char character : uncheckedOperation) {
+        if (!std::isdigit(character)) {
+            std::cout << "\nERROR: '" << uncheckedOperation << "' is not an integer\n\n<><><><><><><><><><><><><><>";
+            return false;
         }
     }
 
-    myDialog->option = 0;
-
-}
-
-Calculator::~Calculator() {
-
-    delete myDialog;
-    delete myExpenseListUpdater;
-    delete myDataFileGenerator;
-    delete myTransactionAdder;
-    delete myTransactionDeleter;
-    delete myReportGenerator;
-    delete myReportViewer;
-
+    // check if the users input is within the range of 1-7
+    if (std::stoi(uncheckedOperation) < 1 || std::stoi(uncheckedOperation) > 7) {
+        std::cout << "\nERROR: '" << uncheckedOperation << "' does not fall within the range of 1 - " << NUM_OPERATIONS << "\n\n<><><><><><><><><><><><><><>";
+        return false;
+    }
+    else {
+        return true;
+    }
 }

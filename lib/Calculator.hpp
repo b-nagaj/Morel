@@ -1,40 +1,36 @@
 #ifndef CALCULATOR_HPP
 #define CALCULATOR_HPP
 
-#include "Dialog.hpp"
-#include "ExpenseListUpdater.hpp"
-#include "DataFileGenerator.hpp"
-#include "TransactionAdder.hpp"
-#include "TransactionDeleter.hpp"
-#include "ReportGenerator.hpp"
-#include "ReportViewer.hpp"
+#include "./ExpenseListUpdater.hpp"
+#include "./DataFileGenerator.hpp"
+#include "./TransactionAdder.hpp"
+#include "./TransactionDeleter.hpp"
+#include "./ReportGenerator.hpp"
+#include "./ReportViewer.hpp"
 
 class Calculator {
-
+    // attributes
+    private:
+        int operation; // stores the calculator operation selected by the user
+        ExpenseListUpdater expenseListUpdater;
+        DataFileGenerator dataFileGenerator;
+        TransactionAdder transactionAdder;
+        TransactionDeleter transactionDeleter;
+        ReportGenerator reportGenerator;
+        ReportViewer reportViewer;
     public:
-
-        Dialog * myDialog;
-        ExpenseListUpdater * myExpenseListUpdater;
-        DataFileGenerator * myDataFileGenerator;
-        TransactionAdder * myTransactionAdder;
-        TransactionDeleter * myTransactionDeleter;
-        ReportGenerator * myReportGenerator;
-        ReportViewer * myReportViewer;
-
-        //Dialog myDialog;
-        // ExpenseListUpdater myExpenseListUpdater;
-        // DataFileGenerator myDataFileGenerator;
-        // TransactionAdder myTransactionAdder;
-        // TransactionDeleter myTransactionDeleter;
-        // ReportGenerator myReportGenerator;
-        // ReportViewer myReportViewer;
-
+        const int NUM_OPERATIONS = 7;
+    
+    // methods
+    private:
+        int GetOperation();
+        void SetOperation(int num);
+        void DisplayOperations(); // display a list of calculator operations available to the user
+        void GetOperationFromUser();
+        bool ValidateOperation(std::string uncheckedOperation);
     public:
-
         Calculator();
-        void Prompt();
-        ~Calculator();
-
+        void Calculate();
 };
 
 #endif

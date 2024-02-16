@@ -18,9 +18,7 @@ class Dialog : public Helper {
     public:
     
         Dialog();
-        void Menu();
         void WelcomeBanner();
-        bool ValidateChoice(std::string c);
         void ReportBanner(std::ostream& stream);
 
 };
