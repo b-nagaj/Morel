@@ -7,14 +7,15 @@
 
 class Transaction {
     // attributes
+    // each of these represent a column inside the Transactions table
     private:
-        int userID;
+        int userID; 
         std::string amount;
         std::string category;
         std::string transactionDate;
     
     // methods
-    private:
+    public:
         std::string GetTransactionDate();
         void SetTransactionDate(Date date);
         int GetUserID();
@@ -24,8 +25,7 @@ class Transaction {
         std::string GetCategory();
         void SetCategory(std::string c);
         std::string FormatToDecimal(std::string value);
-    public:
-        Transaction(int id, double a, std::string c, std::string td);
+        Transaction(int id, std::string a, std::string c, Date td);
 
 };
 

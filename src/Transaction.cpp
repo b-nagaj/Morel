@@ -3,11 +3,11 @@
 
 #include "../lib/Transaction.hpp"
 
-Transaction::Transaction(int id, double a, std::string c, std::string td) {
-    userID = id;
-    amount = a;
-    category = c;
-    transactionDate = td;
+Transaction::Transaction(int id, std::string a, std::string c, Date td) {
+    SetUserID(id);
+    SetAmount(a);
+    SetCategory(c);
+    SetTransactionDate(td);
 }
 
 std::string Transaction::GetTransactionDate() {
