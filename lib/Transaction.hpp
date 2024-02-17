@@ -23,7 +23,7 @@ class Transaction {
         void SetAmount(std::string a);
         std::string GetCategory();
         void SetCategory(std::string c);
-        std::string FormatAmountToDecimal(std::string value);
+        std::string FormatToDecimal(std::string value);
     public:
         Transaction(int id, double a, std::string c, std::string td);
 

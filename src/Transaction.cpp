@@ -31,7 +31,7 @@ std::string Transaction::GetAmount() {
 }
 
 void Transaction::SetAmount(std::string a) {
-    amount = FormatAmountToDecimal(a);
+    amount = FormatToDecimal(a);
 }
 
 std::string Transaction::GetCategory() {
@@ -42,7 +42,7 @@ void Transaction::SetCategory(std::string c) {
     category = c;
 }
 
-std::string Transaction::FormatAmountToDecimal(std::string value) {
+std::string Transaction::FormatToDecimal(std::string value) {
     std::stringstream ss;
     ss << std::fixed << std::setprecision(2) << value;
     return ss.str();
