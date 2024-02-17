@@ -15,16 +15,21 @@ class Transaction {
         std::string transactionDate;
     
     // methods
-    public:
-        Transaction(int id, std::string a, std::string c, Date td);
-        std::string GetTransactionDate();
-        void SetTransactionDate(Date date);
-        int GetUserID();
+    private:
+        // Setters
         void SetUserID(int id);
-        std::string GetAmount();
         void SetAmount(std::string a);
-        std::string GetCategory();
         void SetCategory(std::string c);
+        void SetTransactionDate(Date date);
+
+    public:     
+        Transaction(int id, std::string a, std::string c, Date td);
+        
+        // Getters
+        int GetUserID();
+        std::string GetAmount();
+        std::string GetTransactionDate();
+        std::string GetCategory();
 };
 
 #endif
