@@ -10,40 +10,45 @@ Transaction::Transaction(int id, std::string a, std::string c, Date td) {
     SetTransactionDate(td);
 }
 
-std::string Transaction::GetTransactionDate() {
-    return transactionDate;
+// helper function to format a transaction amount to currency format
+std::string FormatToDecimal(std::string value) {
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(2) << value;
+    return ss.str();
 }
 
-void Transaction::SetTransactionDate(Date date) {
-    transactionDate = date.FormatToTimestamp();
-}
+// Getters
 
 int Transaction::GetUserID() {
     return userID;
-}
-
-void Transaction::SetUserID(int id) {
-    userID = id;
 }
 
 std::string Transaction::GetAmount() {
     return amount;
 }
 
-void Transaction::SetAmount(std::string a) {
-    amount = FormatToDecimal(a);
-}
-
 std::string Transaction::GetCategory() {
     return category;
+}
+
+std::string Transaction::GetTransactionDate() {
+    return transactionDate;
+}
+
+// Setters
+
+void Transaction::SetUserID(int id) {
+    userID = id;
+}
+
+void Transaction::SetAmount(std::string a) {
+    amount = FormatToDecimal(a);
 }
 
 void Transaction::SetCategory(std::string c) {
     category = c;
 }
 
-std::string Transaction::FormatToDecimal(std::string value) {
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << value;
-    return ss.str();
+void Transaction::SetTransactionDate(Date date) {
+    transactionDate = date.FormatToTimestamp();
 }

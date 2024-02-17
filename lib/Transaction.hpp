@@ -16,6 +16,7 @@ class Transaction {
     
     // methods
     public:
+        Transaction(int id, std::string a, std::string c, Date td);
         std::string GetTransactionDate();
         void SetTransactionDate(Date date);
         int GetUserID();
@@ -24,9 +25,6 @@ class Transaction {
         void SetAmount(std::string a);
         std::string GetCategory();
         void SetCategory(std::string c);
-        std::string FormatToDecimal(std::string value);
-        Transaction(int id, std::string a, std::string c, Date td);
-
 };
 
 #endif
