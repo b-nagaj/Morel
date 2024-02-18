@@ -1,7 +1,7 @@
 #include <sstream>
 #include <iomanip>
 
-#include "../lib/Transaction.hpp"
+#include "Transaction.hpp"
 
 Transaction::Transaction(int id, std::string a, std::string c, Date td) {
     SetUserID(id);

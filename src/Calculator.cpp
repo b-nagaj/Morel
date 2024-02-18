@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../lib/Calculator.hpp"
+#include "Calculator.hpp"
 
 Calculator::Calculator() {
     SetOperation(0);

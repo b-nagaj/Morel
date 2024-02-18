@@ -6,7 +6,7 @@
 #include <boost/filesystem.hpp>
 #include <experimental/filesystem>
 
-#include "../lib/DataFileGenerator.hpp"
+#include "DataFileGenerator.hpp"
 
 DataFileGenerator::DataFileGenerator() {
 

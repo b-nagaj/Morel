@@ -1,7 +1,7 @@
 #include <iostream>
 #include <filesystem>
 
-#include "../lib/ReportViewer.hpp"
+#include "ReportViewer.hpp"
 
 ReportViewer::ReportViewer() {
 

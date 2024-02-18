@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <algorithm>
 
-#include "../lib/TransactionDeleter.hpp"
+#include "TransactionDeleter.hpp"
 
 TransactionDeleter::TransactionDeleter() {
 

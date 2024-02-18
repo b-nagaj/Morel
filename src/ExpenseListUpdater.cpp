@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iomanip>
 
-#include "../lib/ExpenseListUpdater.hpp"
+#include "ExpenseListUpdater.hpp"
 
 ExpenseListUpdater::ExpenseListUpdater() {
 

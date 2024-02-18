@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <fstream>
 
-#include "../lib/Helper.hpp"
-#include "../lib/Dialog.hpp"
+#include "Helper.hpp"
+#include "Dialog.hpp"
 
 Dialog::Dialog() {
 

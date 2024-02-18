@@ -1,6 +1,6 @@
-#include "../lib/Setup.hpp"
-#include "../lib/Dialog.hpp"
-#include "../lib/Calculator.hpp"
+#include "Setup.hpp"
+#include "Dialog.hpp"
+#include "Calculator.hpp"
 
 #include <filesystem>
 
