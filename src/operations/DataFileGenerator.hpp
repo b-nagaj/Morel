@@ -6,7 +6,7 @@
 #include <fstream>
 #include <ostream>
 
-#include "utils/Helper.hpp"
+#include "../utils/Helper.hpp"
 
 class DataFileGenerator : public Helper {
 

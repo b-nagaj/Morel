@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-#include "utils/Helper.hpp"
+#include "../utils/Helper.hpp"
 
 class ExpenseListUpdater : public Helper {
 

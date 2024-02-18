@@ -6,8 +6,8 @@
 #include <fstream>
 #include <ostream>
 
-#include "utils/Helper.hpp"
-#include "utils/Dialog.hpp"
+#include "../utils/Helper.hpp"
+#include "../utils/Dialog.hpp"
 
 class ReportGenerator : public Helper {
 

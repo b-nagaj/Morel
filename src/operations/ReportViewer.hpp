@@ -1,7 +1,7 @@
 #ifndef REPORT_VIEWER
 #define REPORT_VIEWER
 
-#include "utils/Helper.hpp"
+#include "../utils/Helper.hpp"
 
 class ReportViewer : public Helper {
 
