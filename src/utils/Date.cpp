@@ -1,7 +1,7 @@
 #include <sstream>
 #include <iomanip>
 
-#include "../lib/Date.hpp"
+#include "Date.hpp"
 
 Date::Date(int m, int d, int y) {
     month = m;

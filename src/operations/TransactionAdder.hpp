@@ -1,7 +1,7 @@
 #ifndef TRANSACTION_ADDER_HPP
 #define TRANSACTION_ADDER_HPP
 
-#include "Helper.hpp"
+#include "../utils/Helper.hpp"
 
 class TransactionAdder : public Helper {
 

@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <boost/filesystem.hpp>
 
-#include "../lib/Setup.hpp"
+#include "Setup.hpp"
 
 Setup::Setup() {
 

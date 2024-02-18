@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../lib/Helper.hpp"
+#include "Helper.hpp"
 
 // Expenses
 

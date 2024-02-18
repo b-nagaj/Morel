@@ -1,12 +1,12 @@
 #ifndef CALCULATOR_HPP
 #define CALCULATOR_HPP
 
-#include "./ExpenseListUpdater.hpp"
-#include "./DataFileGenerator.hpp"
-#include "./TransactionAdder.hpp"
-#include "./TransactionDeleter.hpp"
-#include "./ReportGenerator.hpp"
-#include "./ReportViewer.hpp"
+#include "operations/ExpenseListUpdater.hpp"
+#include "operations/DataFileGenerator.hpp"
+#include "operations/TransactionAdder.hpp"
+#include "operations/TransactionDeleter.hpp"
+#include "operations/ReportGenerator.hpp"
+#include "operations/ReportViewer.hpp"
 
 class Calculator {
     // attributes

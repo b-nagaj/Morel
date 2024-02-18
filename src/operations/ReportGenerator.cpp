@@ -5,8 +5,8 @@
 #include <ostream>
 #include <boost/filesystem.hpp>
 
-#include "../lib/ReportGenerator.hpp"
-#include "../lib/Dialog.hpp"
+#include "ReportGenerator.hpp"
+#include "../utils/Dialog.hpp"
 
 ReportGenerator::ReportGenerator() {
     

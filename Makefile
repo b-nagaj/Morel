@@ -1,50 +1,56 @@
 # compile settings
-GCC = g++ -std=c++17
+CXX = g++
+CXXFLAGS = -std=c++17
+LDFLAGS = -lboost_system -lboost_filesystem -L/usr/lib/x86_64-linux-gnu/ -lmysqlcppconn
 BUILD_BINARY = morel
 TEST_BINARIES = testSetup testHelper testCalculator testDialog
-BOOST = -lboost_system -lboost_filesystem
 
 # directories
 SRC_DIR = src
 TEST_DIR = test
-OBJ_DIR = obj
-DATA_DIR = data
-REPORT_DIR = reports
+BUILD_DIR = build
 
 # file collections
-SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
-OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
+OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
 # other aliases
 MKDIR_OBJ = make_object_directory
 
+# main target
 all: $(MKDIR_OBJ) $(BUILD_BINARY)
-	./morel
+	./$(BUILD_BINARY)
 
+# compile generated output files
 $(BUILD_BINARY): $(OBJ_FILES)
-	$(GCC) -o $@ $^ $(BOOST)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp 
-	$(GCC) -c -o $@ $^ $(BOOST)
+# compile cpp files in the /src directory recursively
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp 
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
+# create build directories
 $(MKDIR_OBJ):
-	mkdir -p $(OBJ_DIR) $(DATA_DIR) $(REPORT_DIR)
- 
+	mkdir -p $(BUILD_DIR) $(BUILD_DIR)/entities $(BUILD_DIR)/operations $(BUILD_DIR)/setup $(BUILD_DIR)/utils
+
+# tests
 test: $(TEST_BINARIES)
 	./testSetup
 	./testHelper
 	./testCalculator
 	./testDialog
 
+# compile generated output files
 test%: test%.o
-	$(GCC) test$*.o -o test$* $(BOOST)
+	$(GCC) test$*.o -o test$* $(BOOST) $(MY_SQL)
 
+# compile cpp files in the /test directory
 test%.o: $(TEST_DIR)/test%.cpp
 	$(GCC) -c $(TEST_DIR)/test$*.cpp
 
+# cleans
 clean:
-	rm -r $(OBJ_FILES) $(OBJ_DIR)
-	rm $(BUILD_BINARY)
+	rm -rf $(BUILD_DIR) $(BUILD_BINARY)
 
 cleanTests:
 	rm $(TEST_BINARIES)

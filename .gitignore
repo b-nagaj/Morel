@@ -1,6 +1,6 @@
 /.vscode
 /data
-/obj
+/build
 /reports
 config.txt
 test/testConfig.txt
