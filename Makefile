@@ -21,7 +21,7 @@ MKDIR_OBJ = make_object_directory
 all: $(MKDIR_OBJ) $(BUILD_BINARY)
 	./$(BUILD_BINARY)
 
-# compile generated .o files
+# compile generated output files
 $(BUILD_BINARY): $(OBJ_FILES)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
@@ -40,7 +40,7 @@ test: $(TEST_BINARIES)
 	./testCalculator
 	./testDialog
 
-# compile generated .o files
+# compile generated output files
 test%: test%.o
 	$(GCC) test$*.o -o test$* $(BOOST) $(MY_SQL)
 
