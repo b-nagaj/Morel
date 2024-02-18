@@ -31,7 +31,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 # create build directories
 $(MKDIR_OBJ):
-	mkdir -p $(BUILD_DIR) $(BUILD_DIR)/entities $(BUILD_DIR)/setup $(BUILD_DIR)/utils
+	mkdir -p $(BUILD_DIR) $(BUILD_DIR)/entities $(BUILD_DIR)/operations $(BUILD_DIR)/setup $(BUILD_DIR)/utils
 
 # tests
 test: $(TEST_BINARIES)
