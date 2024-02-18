@@ -6,7 +6,7 @@
 #include <boost/filesystem.hpp>
 
 #include "ReportGenerator.hpp"
-#include "Dialog.hpp"
+#include "utils/Dialog.hpp"
 
 ReportGenerator::ReportGenerator() {
     

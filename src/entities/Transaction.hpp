@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../Date.hpp"
+#include "../utils/Date.hpp"
 
 class Transaction {
     // attributes
