@@ -1,4 +1,4 @@
-#include "Setup.hpp"
+#include "setup/Setup.hpp"
 #include "Dialog.hpp"
 #include "Calculator.hpp"
 
