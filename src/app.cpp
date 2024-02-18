@@ -1,5 +1,5 @@
 #include "setup/Setup.hpp"
-#include "Dialog.hpp"
+#include "utils/Dialog.hpp"
 #include "Calculator.hpp"
 
 #include <filesystem>
