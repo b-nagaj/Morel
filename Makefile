@@ -1,7 +1,7 @@
 # compile settings
 CXX = g++
 CXXFLAGS = -std=c++17
-LDFLAGS = -lboost_system -lboost_filesystem -L/usr/lib/x86_64-linux-gnu/ -lmysqlcppconn
+LDFLAGS = -lboost_system -lboost_filesystem -I/usr/include/mysql -lmysqlclient
 BUILD_BINARY = morel
 TEST_BINARIES = testSetup testHelper testCalculator testDialog
 
