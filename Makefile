@@ -1,8 +1,9 @@
 # compile settings
 CXX = g++
 CXXFLAGS = -std=c++17
-LDFLAGS = -lboost_system -lboost_filesystem -I/usr/include/mysql -lmysqlclient
 BUILD_BINARY = morel
+BOOST = -lboost_system -lboost_filesystem
+MY_SQL = -I/usr/include/mysql -lmysqlclient
 TEST_BINARIES = testSetup testHelper testCalculator testDialog
 
 # directories
@@ -23,7 +24,7 @@ all: $(MKDIR_OBJ) $(BUILD_BINARY)
 
 # compile generated output files
 $(BUILD_BINARY): $(OBJ_FILES)
-	$(CXX) -o $@ $^ $(LDFLAGS)
+	$(CXX) -o $@ $^ $(BOOST) $(MY_SQL)
 
 # compile cpp files in the /src directory recursively
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp 
