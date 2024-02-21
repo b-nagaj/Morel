@@ -23,6 +23,7 @@ class Transaction {
         void SetTransactionDate(Date date);
 
     public:     
+        Transaction();
         Transaction(int id, std::string a, std::string c, Date td);
         
         // Getters

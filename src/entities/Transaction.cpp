@@ -3,6 +3,14 @@
 
 #include "Transaction.hpp"
 
+Transaction::Transaction() {
+    SetUserID(0);
+    SetAmount("");
+    SetCategory("");
+    Date date(0, 0, 0);
+    SetTransactionDate(date);
+}
+
 Transaction::Transaction(int id, std::string a, std::string c, Date td) {
     SetUserID(id);
     SetAmount(a);

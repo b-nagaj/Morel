@@ -3,10 +3,10 @@
 
 #include "operations/ExpenseListUpdater.hpp"
 #include "operations/DataFileGenerator.hpp"
-#include "operations/TransactionAdder.hpp"
 #include "operations/TransactionDeleter.hpp"
 #include "operations/ReportGenerator.hpp"
 #include "operations/ReportViewer.hpp"
+#include "operations/AddTransaction.hpp"
 
 class Calculator {
     // attributes
@@ -14,10 +14,10 @@ class Calculator {
         int operation; // stores the calculator operation selected by the user
         ExpenseListUpdater expenseListUpdater;
         DataFileGenerator dataFileGenerator;
-        TransactionAdder transactionAdder;
         TransactionDeleter transactionDeleter;
         ReportGenerator reportGenerator;
         ReportViewer reportViewer;
+        AddTransaction addTransaction;
     public:
         const int NUM_OPERATIONS = 7;
     
