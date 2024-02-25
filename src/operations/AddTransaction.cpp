@@ -83,7 +83,6 @@ bool AddTransaction::ValidateNewTransactionAmount(std::string uncheckedTransacti
     }
 }
 
-// TODO: This is broken
 bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransactionCategory) {
     // check if the users input is empty
     if (uncheckedTransactionCategory.empty()) {
