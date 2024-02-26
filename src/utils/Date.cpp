@@ -1,6 +1,3 @@
-#include <sstream>
-#include <iomanip>
-
 #include "Date.hpp"
 
 Date::Date(int m, int d, int y) {

@@ -1,9 +1,11 @@
 #ifndef TRANSACTION
 #define TRANSACTION
 
-#include <string>
-
 #include "../utils/Date.hpp"
+
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 class Transaction {
     // attributes
