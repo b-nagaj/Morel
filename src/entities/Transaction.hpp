@@ -2,6 +2,8 @@
 #define TRANSACTION
 
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 #include "../utils/Date.hpp"
 
