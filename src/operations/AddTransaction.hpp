@@ -4,6 +4,17 @@
 #include "../utils/Date.hpp"
 #include "../entities/Transaction.hpp"
 
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <fstream>
+#include <algorithm>
+#include <chrono>
+#include <ctime>
+#include <mysql/mysql.h>
+#include <cctype>
+#include <map>
+
 class AddTransaction {
     // attributes
     private:
