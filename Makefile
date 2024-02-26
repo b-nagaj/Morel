@@ -1,27 +1,30 @@
 # compile settings
 CXX = g++
 CXXFLAGS = -std=c++17
+
+# libraries
 BOOST = -lboost_system -lboost_filesystem
 MY_SQL = -I/usr/include/mysql -lmysqlclient
 
 # binaries
-BUILD_BINARY = morel
-TEST_BINARIES = testSetup testHelper testCalculator testDialog
+BUILD_BINARY = bin/morel
+TEST_BINARIES = bin/testSetup bin/testHelper bin/testCalculator bin/testDialog
 
 # directories
 SRC_DIR = src
 TEST_DIR = test
 BUILD_DIR = build
+BIN_DIR = bin
 
 # file collections
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
 # other aliases
-MKDIR_OBJ = make_object_directory
+MKDIR = create_build_directories
 
 # main target
-all: $(MKDIR_OBJ) $(BUILD_BINARY)
+all: $(MKDIR) $(BUILD_BINARY)
 	./$(BUILD_BINARY)
 
 # compile generated output files
@@ -33,27 +36,27 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 # create build directories
-$(MKDIR_OBJ):
-	mkdir -p $(BUILD_DIR) $(BUILD_DIR)/entities $(BUILD_DIR)/operations $(BUILD_DIR)/setup $(BUILD_DIR)/utils
+$(MKDIR):
+	mkdir -p $(BUILD_DIR) $(BUILD_DIR)/entities $(BUILD_DIR)/operations $(BUILD_DIR)/setup $(BUILD_DIR)/utils bin
 
 # tests
 test: $(TEST_BINARIES)
-	./testSetup
-	./testHelper
-	./testCalculator
-	./testDialog
+	./bin/testSetup
+	./bin/testHelper
+	./bin/testCalculator
+	./bin/testDialog
 
 # compile generated output files
-test%: test%.o
-	$(GCC) test$*.o -o test$* $(BOOST) $(MY_SQL)
+bin/test%: test%.o
+	$(GCC) test$*.o -o $@ $(BOOST) $(MY_SQL)
 
 # compile cpp files in the /test directory
 test%.o: $(TEST_DIR)/test%.cpp
-	$(GCC) -c $(TEST_DIR)/test$*.cpp
+	$(GCC) -c $< -o $@
 
 # cleans
 clean:
-	rm -rf $(BUILD_DIR) $(BUILD_BINARY)
+	rm -rf $(BUILD_DIR) $(BIN_DIR)
 
 cleanTests:
 	rm $(TEST_BINARIES)
