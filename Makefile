@@ -8,14 +8,14 @@ MY_SQL = -I/usr/include/mysql -lmysqlclient
 BUILD_BINARY = morel
 TEST_BINARIES = testSetup testHelper testCalculator testDialog
 
-# file collections
-SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
-OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
-
 # directories
 SRC_DIR = src
 TEST_DIR = test
 BUILD_DIR = build
+
+# file collections
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
+OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
 # other aliases
 MKDIR_OBJ = make_object_directory
