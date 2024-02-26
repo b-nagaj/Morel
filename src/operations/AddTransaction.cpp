@@ -1,14 +1,5 @@
 #include "AddTransaction.hpp"
-
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <fstream>
-#include <algorithm>
-#include <chrono>
-#include <ctime>
-#include <mysql/mysql.h>
-#include <cctype>
+#include "../utils/DBManager.hpp"
 
 void AddTransaction::Add() {
     GetNewTransactions();
@@ -99,31 +90,14 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
 }
 
 void AddTransaction::AddNewTransactions() {
-    // establish a MySQL connection & report connection exceptions
-    MYSQL *con = mysql_init(NULL);
-    if (con == NULL) {
-        std::cerr << "Error initializing MySQL connection" << std::endl;
+    DBManager dbManager;
+    
+    if (dbManager.Connect()) {
+        dbManager.CreateNewTransactions(newTransactions, numNewTransactions);
+        dbManager.Disconnect();
+        std::cout << "\n" << numNewTransactions << " new Transaction(s) Added ✅";
     }
-    // TODO: Retrieve these credentials with AWS Secrets Manager API
-    if (!mysql_real_connect(con, "dbName", "dbUsername", "dbPassword", "Morel", 3306, NULL, 0)) {
-        std::cerr << "Error connecting to MySQL database: " << mysql_error(con) << std::endl;
-        mysql_close(con);
+    else {
+        std::cout << "\nERROR: Could not connect to database\n\n";
     }
-
-    // execute INSERT queries for each new transaction
-    for (int i = 0; i < numNewTransactions; i++) {
-        std::string query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) VALUES ('" +
-                            std::to_string(newTransactions[i].GetUserID()) + "', '" +
-                            newTransactions[i].GetAmount() + "', '" +
-                            newTransactions[i].GetCategory() + "', '" +
-                            newTransactions[i].GetTransactionDate() + "')";
-        // handle exceptions
-        if (mysql_query(con, query.c_str()) != 0) {
-            std::cerr << "Error executing SQL query: " << mysql_error(con) << std::endl;
-            mysql_close(con);
-        }
-    }
-
-    // Close MySQL connection
-    mysql_close(con);
 }
