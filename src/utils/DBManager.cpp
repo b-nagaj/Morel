@@ -1,12 +1,15 @@
 #include "DBManager.hpp"
 
 std::map<std::string, std::string> DBManager::GetDBSecrets() {
-    std::map<std::string, std::string> dbSecrets;
+    std::map<std::string, std::string> dbSecrets; // map to store key/value pairs of DB secrets
     std::string line, key, value;
     std::ifstream envFile ("/Users/bryce/Documents/GitHub/Projects/Morel/dbSecrets.env");
 
     if (envFile.is_open()) {
-        while ( getline (envFile, line) ) {
+        // read each line from .env file
+        // split each line with a delimeter
+        // insert each side of the split into a new key/value pair inside dbSecrets
+        while ( getline (envFile, line) ) { 
             std::istringstream iss(line);
             std::getline(iss, key, '=');
             std::getline(iss, value);
