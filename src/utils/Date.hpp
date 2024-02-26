@@ -1,6 +1,8 @@
 #ifndef DATE
 #define DATE
 
+#include <sstream>
+#include <iomanip>
 #include <string>
 
 class Date {
