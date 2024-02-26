@@ -8,6 +8,8 @@
 #include "operations/ReportViewer.hpp"
 #include "operations/AddTransaction.hpp"
 
+#include <iostream>
+
 class Calculator {
     // attributes
     private:

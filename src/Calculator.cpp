@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Calculator.hpp"
 
 Calculator::Calculator() {
