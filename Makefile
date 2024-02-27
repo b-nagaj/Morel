@@ -66,7 +66,3 @@ $(MKDIR):
 # cleans
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
-
-cleanTests:
-	rm $(TEST_BINARIES)
-	rm $(TEST_DIR)/testConfig.txt
