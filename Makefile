@@ -34,7 +34,7 @@ $(BUILD_BINARY): $(OBJ_FILES)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp 
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-# main target
+# test target
 test: $(MKDIR) $(TEST_BINARY)
 	./$(TEST_BINARY)
 
@@ -45,16 +45,6 @@ $(TEST_BINARY): $(TEST_OBJ_FILES)
 # compile cpp files in the /src directory recursively
 $(BUILD_DIR)/%.o: $(TEST_DIR)/%.cpp 
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
-
-# # test target
-# test: $(MKDIR) $(TEST_BINARY)
-# 	./$(TEST_BINARY)
-
-# $(TEST_BINARY): $(TEST_OBJ_FILES)
-# 	$(CXX) -o $@ $< $(BOOST) $(MY_SQL)
-
-# $(BUILD_DIR)/%.o: $(TEST_DIR)/%.cpp
-# 	$(CXX) $(CXXFLAGS) -c -o $< $@
 
 # create build directories
 $(MKDIR):
