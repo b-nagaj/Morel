@@ -1,6 +1,6 @@
 # compile settings
 CXX = g++
-CXXFLAGS = -std=c++17
+CXXFLAGS = -std=c++17 -Wno-deprecated-declarations
 
 # libraries
 BOOST = -lboost_system -lboost_filesystem
