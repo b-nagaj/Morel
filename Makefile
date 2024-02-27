@@ -1,10 +1,7 @@
 # compile settings
 CXX = g++
 CXXFLAGS = -std=c++17 -Wno-deprecated-declarations
-
-# libraries
-BOOST = -lboost_system -lboost_filesystem
-MY_SQL = -I/usr/include/mysql -lmysqlclient
+LDFLAGS = -lboost_system -lboost_filesystem -I/usr/include/mysql -lmysqlclient
 
 # binaries
 BUILD_BINARY = bin/morel
@@ -31,7 +28,7 @@ all: $(MKDIR) $(BUILD_BINARY)
 
 # compile generated output files
 $(BUILD_BINARY): $(OBJ_FILES)
-	$(CXX) -o $@ $^ $(BOOST) $(MY_SQL)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
 # compile cpp files in the /src directory recursively
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp 
@@ -43,7 +40,7 @@ test: $(MKDIR) $(TEST_BINARY)
 
 # compile generated output files
 $(TEST_BINARY): $(TEST_OBJ_FILES)
-	$(CXX) -o $@ $^ $(BOOST) $(MY_SQL)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
 # compile cpp files in the /src directory recursively
 $(BUILD_DIR)/%.o: $(TEST_DIR)/%.cpp 
