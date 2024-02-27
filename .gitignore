@@ -1,12 +1,5 @@
 /.vscode
-/data
+/bin
 /build
-/reports
 config.txt
-test/testConfig.txt
-morel
-testSetup
-testHelper
-testCalculator
-testDialog
 dbSecrets.env
