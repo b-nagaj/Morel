@@ -1,5 +1,4 @@
-#define BOOST_TEST_MODULE "User"
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "../../src/entities/User.hpp"
 #include "../../src/entities/User.cpp"
