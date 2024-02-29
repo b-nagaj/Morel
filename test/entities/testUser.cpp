@@ -5,7 +5,7 @@
 
 BOOST_AUTO_TEST_SUITE ( userTestSuite )
 
-    BOOST_AUTO_TEST_CASE( testUserInitialization ) {
+    BOOST_AUTO_TEST_CASE( defaultUserConstructor ) {
         User user("testUsername");
         std::string username = user.GetUsername();
         BOOST_CHECK_EQUAL(username, "testUsername");
