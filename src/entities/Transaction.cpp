@@ -15,13 +15,6 @@ Transaction::Transaction(int id, std::string a, std::string c, Date td) {
     SetTransactionDate(td);
 }
 
-// helper function to format a transaction amount to currency format
-std::string FormatToDecimal(std::string value) {
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << value;
-    return ss.str();
-}
-
 // Getters
 
 int Transaction::GetUserID() {
@@ -47,7 +40,7 @@ void Transaction::SetUserID(int id) {
 }
 
 void Transaction::SetAmount(std::string a) {
-    amount = FormatToDecimal(a);
+    amount = a;
 }
 
 void Transaction::SetCategory(std::string c) {
