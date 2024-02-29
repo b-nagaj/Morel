@@ -16,4 +16,18 @@ BOOST_AUTO_TEST_SUITE ( transactionTestSuite )
         BOOST_CHECK_EQUAL(transaction.GetTransactionDate(), "0000-00-00 00:00:00");
     }
 
+    BOOST_AUTO_TEST_CASE( alternateTransactionContructor ) {
+        int userID = 1;
+        Date date(2, 28, 2024);
+        std::string amount = "1000.00";
+        std::string category = "testCategory";
+
+        Transaction transaction(1, "1000.00", "testCategory", date);
+
+        BOOST_CHECK_EQUAL(transaction.GetUserID(), 1);
+        BOOST_CHECK_EQUAL(transaction.GetAmount(), "1000.00");
+        BOOST_CHECK_EQUAL(transaction.GetCategory(), "testCategory");
+        BOOST_CHECK_EQUAL(transaction.GetTransactionDate(), "2024-02-28 00:00:00");
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
