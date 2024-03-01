@@ -1,6 +1,9 @@
 #include "AddTransaction.hpp"
 #include "../utils/DBManager.hpp"
 
+/**
+ * Handles invoking the GetNewTransactions() and AddNewTransactions() functions
+ */
 void AddTransaction::Add() {
     GetNewTransactions();
     // confirms with user before performing the create operation
@@ -8,7 +11,11 @@ void AddTransaction::Add() {
         AddNewTransactions();
     }
 }
-
+/**
+ * Grabs the current month, day, and year values
+ * 
+ * @return date a Date object initialized with those values
+ */
 Date GetCurrentDate() {
     // get the current system time
     auto now = std::chrono::system_clock::now();
@@ -22,6 +29,10 @@ Date GetCurrentDate() {
     return date;
 }
 
+/**
+ * Prompts the user to enter data about new transactions
+ * It also initialized the transactionAmount & transactionCategory attributes when valid input is provided
+ */
 void AddTransaction::GetNewTransactions() {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
@@ -57,6 +68,12 @@ void AddTransaction::GetNewTransactions() {
     }
 }
 
+/**
+ * Validates that an input value for a transaction's amount isn't empty and doesn't contain letters
+ * 
+ * @param uncheckedTransactionAmount an input value for a transaction's amount that hasn't been checked
+ * @return boolean value based on whether or not the value is valid or not
+ */
 bool AddTransaction::ValidateNewTransactionAmount(std::string uncheckedTransactionAmount) { 
     // strip decimal character from transaction amount value   
     std::string transactionAmountWithoutDecimal = uncheckedTransactionAmount;
@@ -77,6 +94,12 @@ bool AddTransaction::ValidateNewTransactionAmount(std::string uncheckedTransacti
     }
 }
 
+/**
+ * Validates that an input value for a transaction's category isn't empty and doesn't contains numbers
+ * 
+ * @param uncheckedTransactionAmount an input value for a transaction's category that hasn't been checked
+ * @return boolean value based on whether or not the value is valid or not
+ */
 bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransactionCategory) {
     // check if the users input is empty
     if (uncheckedTransactionCategory.empty()) {
@@ -92,6 +115,11 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
     return true; 
 }
 
+/**
+ * Displays a summary of the user's input and asks them to confirm its correctness
+ * 
+ * @return boolean value that represent's the user's input (yes or no)
+ */
 bool AddTransaction::ConfirmOperation() {
     std::cout << "\n";
     for (int i = 0; i < numNewTransactions; i++) {
@@ -111,6 +139,9 @@ bool AddTransaction::ConfirmOperation() {
     }
 }
 
+/**
+ * Invokes the CreateNewTransactions() function from DBManager after connecting to the database
+ */
 void AddTransaction::AddNewTransactions() {
     DBManager dbManager;
     
