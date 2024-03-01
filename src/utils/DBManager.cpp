@@ -53,7 +53,7 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions, int numNewTr
                             std::to_string(newTransactions[i].GetUserID()) + "', '" +
                             newTransactions[i].GetAmount() + "', '" +
                             newTransactions[i].GetCategory() + "', '" +
-                            newTransactions[i].GetTransactionDate() + "')";
+                            newTransactions[i].GetDate() + "')";
         // handle exceptions
         if (mysql_query(connection, query.c_str()) != 0) {
             std::cerr << "Error executing SQL query: " << mysql_error(connection) << std::endl;
