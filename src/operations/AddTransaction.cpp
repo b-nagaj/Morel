@@ -123,7 +123,7 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
 bool AddTransaction::ConfirmOperation() {
     std::cout << "\n";
     for (int i = 0; i < numNewTransactions; i++) {
-        std::cout << newTransactions[i].GetAmount() << " -> " << newTransactions[i].GetCategory() << "\n";
+        std::cout << "$" << newTransactions[i].GetAmount() << " -> " << newTransactions[i].GetCategory() << "\n";
     }
 
     std::cout << "\nAdd the above transactions? (Y/N): ";
