@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_SUITE ( transactionTestSuite )
         BOOST_CHECK_EQUAL(transaction.GetAmount(), "");
         BOOST_CHECK_EQUAL(transaction.GetCategory(), "");
         // validate that the transactionDate was converted to a timestamp
-        BOOST_CHECK_EQUAL(transaction.GetTransactionDate(), "0000-00-00 00:00:00");
+        BOOST_CHECK_EQUAL(transaction.GetDate(), "0000-00-00 00:00:00");
     }
 
     BOOST_AUTO_TEST_CASE( alternateTransactionContructor ) {
@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE ( transactionTestSuite )
         BOOST_CHECK_EQUAL(transaction.GetUserID(), 1);
         BOOST_CHECK_EQUAL(transaction.GetAmount(), "1000.00");
         BOOST_CHECK_EQUAL(transaction.GetCategory(), "testCategory");
-        BOOST_CHECK_EQUAL(transaction.GetTransactionDate(), "2024-02-28 00:00:00");
+        BOOST_CHECK_EQUAL(transaction.GetDate(), "2024-02-28 00:00:00");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -22,7 +22,7 @@ class Transaction {
         void SetUserID(int id);
         void SetAmount(std::string a);
         void SetCategory(std::string c);
-        void SetTransactionDate(Date date);
+        void SetDate(Date date);
 
     public:     
         Transaction();
@@ -31,7 +31,7 @@ class Transaction {
         // Getters
         int GetUserID();
         std::string GetAmount();
-        std::string GetTransactionDate();
+        std::string GetDate();
         std::string GetCategory();
 };
 
