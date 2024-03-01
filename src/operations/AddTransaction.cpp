@@ -3,7 +3,10 @@
 
 void AddTransaction::Add() {
     GetNewTransactions();
-    AddNewTransactions();
+    // confirms with user before performing the create operation
+    if (ConfirmOperation()) {
+        AddNewTransactions();
+    }
 }
 
 Date GetCurrentDate() {
@@ -87,6 +90,25 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
     }
 
     return true; 
+}
+
+bool AddTransaction::ConfirmOperation() {
+    std::cout << "\n";
+    for (int i = 0; i < numNewTransactions; i++) {
+        std::cout << newTransactions[i].GetAmount() << " -> " << newTransactions[i].GetCategory() << "\n";
+    }
+
+    std::cout << "\nAdd the above transactions? (Y/N): ";
+    std::string confirmationResponse;
+    std::cin >> confirmationResponse; 
+
+    if (confirmationResponse == "Y" || confirmationResponse == "y") {
+        return true;
+    }
+    else {
+        std::cout << "\n0 new Transaction(s) Added";
+        return false;
+    }
 }
 
 void AddTransaction::AddNewTransactions() {
