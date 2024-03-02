@@ -24,7 +24,7 @@ Date GetCurrentDate() {
     // convert the time_t object to a struct tm (broken down time)
     std::tm *tm_now = std::localtime(&time_now);
     // instantiate a new Date object
-    Date date((tm_now->tm_mon + 1), (tm_now->tm_mday), (tm_now->tm_year + 1900));
+    Date date((tm_now->tm_mon + 1), tm_now->tm_mday, (tm_now->tm_year + 1900));
     
     return date;
 }
