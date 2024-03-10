@@ -8,8 +8,7 @@ Calculator::Calculator() {
 }
 
 /**
- * runs a loop continously that gets user input
- * and executes the matching operation
+ * runs a loop continously that gets user input and executes the matching operation
  */ 
 void Calculator::Calculate() {
     while(GetOperation() != NUM_OPERATIONS) {
@@ -104,14 +103,20 @@ bool Calculator::ValidateOperation(std::string uncheckedOperation) {
     // check if every character in the users input is a digit
     for (char character : uncheckedOperation) {
         if (!std::isdigit(character)) {
-            std::cout << "\nERROR: '" << uncheckedOperation << "' is not an integer\n\n";
+            std::cout << "\nERROR: '" 
+                      << uncheckedOperation 
+                      << "' is not an integer\n\n";
             return false;
         }
     }
 
     // check if the users input is within the range of 1-7
     if (std::stoi(uncheckedOperation) < 1 || std::stoi(uncheckedOperation) > 7) {
-        std::cout << "\nERROR: '" << uncheckedOperation << "' does not fall within the range of 1 - " << NUM_OPERATIONS << "\n\n";
+        std::cout << "\nERROR: '" 
+                  << uncheckedOperation 
+                  << "' does not fall within the range of 1 - " 
+                  << NUM_OPERATIONS 
+                  << "\n\n";
         return false;
     }
     else {
