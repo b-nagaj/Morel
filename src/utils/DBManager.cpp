@@ -1,9 +1,9 @@
 #include "DBManager.hpp"
 
 /**
- * Retrieves DB secrets from a local .env file
+ * gets DB secrets from a local .env file
  * 
- * @return a map containing secret names & values
+ * @return a map containing key/value pairs of secret names & values
  */ 
 std::map<std::string, std::string> DBManager::GetDBSecrets() {
     std::map<std::string, std::string> dbSecrets; // map to store key/value pairs of DB secrets
@@ -30,7 +30,7 @@ std::map<std::string, std::string> DBManager::GetDBSecrets() {
 }
 
 /**
- * Initializes a MySQL connection & authenticates with the database
+ * initializes a MySQL connection & authenticates with the database
  * 
  * @return a boolean value based on if the connection was successful/unsuccessful
  */ 
@@ -57,9 +57,9 @@ bool DBManager::Connect() {
 }
 
 /**
- * Adds new transactions into the Transactions table
+ * adds new transactions into the Transactions table
  * 
- * @param newTransactions a pointer to an index in an array of new transactions
+ * @param newTransactions an array of transactions
  * @param numNewTransactions the number of transactions being added to the DB
  */ 
 void DBManager::CreateNewTransactions(Transaction *newTransactions, int numNewTransactions) {

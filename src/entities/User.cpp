@@ -1,18 +1,18 @@
 #include "User.hpp"
 
 /**
- * alternate constructor that initializes a user's username
+ * initializes a user's username
  * 
- * @param username a user's username
+ * @param username
  */ 
 User::User(std::string username) {
     SetUsername(username);
 }
 
 /** 
- * retrieves a user's username
+ * gets a user's username
  * 
- * @return a user's username
+ * @return username
  */ 
 std::string User::GetUsername() {
     return username;
@@ -21,7 +21,7 @@ std::string User::GetUsername() {
 /**
  * sets a user's username
  * 
- * @param u a user's username
+ * @param u
  */ 
 void User::SetUsername(std::string u) {
     username = u;

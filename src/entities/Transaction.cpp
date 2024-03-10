@@ -1,7 +1,7 @@
 #include "Transaction.hpp"
 
 /**
- * Default constructor that initializes each class attribute with '0' or ""
+ * initializes each class attribute with '0' or ""
  */
 Transaction::Transaction() {
     SetUserID(0);
@@ -12,9 +12,9 @@ Transaction::Transaction() {
 }
 
 /**
- * Alternate constructor that initializes each class attribute based on input parameters
+ * initializes each class attribute based on input parameters
  * 
- * @param id the user a transaction is related to
+ * @param id the user a transaction should be created for
  * @param a a transaction's amount
  * @param c a transaction's category
  * @param td a transaction's date
@@ -26,10 +26,8 @@ Transaction::Transaction(int id, std::string a, std::string c, Date td) {
     SetTransactionDate(td);
 }
 
-// Getters
-
 /**
- * Gets transaction userID
+ * Gets a transaction's userID
  * 
  * @return userID
  */
@@ -38,7 +36,7 @@ int Transaction::GetUserID() {
 }
 
 /**
- * Gets transaction amount
+ * Gets a transaction's amount
  * 
  * @return amount
  */
@@ -47,7 +45,7 @@ std::string Transaction::GetAmount() {
 }
 
 /**
- * Gets transaction category
+ * Gets a transaction's category
  * 
  * @return category
  */
@@ -56,7 +54,7 @@ std::string Transaction::GetCategory() {
 }
 
 /**
- * Gets transaction date
+ * Gets a transaction's date
  * 
  * @return transactionDate
  */
@@ -67,28 +65,28 @@ std::string Transaction::GetTransactionDate() {
 // Setters
 
 /**
- * Sets transaction userID
+ * Sets a transaction's userID
  */
 void Transaction::SetUserID(int id) {
     userID = id;
 }
 
 /**
- * Sets transaction amount
+ * Sets a transaction's amount
  */
 void Transaction::SetAmount(std::string a) {
     amount = a;
 }
 
 /**
- * Sets transaction category
+ * Sets a transaction's category
  */
 void Transaction::SetCategory(std::string c) {
     category = c;
 }
 
 /**
- * Sets transaction date
+ * Sets a transaction's date
  */
 void Transaction::SetTransactionDate(Date date) {
     transactionDate = date.FormatToTimestamp();

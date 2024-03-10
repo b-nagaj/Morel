@@ -1,7 +1,7 @@
 #include "Date.hpp"
 
 /**
- * Alternate constructor that initializes each class attribute based on input parameters
+ * initializes each class attribute based on input parameters
  * 
  * @param m a date's month
  * @param d a date's day
@@ -14,7 +14,7 @@ Date::Date(int m, int d, int y) {
 }
 
 /**
- * Formats a Date into a timestamp
+ * formats a Date into a timestamp
  * EX) 09-22-2000 -> 2000-09-22 00:00:00
  * 
  * @return a string that represent's a date in timestamp format

@@ -7,7 +7,7 @@ void AddTransaction::Add() {
 }
 
 /**
- * Gets the current date and instantiates a new Date object
+ * gets the current date and instantiates a new Date object
  * 
  * @return an instantiated date object with a month, day, and year value
  */
@@ -25,8 +25,8 @@ Date GetCurrentDate() {
 }
 
 /**
- * Accepts input from the user for new transactions 
- * then adds them to the newTransactions array once they are validated
+ * accepts user input for new transactions, then
+ * adds them to an array once validated
  */ 
 void AddTransaction::GetNewTransactions() {
     std::string uncheckedTransactionAmount;
@@ -64,8 +64,8 @@ void AddTransaction::GetNewTransactions() {
 }
 
 /**
- * Validates that a user's input for a transaction's amount
- * isn't empty and doesn't contain letters or special characters
+ * validates that user input for a transaction's amount
+ * isn't empty, and doesn't contain letters or special characters
  * 
  * @param uncheckedTransactionAmount an input value for a transaction's amount that hasn't been checked
  * @return a boolean value based on the correctness of a user's input
@@ -91,7 +91,7 @@ bool AddTransaction::ValidateNewTransactionAmount(std::string uncheckedTransacti
 }
 
 /**
- * Validates that a user's input for a transactions' category
+ * validates that user input for a transactions' category
  * isn't empty and doesn't contain numerical values 
  * 
  * @param uncheckedTransactionCategory an input value for a transaction's category that hasn't been checked
@@ -113,7 +113,8 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
 }
 
 /**
- * Invokes the CreateNewTransactions method from DBManager to add new transactions to the DB
+ * invokes the CreateNewTransactions() method from DBManager to add an
+ * array of transactions to the DB
  */ 
 void AddTransaction::AddNewTransactions() {
     DBManager dbManager;
