@@ -14,10 +14,10 @@ Transaction::Transaction() {
 /**
  * Alternate constructor that initializes each class attribute based on input parameters
  * 
- * @param id value to set userID equal to
- * @param a value to set amount equal to
- * @param c value to set category equal to
- * @param td value to set transactionDate equal to
+ * @param id the user a transaction is related to
+ * @param a a transaction's amount
+ * @param c a transaction's category
+ * @param td a transaction's date
  */
 Transaction::Transaction(int id, std::string a, std::string c, Date td) {
     SetUserID(id);
