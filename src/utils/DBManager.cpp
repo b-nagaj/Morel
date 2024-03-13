@@ -1,4 +1,5 @@
 #include "DBManager.hpp"
+#include <fstream>
 
 /**
  * gets DB secrets from a local .env file
@@ -9,7 +10,8 @@ std::map<std::string, std::string> DBManager::GetDBSecrets() {
     // map to store key/value pairs of DB secrets
     std::map<std::string, std::string> dbSecrets;
     std::string line, key, value;
-    std::ifstream envFile ("/Users/bryce/Documents/GitHub/Projects/Morel/dbSecrets.env");
+    std::string pathToEnvFile = "dbSecrets.env";
+    std::ifstream envFile(pathToEnvFile);
 
     if (envFile.is_open()) {
         // read each line from .env file
@@ -45,7 +47,7 @@ bool DBManager::Connect() {
         std::cerr << "Error initializing MySQL connection" << std::endl;
         return false;
     }
-
+    
     // authenticate with database
     if (!mysql_real_connect(connection, 
                             dbSecrets["DB_HOST"].c_str(), 
