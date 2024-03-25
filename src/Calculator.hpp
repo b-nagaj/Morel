@@ -11,7 +11,7 @@ class Calculator {
         int operation; // stores the calculator operation selected by the user
         AddTransaction addTransaction;
     public:
-        const int NUM_OPERATIONS = 7;
+        const int NUM_OPERATIONS = 8;
     
     // methods
     private:
