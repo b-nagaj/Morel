@@ -20,19 +20,19 @@ void Calculator::Calculate() {
                 addTransaction.Add();
                 break;
             case 2:
-                expenseListUpdater.Update();
+                std::cout << "\ncoming soon!";
                 break;
             case 3:
-                dataFileGenerator.Generate();
+                std::cout << "\ncoming soon!";
                 break;
             case 4:
-                transactionDeleter.Delete();
+                std::cout << "\ncoming soon!";
                 break;
             case 5:
-                reportGenerator.Generate();
+                std::cout << "\ncoming soon!";
                 break;
             case 6:
-                reportViewer.View();
+                std::cout << "\ncoming soon!";
                 break;
         }
     }
