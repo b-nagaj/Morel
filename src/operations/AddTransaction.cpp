@@ -1,9 +1,15 @@
 #include "AddTransaction.hpp"
 #include "../utils/DBManager.hpp"
 
+/**
+ * Handles invoking the GetNewTransactions() and AddNewTransactions() functions
+ */
 void AddTransaction::Add() {
     GetNewTransactions();
-    AddNewTransactions();
+    // confirms with user before performing the create operation
+    if (ConfirmOperation()) {
+        AddNewTransactions();
+    }
 }
 
 /**
@@ -19,7 +25,7 @@ Date GetCurrentDate() {
     // convert the time_t object to a struct tm (broken down time)
     std::tm *tm_now = std::localtime(&time_now);
     // instantiate a new Date object
-    Date date((tm_now->tm_mon + 1), (tm_now->tm_mday), (tm_now->tm_year + 1900));
+    Date date((tm_now->tm_mon + 1), tm_now->tm_mday, (tm_now->tm_year + 1900));
     
     return date;
 }
@@ -68,7 +74,7 @@ void AddTransaction::GetNewTransactions() {
 }
 
 /**
- * validates that user input for a transaction's amount isn't empty, and doesn't
+ * validates that user input for a transaction's amount isn't empty and doesn't
  * contain letters or special characters
  * 
  * @param uncheckedTransactionAmount an input value for a transaction's amount 
@@ -127,9 +133,47 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
 }
 
 /**
- * invokes the CreateNewTransactions() method from DBManager to add an array of 
- * transactions to the DB
- */ 
+ * Displays a summary of the user's input and asks them to confirm its correctness
+ * 
+ * @return boolean value that represent's the user's input (yes or no)
+ */
+bool AddTransaction::ConfirmOperation() {
+    std::string confirmationResponse = "";
+
+    // check that a user has entered at least 1 transaction, then display a
+    // confirmation message
+    if (numNewTransactions != 0) {
+        // grab each transaction's amount & category from the array of new transactions
+        // then display them to the user in a readable format
+        std::cout << "\n";
+        for (int i = 0; i < numNewTransactions; i++) {
+            std::cout << "$" 
+                    << newTransactions[i].GetAmount() 
+                    << " -> " 
+                    << newTransactions[i].GetCategory() 
+                    << "\n";
+        }
+
+        std::cout << "\nAdd the above transactions? (Y/N): ";
+        std::cin >> confirmationResponse;
+
+        if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
+            return true;
+        }
+        else {
+            std::cout << "\n0 new Transaction(s) Added";
+            return false;
+        }
+    }
+    else {
+        std::cout << "\n0 new Transaction(s) Added";
+        return false;
+    }
+}
+
+/**
+ * Invokes the CreateNewTransactions() function from DBManager after connecting to the database
+ */
 void AddTransaction::AddNewTransactions() {
     DBManager dbManager;
     

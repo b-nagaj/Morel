@@ -85,7 +85,7 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
                                            + "', '" +
                                            newTransactions[i].GetCategory() 
                                            + "', '" +
-                                           newTransactions[i].GetTransactionDate() 
+                                           newTransactions[i].GetDate() 
                                            + "')";
         // handle exceptions
         if (mysql_query(connection, query.c_str()) != 0) {

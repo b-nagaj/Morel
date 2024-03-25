@@ -28,6 +28,7 @@ class AddTransaction {
         void GetNewTransactions();
         bool ValidateNewTransactionAmount(std::string uncheckedTransactionAmount);
         bool ValidateNewTransactionCategory(std::string uncheckedTransactionCategory);
+        bool ConfirmOperation();
         void AddNewTransactions();
 
     public:

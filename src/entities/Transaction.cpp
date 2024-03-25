@@ -8,7 +8,7 @@ Transaction::Transaction() {
     SetAmount("");
     SetCategory("");
     Date date(0, 0, 0);
-    SetTransactionDate(date);
+    SetDate(date);
 }
 
 /**
@@ -23,7 +23,7 @@ Transaction::Transaction(int id, std::string a, std::string c, Date td) {
     SetUserID(id);
     SetAmount(a);
     SetCategory(c);
-    SetTransactionDate(td);
+    SetDate(td);
 }
 
 /**
@@ -58,7 +58,7 @@ std::string Transaction::GetCategory() {
  * 
  * @return transactionDate
  */
-std::string Transaction::GetTransactionDate() {
+std::string Transaction::GetDate() {
     return transactionDate;
 }
 
@@ -88,6 +88,6 @@ void Transaction::SetCategory(std::string c) {
 /**
  * Sets a transaction's date
  */
-void Transaction::SetTransactionDate(Date date) {
+void Transaction::SetDate(Date date) {
     transactionDate = date.FormatToTimestamp();
 }
