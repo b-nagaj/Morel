@@ -166,6 +166,7 @@ bool AddTransaction::ConfirmOperation() {
         }
     }
     else {
+        std::cout << "\n0 new Transaction(s) Added";
         return false;
     }
 }
