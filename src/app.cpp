@@ -4,6 +4,9 @@
 
 #include <filesystem>
 
+/**
+ * handles setup for new users and starts the calculator
+ */ 
 int main() {
     Setup setup;
     Dialog dialog;

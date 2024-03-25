@@ -11,10 +11,11 @@ void AddTransaction::Add() {
         AddNewTransactions();
     }
 }
+
 /**
- * Grabs the current month, day, and year values
+ * gets the current date and instantiates a new Date object
  * 
- * @return date a Date object initialized with those values
+ * @return an instantiated date object with a month, day, and year value
  */
 Date GetCurrentDate() {
     // get the current system time
@@ -30,9 +31,8 @@ Date GetCurrentDate() {
 }
 
 /**
- * Prompts the user to enter data about new transactions
- * It also initialized the transactionAmount & transactionCategory attributes when valid input is provided
- */
+ * accepts user input for new transactions, then adds them to an array once validated
+ */ 
 void AddTransaction::GetNewTransactions() {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
@@ -57,36 +57,51 @@ void AddTransaction::GetNewTransactions() {
         std::cout << "\n";
 
         // given the input is valid, instantiate a new transaction
-        if (ValidateNewTransactionAmount(uncheckedTransactionAmount) && ValidateNewTransactionCategory(uncheckedTransactionCategory)) {
+        if (ValidateNewTransactionAmount(uncheckedTransactionAmount) 
+            && ValidateNewTransactionCategory(uncheckedTransactionCategory)) {
             transactionAmount = uncheckedTransactionAmount;
             transactionCategory = uncheckedTransactionCategory;
 
-            // TODO: Implement a way to retrieve the user id of the username you're using
-            Transaction newTransaction(1, transactionAmount, transactionCategory, GetCurrentDate());
+            // TODO: Implement a way to retrieve the user id of the username 
+            // you're using
+            Transaction newTransaction(1, 
+                                       transactionAmount, 
+                                       transactionCategory, 
+                                       GetCurrentDate());
             newTransactions[numNewTransactions] = newTransaction;
         }
     }
 }
 
 /**
- * Validates that an input value for a transaction's amount isn't empty and doesn't contain letters
+ * validates that user input for a transaction's amount isn't empty and doesn't
+ * contain letters or special characters
  * 
- * @param uncheckedTransactionAmount an input value for a transaction's amount that hasn't been checked
- * @return boolean value based on whether or not the value is valid or not
- */
+ * @param uncheckedTransactionAmount an input value for a transaction's amount 
+ * that hasn't been checked
+ * @return a boolean value based on the correctness of a user's input
+ */ 
 bool AddTransaction::ValidateNewTransactionAmount(std::string uncheckedTransactionAmount) { 
     // strip decimal character from transaction amount value   
     std::string transactionAmountWithoutDecimal = uncheckedTransactionAmount;
-    transactionAmountWithoutDecimal.erase(remove(transactionAmountWithoutDecimal.begin(), transactionAmountWithoutDecimal.end(), '.'), transactionAmountWithoutDecimal.end());
+    transactionAmountWithoutDecimal.erase(remove(transactionAmountWithoutDecimal.begin(), 
+                                                 transactionAmountWithoutDecimal.end(), 
+                                                 '.'), 
+                                                 transactionAmountWithoutDecimal.end());
     
     // check if the users input is empty
     if (uncheckedTransactionAmount.empty()) {
-        std::cout << "\nERROR: You entered an empty value for a transaction amount\n\n";
+        std::cout << "\nERROR: You entered an empty value for a transaction" 
+                  << "amount\n\n";
         return false;
     }
     // check if the users input is numeric
-    else if (std::all_of(transactionAmountWithoutDecimal.begin(), transactionAmountWithoutDecimal.end(), ::isdigit) == false) {
-        std::cout << "\nERROR: '" << uncheckedTransactionAmount << "' is not a numerical value\n\n";
+    else if (std::all_of(transactionAmountWithoutDecimal.begin(), 
+                         transactionAmountWithoutDecimal.end(), 
+                         ::isdigit) == false) {
+        std::cout << "\nERROR: '" 
+                  << uncheckedTransactionAmount 
+                  << "' is not a numerical value\n\n";
         return false;
     }
     else {
@@ -95,11 +110,13 @@ bool AddTransaction::ValidateNewTransactionAmount(std::string uncheckedTransacti
 }
 
 /**
- * Validates that an input value for a transaction's category isn't empty and doesn't contains numbers
+ * validates that user input for a transactions' category isn't empty and 
+ * doesn't contain numerical values 
  * 
- * @param uncheckedTransactionAmount an input value for a transaction's category that hasn't been checked
- * @return boolean value based on whether or not the value is valid or not
- */
+ * @param uncheckedTransactionCategory an input value for a transaction's 
+ * category that hasn't been checked
+ * @return a boolean value based on the correctness of a user's input
+ */ 
 bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransactionCategory) {
     // check if the users input is empty
     if (uncheckedTransactionCategory.empty()) {

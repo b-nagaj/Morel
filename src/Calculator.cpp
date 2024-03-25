@@ -1,9 +1,15 @@
 #include "Calculator.hpp"
 
+/**
+ * initializes the calculator option to '0'
+ */ 
 Calculator::Calculator() {
     SetOperation(0);
 }
 
+/**
+ * runs a loop continously that gets user input and executes the matching operation
+ */ 
 void Calculator::Calculate() {
     while(GetOperation() != NUM_OPERATIONS) {
         DisplayOperations();
@@ -32,14 +38,27 @@ void Calculator::Calculate() {
     }
 }
 
+/**
+ * Gets the last operation entered by the user
+ * 
+ * @return operation
+ */ 
 int Calculator::GetOperation() {
     return operation;
 }
 
+/**
+ * Sets the operation based on input from the user
+ * 
+ * @param num user input that represents an operation
+ */ 
 void Calculator::SetOperation(int num) {
     operation = num;
 }
 
+/**
+ * displays a menu of calculator operations available to the user
+ */ 
 void Calculator::DisplayOperations() {
     std::cout << "\n\nEnter the # of an operation from the list\n";
 
@@ -52,6 +71,9 @@ void Calculator::DisplayOperations() {
               << "\n\t7. Quit";
 }
 
+/**
+ * accepts user input to determine the next operation
+ */ 
 void Calculator::GetOperationFromUser() {
     std::cout << "\n\nOperation: ";
     std::string uncheckedOperation;
@@ -67,6 +89,10 @@ void Calculator::GetOperationFromUser() {
     }
 }
 
+/**
+ * validates that user input for an operation
+ * isn't empty and doesn't contain numbers
+ */ 
 bool Calculator::ValidateOperation(std::string uncheckedOperation) {
     // check if the users input is empty
     if (uncheckedOperation.empty()) {
@@ -77,14 +103,20 @@ bool Calculator::ValidateOperation(std::string uncheckedOperation) {
     // check if every character in the users input is a digit
     for (char character : uncheckedOperation) {
         if (!std::isdigit(character)) {
-            std::cout << "\nERROR: '" << uncheckedOperation << "' is not an integer\n\n";
+            std::cout << "\nERROR: '" 
+                      << uncheckedOperation 
+                      << "' is not an integer\n\n";
             return false;
         }
     }
 
     // check if the users input is within the range of 1-7
     if (std::stoi(uncheckedOperation) < 1 || std::stoi(uncheckedOperation) > 7) {
-        std::cout << "\nERROR: '" << uncheckedOperation << "' does not fall within the range of 1 - " << NUM_OPERATIONS << "\n\n";
+        std::cout << "\nERROR: '" 
+                  << uncheckedOperation 
+                  << "' does not fall within the range of 1 - " 
+                  << NUM_OPERATIONS 
+                  << "\n\n";
         return false;
     }
     else {

@@ -27,7 +27,7 @@ class Calculator {
     private:
         int GetOperation();
         void SetOperation(int num);
-        void DisplayOperations(); // display a list of calculator operations available to the user
+        void DisplayOperations(); // display a list of calculator operations
         void GetOperationFromUser();
         bool ValidateOperation(std::string uncheckedOperation);
     public:

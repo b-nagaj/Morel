@@ -1,53 +1,35 @@
 # Morel
-A monthly expenses calculator CLI application for generating customized monthly expense reports
 
-## Installation
+Revolutionize your budgeting experience with Morel -- an intuitive monthly expenses calculator that crafts personalized reports to track your financial journey.
 
-### Using Linux?
-1. Open a terminal
-2. Install dependencies
+## Installing Dependencies
+
+What dependencies do I need to install & how do I install them?
+
 ```
-sudo apt-get install git libboost-all-dev make g++
-```
-3. clone the repo inside of the Ubuntu environment
-```
-git clone https://github.com/b-nagaj/Morel.git
+sudo apt-get install g++ make libboost-all-dev libmysqlclient-dev
 ```
 
-### Using Windows?
-Morel is native to linux environments. Here's how to use the app with the Windows Subsystem for Linux (WSL)
-1. Open a Windows powershell as an administrator
-```
-wsl --install
-```
-2. Restart your machine and open windows powershell as an administrator
-```
-wsl --install -d Ubuntu
-```
-3. Follow the prompts inside of Ubuntu to enter a UNIX username and password
-4. Ensure that you are inside your user's home directory (i.e. /home/yourUsername)
-5. Install dependencies
-```
-sudo apt-get install git libboost-all-dev make g++
-```
-6. clone the repo inside of the Ubuntu environment
-```
-git clone https://github.com/b-nagaj/Morel.git
-```
-## Usage
+## Building
 
-Running the Application
+How do I run the application?
+
 ```
 make
 ```
-Running the Automated Test Suite
+
+## Running Tests
+
+How do I run the automated test suite?
+
 ```
 make test
 ```
-Cleaning Auto-Generated Files
+
+## Cleaning
+
+How do I remove auto-generated build files?
+
 ```
 make clean
-make cleanTests
 ```
-
-
