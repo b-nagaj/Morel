@@ -138,20 +138,34 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
  * @return boolean value that represent's the user's input (yes or no)
  */
 bool AddTransaction::ConfirmOperation() {
-    std::cout << "\n";
-    for (int i = 0; i < numNewTransactions; i++) {
-        std::cout << "$" << newTransactions[i].GetAmount() << " -> " << newTransactions[i].GetCategory() << "\n";
-    }
+    std::string confirmationResponse = "";
 
-    std::cout << "\nAdd the above transactions? (Y/N): ";
-    std::string confirmationResponse;
-    std::cin >> confirmationResponse; 
+    // check that a user has entered at least 1 transaction, then display a
+    // confirmation message
+    if (numNewTransactions != 0) {
+        // grab each transaction's amount & category from the array of new transactions
+        // then display them to the user in a readable format
+        std::cout << "\n";
+        for (int i = 0; i < numNewTransactions; i++) {
+            std::cout << "$" 
+                    << newTransactions[i].GetAmount() 
+                    << " -> " 
+                    << newTransactions[i].GetCategory() 
+                    << "\n";
+        }
 
-    if (confirmationResponse == "Y" || confirmationResponse == "y") {
-        return true;
+        std::cout << "\nAdd the above transactions? (Y/N): ";
+        std::cin >> confirmationResponse;
+
+        if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
+            return true;
+        }
+        else {
+            std::cout << "\n0 new Transaction(s) Added";
+            return false;
+        }
     }
     else {
-        std::cout << "\n0 new Transaction(s) Added";
         return false;
     }
 }
