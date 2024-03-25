@@ -34,6 +34,9 @@ void Calculator::Calculate() {
             case 6:
                 std::cout << "\ncoming soon!";
                 break;
+            case 7:
+                std::cout << "\ncoming soon!";
+                break;
         }
     }
 }
@@ -63,12 +66,13 @@ void Calculator::DisplayOperations() {
     std::cout << "\n\nEnter the # of an operation from the list\n";
 
     std::cout << "\n\t1. Add a Transaction"
-              << "\n\t2. Update List Of Expenses"
-              << "\n\t3. Generate Data Files"
-              << "\n\t4. Delete a Transaction"
-              << "\n\t5. Generate A Report"
-              << "\n\t6. View A Report"
-              << "\n\t7. Quit";
+              << "\n\t2. Delete a Transaction"
+              << "\n\t3. Edit a Transaction"
+              << "\n\t4. Modify a Transaction"
+              << "\n\t5. View Transactions"
+              << "\n\t6. Generate a Report"
+              << "\n\t7. View a Report"
+              << "\n\t8. Quit";
 }
 
 /**
@@ -111,7 +115,7 @@ bool Calculator::ValidateOperation(std::string uncheckedOperation) {
     }
 
     // check if the users input is within the range of 1-7
-    if (std::stoi(uncheckedOperation) < 1 || std::stoi(uncheckedOperation) > 7) {
+    if (std::stoi(uncheckedOperation) < 1 || std::stoi(uncheckedOperation) > NUM_OPERATIONS) {
         std::cout << "\nERROR: '" 
                   << uncheckedOperation 
                   << "' does not fall within the range of 1 - " 
