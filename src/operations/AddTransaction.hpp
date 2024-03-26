@@ -3,6 +3,7 @@
 
 #include "../utils/Date.hpp"
 #include "../entities/Transaction.hpp"
+#include "../utils/DBManager.hpp"
 
 #include <iostream>
 #include <iomanip>

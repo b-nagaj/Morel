@@ -1,5 +1,4 @@
 #include "AddTransaction.hpp"
-#include "../utils/DBManager.hpp"
 
 /**
  * Handles invoking the GetNewTransactions() and AddNewTransactions() functions
