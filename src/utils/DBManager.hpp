@@ -21,6 +21,7 @@ class DBManager {
     public:
         bool Connect();
         void CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
+        void GetTransactionByAmount(std::string transactionAmount);
         void Disconnect();
 };
 
