@@ -30,7 +30,7 @@ bool DeleteTransaction::FindTransaction() {
     }
 
     if (numRows < 1) {
-        std::cout << "\nERROR: No transactions with an amount of "
+        std::cout << "\nERROR: No transactions with an amount of $"
                   << transactionAmount
                   << " exist";
         return false;
@@ -76,7 +76,7 @@ void DeleteTransaction::DeleteTheTransaction() {
     if (dbManager.Connect()) {
         dbManager.DeleteTransaction(transactionAmount);
         std::cout << "\n" 
-                  << "The transaction with an amount of " 
+                  << "The transaction with an amount of $" 
                   << transactionAmount 
                   << " was deleted ✅";
         dbManager.Disconnect();
