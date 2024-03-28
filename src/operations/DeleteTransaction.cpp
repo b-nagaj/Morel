@@ -3,7 +3,9 @@
 void DeleteTransaction::Delete() {
     GetTransaction();
     FindTransaction();
-    ConfirmOperation();
+    if (ConfirmOperation()) {
+        DeleteTheTransaction();
+    };
 }
 
 void DeleteTransaction::GetTransaction() {
@@ -64,5 +66,17 @@ void DeleteTransaction::DisplayTransaction() {
 }
 
 void DeleteTransaction::DeleteTheTransaction() {
+    DBManager dbManager;
 
+    if (dbManager.Connect()) {
+        dbManager.DeleteTransaction(transactionAmount);
+        std::cout << "\n" 
+                  << "The transaction with an amount of " 
+                  << transactionAmount 
+                  << " was deleted ✅";
+        dbManager.Disconnect();
+    }
+    else {
+        std::cout << "\nERROR: Could not connect to database\n\n";
+    }
 }
