@@ -1,11 +1,14 @@
 #include "DeleteTransaction.hpp"
 
+DeleteTransaction::DeleteTransaction() {
+    numTransactions = 0;
+}
+
 void DeleteTransaction::Delete() {
     GetTransaction();
     if (FindTransaction()) {
-        if (ConfirmOperation()) {
-            DeleteTheTransaction();
-        }
+        DisplayTransaction();
+        DeleteTheTransaction();
     }
 }
 
@@ -44,7 +47,7 @@ bool DeleteTransaction::ConfirmOperation() {
     std::string confirmationResponse = "";
     long numRows = mysql_num_rows(result);
 
-    DisplayTransaction();
+    // DisplayTransaction();
 
     std::cout << "\nDelete the above transaction? (Y/N): ";
     std::cin >> confirmationResponse;
@@ -53,20 +56,28 @@ bool DeleteTransaction::ConfirmOperation() {
         return true;
     }
     else {
-        std::cout << "\n0 new Transaction(s) Added";
+        // std::cout << "\n0 new Transaction(s) Added";
         return false;
     }
 }
 
 void DeleteTransaction::DisplayTransaction() {
+    DBManager dbManager;
     MYSQL_ROW row;
     
     // display each transaction that matches the transactionAmount
     while ((row = mysql_fetch_row(result)) != NULL) {
-        std::cout << "\nDate: " << (row[0] ? row[0] : "NULL");
-        std::cout << "\nAmount: $" << (row[1] ? row[1] : "NULL");
-        std::cout << "\nCategory: " << (row[2] ? row[2] : "NULL");
-        std::cout << std::endl;
+        std::cout << "\nDate: " << (row[4] ? row[4] : "NULL");
+        std::cout << "\nAmount: $" << (row[2] ? row[2] : "NULL");
+        std::cout << "\nCategory: " << (row[3] ? row[3] : "NULL");
+        std::cout << std::endl;;
+
+        std::string transactionID = row[0];
+
+        if (ConfirmOperation()) {
+            transactions[numTransactions] = transactionID;
+            numTransactions++;
+        }
     }
 }
 
@@ -74,14 +85,17 @@ void DeleteTransaction::DeleteTheTransaction() {
     DBManager dbManager;
 
     if (dbManager.Connect()) {
-        dbManager.DeleteTransaction(transactionAmount);
-        std::cout << "\n" 
-                  << "The transaction with an amount of $" 
-                  << transactionAmount 
-                  << " was deleted ✅";
+        for (int i = 0; i < numTransactions; i++) {
+            dbManager.DeleteTransaction(transactions[i]);
+        }
+        std::cout << "\n" << numTransactions << " transaction(s) deleted ✅";
+
         dbManager.Disconnect();
     }
     else {
         std::cout << "\nERROR: Could not connect to database\n\n";
     }
+
+    numTransactions = 0;
+    transactionAmount = "";
 }

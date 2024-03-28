@@ -103,7 +103,7 @@ MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
     std::string date;
 
     // find each transaction that matches the transactionAmount
-    std::string query = "SELECT transaction_date, amount, category FROM Transactions WHERE amount = " 
+    std::string query = "SELECT * FROM Transactions WHERE amount = " 
                         + transactionAmount;
 
     // execute the query
@@ -117,10 +117,10 @@ MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
     return mysql_store_result(connection); 
 }
 
-void DBManager::DeleteTransaction(std::string transactionAmount) {
+void DBManager::DeleteTransaction(std::string transactionID) {
     // delete the transaction that matches the transactionAmount
-    std::string query = "DELETE FROM Transactions WHERE amount = "
-                        + transactionAmount;
+    std::string query = "DELETE FROM Transactions WHERE transaction_id = "
+                        + transactionID;
 
     // execute the query
     if (mysql_query(connection, query.c_str()) != 0) {
