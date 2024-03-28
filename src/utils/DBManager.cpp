@@ -76,7 +76,7 @@ bool DBManager::Connect() {
  */ 
 void DBManager::CreateNewTransactions(Transaction *newTransactions, 
                                       int numNewTransactions) {
-    // execute INSERT queries for each new transaction
+    // Create a new transaction
     for (int i = 0; i < numNewTransactions; i++) {
         std::string query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) VALUES ('" +
                             std::to_string(newTransactions[i].GetUserID()) 
@@ -87,7 +87,7 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
                                            + "', '" +
                                            newTransactions[i].GetDate() 
                                            + "')";
-        // handle exceptions
+        // execute the query
         if (mysql_query(connection, query.c_str()) != 0) {
             std::cerr << "Error executing SQL query: " 
                       << mysql_error(connection) 
