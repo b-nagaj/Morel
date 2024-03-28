@@ -2,10 +2,11 @@
 
 void DeleteTransaction::Delete() {
     GetTransaction();
-    FindTransaction();
-    if (ConfirmOperation()) {
-        DeleteTheTransaction();
-    };
+    if (FindTransaction()) {
+        if (ConfirmOperation()) {
+            DeleteTheTransaction();
+        }
+    }
 }
 
 void DeleteTransaction::GetTransaction() {
@@ -16,20 +17,17 @@ void DeleteTransaction::GetTransaction() {
 
 bool DeleteTransaction::FindTransaction() {
     DBManager dbManager;
+    long numRows;
 
     if (dbManager.Connect()) {
         result = dbManager.GetTransactionByAmount(transactionAmount);
+        numRows = mysql_num_rows(result);
         mysql_free_result(result);
         dbManager.Disconnect();
     }
     else {
         std::cout << "\nERROR: Could not connect to database\n\n";
     }
-}
-
-bool DeleteTransaction::ConfirmOperation() {
-    std::string confirmationResponse = "";
-    long numRows = mysql_num_rows(result);
 
     if (numRows < 1) {
         std::cout << "\nERROR: No transactions with an amount of "
@@ -38,18 +36,25 @@ bool DeleteTransaction::ConfirmOperation() {
         return false;
     }
     else {
-        DisplayTransaction();
+        return true;
+    }
+}
 
-        std::cout << "\nDelete the above transaction? (Y/N): ";
-        std::cin >> confirmationResponse;
+bool DeleteTransaction::ConfirmOperation() {
+    std::string confirmationResponse = "";
+    long numRows = mysql_num_rows(result);
 
-        if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
-            return true;
-        }
-        else {
-            std::cout << "\n0 new Transaction(s) Added";
-            return false;
-        }
+    DisplayTransaction();
+
+    std::cout << "\nDelete the above transaction? (Y/N): ";
+    std::cin >> confirmationResponse;
+
+    if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
+        return true;
+    }
+    else {
+        std::cout << "\n0 new Transaction(s) Added";
+        return false;
     }
 }
 
