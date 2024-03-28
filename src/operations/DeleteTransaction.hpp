@@ -13,12 +13,14 @@ class DeleteTransaction {
         int numTransactions;
         Transaction transaction;
         std::string transactionAmount;
+        MYSQL_RES * result;
 
     //methods
     private:
         void GetTransaction();
         bool FindTransaction();
         bool ConfirmOperation();
+        void DisplayTransaction();
         void DeleteTheTransaction();
 
     public:
