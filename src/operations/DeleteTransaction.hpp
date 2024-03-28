@@ -11,9 +11,8 @@ class DeleteTransaction {
     // attributes
     private:
         int numTransactions;
-        Transaction transaction;
         std::string transactionAmount;
-        std::string transactions [50];
+        std::string transactionIDs [50];
         MYSQL_RES * result;
 
     //methods
