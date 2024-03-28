@@ -21,7 +21,7 @@ class DBManager {
     public:
         bool Connect();
         void CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
-        void GetTransactionByAmount(std::string transactionAmount);
+        MYSQL_RES * GetTransactionByAmount(std::string transactionAmount);
         void Disconnect();
 };
 

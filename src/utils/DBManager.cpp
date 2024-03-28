@@ -97,11 +97,16 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
     }
 }
 
-void DBManager::GetTransactionByAmount(std::string transactionAmount) {
-    MYSQL_RES *result;
-    MYSQL_ROW row;
-    std::string query = "SELECT * FROM Transactions WHERE amount = " + transactionAmount;
+MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
+    std::string amount;
+    std::string category;
+    std::string date;
+    
+    // find each transaction that matches the transactionAmount
+    std::string query = "SELECT transaction_date, amount, category FROM Transactions WHERE amount = " 
+                        + transactionAmount;
 
+    // execute the query
     if (mysql_query(connection, query.c_str()) != 0) {
         std::cerr << "Error executing SQL query: " 
                   << mysql_error(connection) 
@@ -109,20 +114,8 @@ void DBManager::GetTransactionByAmount(std::string transactionAmount) {
         mysql_close(connection);
     }
 
-    result = mysql_store_result(connection); 
-
-    while ((row = mysql_fetch_row(result)) != NULL) {
-        for (int i = 0; i < mysql_num_fields(result); i++) {
-            std::cout << (row[i] ? row[i] : "NULL");
-
-            if (i < mysql_num_fields(result) - 1) {
-                std::cout << ", ";
-            }
-        }
-        std::cout << std::endl;
-    }
-    
-    mysql_free_result(result);
+    // store the result
+    return mysql_store_result(connection); 
 }
 
 /**
