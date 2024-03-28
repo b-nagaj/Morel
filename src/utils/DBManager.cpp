@@ -101,7 +101,7 @@ MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
     std::string amount;
     std::string category;
     std::string date;
-    
+
     // find each transaction that matches the transactionAmount
     std::string query = "SELECT transaction_date, amount, category FROM Transactions WHERE amount = " 
                         + transactionAmount;
@@ -111,7 +111,6 @@ MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
         std::cerr << "Error executing SQL query: " 
                   << mysql_error(connection) 
                   << std::endl;
-        mysql_close(connection);
     }
 
     // store the result
