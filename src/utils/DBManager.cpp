@@ -118,7 +118,7 @@ MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
 }
 
 void DBManager::DeleteTransaction(std::string transactionID) {
-    // delete the transaction that matches the transactionAmount
+    // delete the transaction that matches the transactionID
     std::string query = "DELETE FROM Transactions WHERE transaction_id = "
                         + transactionID;
 
