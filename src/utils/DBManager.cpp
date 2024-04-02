@@ -104,23 +104,28 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
  * @return a result from an executed MySQL query
 */
 MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
-    std::string amount;
-    std::string category;
-    std::string date;
+    MYSQL_RES * result;
 
-    // find each transaction that matches the transactionAmount
-    std::string query = "SELECT * FROM Transactions WHERE amount = " 
-                        + transactionAmount;
+    if (Connect()) {
+        // find each transaction that matches the transactionAmount
+        std::string query = "SELECT * FROM Transactions WHERE amount = " 
+                            + transactionAmount;
 
-    // execute the query
-    if (mysql_query(connection, query.c_str()) != 0) {
-        std::cerr << "Error executing SQL query: " 
-                  << mysql_error(connection) 
-                  << std::endl;
+        // execute the query
+        if (mysql_query(connection, query.c_str()) != 0) {
+            std::cerr << "Error executing SQL query: " 
+                    << mysql_error(connection) 
+                    << std::endl;
+        }
+        // store the result
+        result = mysql_store_result(connection); 
+        Disconnect();
+    }
+    else {
+        std::cout << "\nERROR: Could not connect to database\n\n";
     }
 
-    // store the result
-    return mysql_store_result(connection); 
+    return result;
 }
 
 /**
@@ -129,15 +134,22 @@ MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
  * @param transactionID represents a transactions unique identifier
 */
 void DBManager::DeleteTransaction(std::string transactionID) {
-    // delete the transaction that matches the transactionID
-    std::string query = "DELETE FROM Transactions WHERE transaction_id = "
-                        + transactionID;
+    if (Connect()) {
+        // delete the transaction that matches the transactionID
+        std::string query = "DELETE FROM Transactions WHERE transaction_id = "
+                            + transactionID;
 
-    // execute the query
-    if (mysql_query(connection, query.c_str()) != 0) {
-        std::cerr << "Error executing SQL query: " 
-                  << mysql_error(connection) 
-                  << std::endl;
+        // execute the query
+        if (mysql_query(connection, query.c_str()) != 0) {
+            std::cerr << "Error executing SQL query: " 
+                    << mysql_error(connection) 
+                    << std::endl;
+        }
+
+        Disconnect();
+    }
+    else {
+        std::cout << "\nERROR: Could not connect to database\n\n";
     }
 }
 

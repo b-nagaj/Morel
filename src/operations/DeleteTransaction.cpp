@@ -23,15 +23,9 @@ bool DeleteTransaction::FindTransaction() {
     DBManager dbManager;
     long numRows;
 
-    if (dbManager.Connect()) {
-        result = dbManager.GetTransactionByAmount(transactionAmount);
-        numRows = mysql_num_rows(result);
-        mysql_free_result(result);
-        dbManager.Disconnect();
-    }
-    else {
-        std::cout << "\nERROR: Could not connect to database\n\n";
-    }
+    result = dbManager.GetTransactionByAmount(transactionAmount);
+    numRows = mysql_num_rows(result);
+    mysql_free_result(result);
 
     if (numRows < 1) {
         std::cout << "\nERROR: No transactions with an amount of $"
@@ -80,17 +74,11 @@ void DeleteTransaction::DisplayTransaction() {
 void DeleteTransaction::DeleteTheTransaction() {
     DBManager dbManager;
 
-    if (dbManager.Connect()) {
-        for (int i = 0; i < numTransactions; i++) {
-            dbManager.DeleteTransaction(transactionIDs[i]);
-        }
-        std::cout << "\n" << numTransactions << " transaction(s) deleted ✅";
-
-        dbManager.Disconnect();
+    // delete each transaction based on the collection of transactionIDs
+    for (int i = 0; i < numTransactions; i++) {
+        dbManager.DeleteTransaction(transactionIDs[i]);
     }
-    else {
-        std::cout << "\nERROR: Could not connect to database\n\n";
-    }
+    std::cout << "\n" << numTransactions << " transaction(s) deleted ✅";
 
     numTransactions = 0;
     transactionAmount = "";
