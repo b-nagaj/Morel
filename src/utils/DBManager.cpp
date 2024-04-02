@@ -76,24 +76,32 @@ bool DBManager::Connect() {
  */ 
 void DBManager::CreateNewTransactions(Transaction *newTransactions, 
                                       int numNewTransactions) {
-    // Create a new transaction
-    for (int i = 0; i < numNewTransactions; i++) {
-        std::string query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) VALUES ('" +
-                            std::to_string(newTransactions[i].GetUserID()) 
-                                           + "', '" +
-                                           newTransactions[i].GetAmount() 
-                                           + "', '" +
-                                           newTransactions[i].GetCategory() 
-                                           + "', '" +
-                                           newTransactions[i].GetDate() 
-                                           + "')";
-        // execute the query
-        if (mysql_query(connection, query.c_str()) != 0) {
-            std::cerr << "Error executing SQL query: " 
-                      << mysql_error(connection) 
-                      << std::endl;
-            mysql_close(connection);
+    if (Connect()) {
+        // Create a new transaction
+        for (int i = 0; i < numNewTransactions; i++) {
+            std::string query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) VALUES ('" +
+                                std::to_string(newTransactions[i].GetUserID()) 
+                                            + "', '" +
+                                            newTransactions[i].GetAmount() 
+                                            + "', '" +
+                                            newTransactions[i].GetCategory() 
+                                            + "', '" +
+                                            newTransactions[i].GetDate() 
+                                            + "')";
+
+            // execute the query
+            if (mysql_query(connection, query.c_str()) != 0) {
+                std::cerr << "Error executing SQL query: " 
+                        << mysql_error(connection) 
+                        << std::endl;
+                mysql_close(connection);
+            }
         }
+        
+        Disconnect();
+    }
+    else {
+        std::cout << "\nERROR: Could not connect to database\n\n";
     }
 }
 

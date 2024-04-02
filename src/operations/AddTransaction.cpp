@@ -175,13 +175,7 @@ bool AddTransaction::ConfirmOperation() {
  */
 void AddTransaction::AddNewTransactions() {
     DBManager dbManager;
-    
-    if (dbManager.Connect()) {
-        dbManager.CreateNewTransactions(newTransactions, numNewTransactions);
-        dbManager.Disconnect();
-        std::cout << "\n" << numNewTransactions << " new Transaction(s) Added ✅";
-    }
-    else {
-        std::cout << "\nERROR: Could not connect to database\n\n";
-    }
+
+    dbManager.CreateNewTransactions(newTransactions, numNewTransactions);
+    std::cout << "\n" << numNewTransactions << " new Transaction(s) Added ✅";
 }
