@@ -59,7 +59,6 @@ bool DeleteTransaction::ConfirmOperation() {
 }
 
 void DeleteTransaction::DisplayTransaction() {
-    DBManager dbManager;
     MYSQL_ROW row;
     
     // display each transaction that matches the transactionAmount
