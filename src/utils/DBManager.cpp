@@ -97,6 +97,12 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
     }
 }
 
+/**
+ * searches for a transaction or transactions matching a specific amount
+ * 
+ * @param transactionAmount the specific amount to search for
+ * @return a result from an executed MySQL query
+*/
 MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
     std::string amount;
     std::string category;
@@ -117,6 +123,11 @@ MYSQL_RES * DBManager::GetTransactionByAmount(std::string transactionAmount) {
     return mysql_store_result(connection); 
 }
 
+/**
+ * Deletes a transaction or transactions
+ * 
+ * @param transactionID represents a transactions unique identifier
+*/
 void DBManager::DeleteTransaction(std::string transactionID) {
     // delete the transaction that matches the transactionID
     std::string query = "DELETE FROM Transactions WHERE transaction_id = "
