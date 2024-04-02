@@ -1,5 +1,4 @@
 #include "AddTransaction.hpp"
-#include "../utils/DBManager.hpp"
 
 /**
  * Handles invoking the GetNewTransactions() and AddNewTransactions() functions
@@ -172,17 +171,12 @@ bool AddTransaction::ConfirmOperation() {
 }
 
 /**
- * Invokes the CreateNewTransactions() function from DBManager after connecting to the database
+ * Invokes the CreateNewTransactions() function from DBManager to delete a transaction
+ * or list of transactions
  */
 void AddTransaction::AddNewTransactions() {
     DBManager dbManager;
-    
-    if (dbManager.Connect()) {
-        dbManager.CreateNewTransactions(newTransactions, numNewTransactions);
-        dbManager.Disconnect();
-        std::cout << "\n" << numNewTransactions << " new Transaction(s) Added ✅";
-    }
-    else {
-        std::cout << "\nERROR: Could not connect to database\n\n";
-    }
+
+    dbManager.CreateNewTransactions(newTransactions, numNewTransactions);
+    std::cout << "\n" << numNewTransactions << " new Transaction(s) Added ✅";
 }

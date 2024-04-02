@@ -20,7 +20,7 @@ void Calculator::Calculate() {
                 addTransaction.Add();
                 break;
             case 2:
-                std::cout << "\ncoming soon!";
+                deleteTransaction.Delete();
                 break;
             case 3:
                 std::cout << "\ncoming soon!";
