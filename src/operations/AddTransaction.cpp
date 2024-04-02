@@ -171,7 +171,8 @@ bool AddTransaction::ConfirmOperation() {
 }
 
 /**
- * Invokes the CreateNewTransactions() function from DBManager after connecting to the database
+ * Invokes the CreateNewTransactions() function from DBManager to delete a transaction
+ * or list of transactions
  */
 void AddTransaction::AddNewTransactions() {
     DBManager dbManager;
