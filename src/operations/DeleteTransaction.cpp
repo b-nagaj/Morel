@@ -2,6 +2,7 @@
 
 DeleteTransaction::DeleteTransaction() {
     numTransactions = 0;
+    transactionAmount = "";
 }
 
 void DeleteTransaction::Delete() {
