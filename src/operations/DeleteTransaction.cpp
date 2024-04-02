@@ -38,10 +38,12 @@ bool DeleteTransaction::FindTransaction() {
     DBManager dbManager;
     long numRows;
 
+    // store the list of matching transactions
     result = dbManager.GetTransactionByAmount(transactionAmount);
     numRows = mysql_num_rows(result);
     mysql_free_result(result);
 
+    // check to see if there are any matching transactions
     if (numRows < 1) {
         std::cout << "\nERROR: No transactions with an amount of $"
                   << transactionAmount
@@ -86,8 +88,10 @@ void DeleteTransaction::DisplayTransaction() {
         std::cout << "\nCategory: " << (row[3] ? row[3] : "NULL");
         std::cout << std::endl;
 
+        // store the transactionID of each transaction
         std::string transactionID = row[0];
 
+        // add to current transaction's ID to a list of transactionIDs
         if (ConfirmOperation()) {
             transactionIDs[numTransactions] = transactionID;
             numTransactions++;
