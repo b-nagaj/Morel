@@ -16,13 +16,15 @@ class DBManager {
     private:
         MYSQL * connection;
         MYSQL_STMT * stmt;
-        MYSQL_BIND bind[4];
+        int numQueryParams;
         const int STRING_SIZE = 50;
 
     //methods
     private:
         std::map<std::string, std::string> GetDBSecrets();
+        
     public:
+        DBManager();
         bool Connect();
         void CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
         MYSQL_RES * GetTransactionByAmount(std::string transactionAmount);

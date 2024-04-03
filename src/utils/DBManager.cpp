@@ -2,6 +2,13 @@
 #include <fstream>
 
 /**
+ * Initializes # of query parameters
+*/
+DBManager::DBManager() {
+    numQueryParams = 0;
+}
+
+/**
  * gets DB secrets from a local .env file
  * 
  * @return a map containing key/value pairs of secret names & values
@@ -79,13 +86,14 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
     if (Connect()) {
         // Create a new transaction
         for (int i = 0; i < numNewTransactions; i++) {
-
             std::string userID = std::to_string(newTransactions[i].GetUserID());
             std::string amount = newTransactions[i].GetAmount();
             std::string category = newTransactions[i].GetCategory();
             std::string date = newTransactions[i].GetDate();
 
             char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) VALUES (?, ?, ?, ?)";
+            numQueryParams = 4;
+            MYSQL_BIND bind[numQueryParams];
             stmt = mysql_stmt_init(connection);
             mysql_stmt_prepare(stmt, query, strlen(query));
             memset(bind, 0, sizeof(bind));
