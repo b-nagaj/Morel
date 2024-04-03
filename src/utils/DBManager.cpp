@@ -81,7 +81,7 @@ bool DBManager::Connect() {
  * @param newTransactions an array of transactions
  * @param numNewTransactions the number of transactions being added to the DB
  */ 
-void DBManager::CreateNewTransactions(Transaction *newTransactions, 
+int DBManager::CreateNewTransactions(Transaction *newTransactions, 
                                       int numNewTransactions) {
     if (Connect()) {
         // Create a new transaction
@@ -91,40 +91,79 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
             std::string category = newTransactions[i].GetCategory();
             std::string date = newTransactions[i].GetDate();
 
-            const char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) \
+
+            // define the INSERT query
+            const char * query = "INSER INTO Transactions(user_id, amount, category, transaction_date) \
                             VALUES (?, ?, ?, ?)";
             numQueryParams = 4;
             MYSQL_BIND bind[numQueryParams];
+
+            // Prepare the INSERT query
             stmt = mysql_stmt_init(connection);
-            mysql_stmt_prepare(stmt, query, strlen(query));
+            if (!stmt) {
+                std::cout << "\nERROR: Could not prepare the INSERT statement, "
+                          << "out of memory\n\n";
+                return 0;
+            }
+            if (mysql_stmt_prepare(stmt, query, strlen(query))) {
+                std::cout << "\nERROR: Could not prepare the INSERT statement";
+                std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
+                return 0;
+            }
+
+            // bind the data for all parameters
             memset(bind, 0, sizeof(bind));
 
+            // userID parameter
             bind[0].buffer_type = MYSQL_TYPE_STRING;
             bind[0].buffer = const_cast<char *>(userID.c_str());
             bind[0].buffer_length = STRING_SIZE;
 
+            // amount parameter
             bind[1].buffer_type = MYSQL_TYPE_STRING;
             bind[1].buffer = const_cast<char *>(amount.c_str());
             bind[1].buffer_length = STRING_SIZE;
 
+            // category parameter
             bind[2].buffer_type = MYSQL_TYPE_STRING;
             bind[2].buffer = const_cast<char *>(category.c_str());
             bind[2].buffer_length = STRING_SIZE;
 
+            // transaction_date parameter
             bind[3].buffer_type = MYSQL_TYPE_STRING;
             bind[3].buffer = const_cast<char *>(date.c_str());
             bind[3].buffer_length = STRING_SIZE;
 
-            mysql_stmt_bind_param(stmt, bind);
-            mysql_stmt_execute(stmt);
-            mysql_stmt_close(stmt);
+            // bind the buffers for all parameters
+            if (mysql_stmt_bind_param(stmt, bind)) {
+                std::cout << "\nERROR: Could not prepare the INSERT statement, "
+                          << "the buffers could not be bound";
+                std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
+                return 0;
+            };
+
+            // execute the INSERT statement
+            if (mysql_stmt_execute(stmt)) {
+                std::cout << "\nERROR: INSERT statement execution has failed";
+                std:: cout << "\n" << mysql_stmt_error(stmt);
+                return 0;
+            }
+
+            // free the statement
+            if (mysql_stmt_close(stmt)) {
+                std::cout << "\nERROR: Failed to free the INSERT statement";
+                std::cout << "\n" << mysql_error(connection) << "\n\n";
+            }
         }
         
         Disconnect();
     }
     else {
-        std::cout << "\nERROR: Could not connect to database\n\n";
+        std::cout << "\nERROR: Could not connect to database";
+        std::cout << "\n" << mysql_error(connection) << "\n\n";
     }
+
+    return 0;
 }
 
 /**

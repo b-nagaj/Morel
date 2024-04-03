@@ -22,11 +22,11 @@ class DBManager {
     //methods
     private:
         std::map<std::string, std::string> GetDBSecrets();
-        
+
     public:
         DBManager();
         bool Connect();
-        void CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
+        int CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
         MYSQL_RES * GetTransactionByAmount(std::string transactionAmount);
         void DeleteTransaction(std::string transactionID);
         void Disconnect();
