@@ -91,7 +91,7 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
             std::string category = newTransactions[i].GetCategory();
             std::string date = newTransactions[i].GetDate();
 
-            char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) \
+            const char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) \
                             VALUES (?, ?, ?, ?)";
             numQueryParams = 4;
             MYSQL_BIND bind[numQueryParams];
@@ -100,19 +100,19 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
             memset(bind, 0, sizeof(bind));
 
             bind[0].buffer_type = MYSQL_TYPE_STRING;
-            bind[0].buffer = const_cast<char*>(userID.c_str());
+            bind[0].buffer = const_cast<char *>(userID.c_str());
             bind[0].buffer_length = STRING_SIZE;
 
             bind[1].buffer_type = MYSQL_TYPE_STRING;
-            bind[1].buffer = const_cast<char*>(amount.c_str());
+            bind[1].buffer = const_cast<char *>(amount.c_str());
             bind[1].buffer_length = STRING_SIZE;
 
             bind[2].buffer_type = MYSQL_TYPE_STRING;
-            bind[2].buffer = const_cast<char*>(category.c_str());
+            bind[2].buffer = const_cast<char *>(category.c_str());
             bind[2].buffer_length = STRING_SIZE;
 
             bind[3].buffer_type = MYSQL_TYPE_STRING;
-            bind[3].buffer = const_cast<char*>(date.c_str());
+            bind[3].buffer = const_cast<char *>(date.c_str());
             bind[3].buffer_length = STRING_SIZE;
 
             mysql_stmt_bind_param(stmt, bind);
