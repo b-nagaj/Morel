@@ -1,13 +1,13 @@
-Joplin Issue ID #
+Obsidian Tag #
 
-### What?
+## Context
 
-Changes that were made
+Background & explanation about why the changes are necessary
 
-### How?
+## Description
 
-Tools and processes you used to make the changes
+What changes were made
 
-### Testing?
+## Additional Info
 
-Steps taken to add necessary unit testing or automated testing
+Anything else
