@@ -91,7 +91,8 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
             std::string category = newTransactions[i].GetCategory();
             std::string date = newTransactions[i].GetDate();
 
-            char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) VALUES (?, ?, ?, ?)";
+            char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) \
+                            VALUES (?, ?, ?, ?)";
             numQueryParams = 4;
             MYSQL_BIND bind[numQueryParams];
             stmt = mysql_stmt_init(connection);
