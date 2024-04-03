@@ -8,12 +8,16 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include <cstring>
 #include <mysql/mysql.h>
 
 class DBManager {
     // attributes
     private:
-        MYSQL *connection;
+        MYSQL * connection;
+        MYSQL_STMT * stmt;
+        MYSQL_BIND bind[4];
+        const int STRING_SIZE = 50;
 
     //methods
     private:

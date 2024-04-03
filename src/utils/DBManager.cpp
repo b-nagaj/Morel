@@ -79,23 +79,36 @@ void DBManager::CreateNewTransactions(Transaction *newTransactions,
     if (Connect()) {
         // Create a new transaction
         for (int i = 0; i < numNewTransactions; i++) {
-            std::string query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) VALUES ('" +
-                                std::to_string(newTransactions[i].GetUserID()) 
-                                            + "', '" +
-                                            newTransactions[i].GetAmount() 
-                                            + "', '" +
-                                            newTransactions[i].GetCategory() 
-                                            + "', '" +
-                                            newTransactions[i].GetDate() 
-                                            + "')";
 
-            // execute the query
-            if (mysql_query(connection, query.c_str()) != 0) {
-                std::cerr << "Error executing SQL query: " 
-                        << mysql_error(connection) 
-                        << std::endl;
-                mysql_close(connection);
-            }
+            std::string userID = std::to_string(newTransactions[i].GetUserID());
+            std::string amount = newTransactions[i].GetAmount();
+            std::string category = newTransactions[i].GetCategory();
+            std::string date = newTransactions[i].GetDate();
+
+            char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) VALUES (?, ?, ?, ?)";
+            stmt = mysql_stmt_init(connection);
+            mysql_stmt_prepare(stmt, query, strlen(query));
+            memset(bind, 0, sizeof(bind));
+
+            bind[0].buffer_type = MYSQL_TYPE_STRING;
+            bind[0].buffer = const_cast<char*>(userID.c_str());
+            bind[0].buffer_length = STRING_SIZE;
+
+            bind[1].buffer_type = MYSQL_TYPE_STRING;
+            bind[1].buffer = const_cast<char*>(amount.c_str());
+            bind[1].buffer_length = STRING_SIZE;
+
+            bind[2].buffer_type = MYSQL_TYPE_STRING;
+            bind[2].buffer = const_cast<char*>(category.c_str());
+            bind[2].buffer_length = STRING_SIZE;
+
+            bind[3].buffer_type = MYSQL_TYPE_STRING;
+            bind[3].buffer = const_cast<char*>(date.c_str());
+            bind[3].buffer_length = STRING_SIZE;
+
+            mysql_stmt_bind_param(stmt, bind);
+            mysql_stmt_execute(stmt);
+            mysql_stmt_close(stmt);
         }
         
         Disconnect();
