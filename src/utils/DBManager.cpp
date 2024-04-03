@@ -6,6 +6,7 @@
 */
 DBManager::DBManager() {
     numQueryParams = 0;
+    numAffectedRows = 0;
 }
 
 /**
@@ -93,7 +94,7 @@ int DBManager::CreateNewTransactions(Transaction *newTransactions,
 
 
             // define the INSERT query
-            const char * query = "INSER INTO Transactions(user_id, amount, category, transaction_date) \
+            const char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) \
                             VALUES (?, ?, ?, ?)";
             numQueryParams = 4;
             MYSQL_BIND bind[numQueryParams];
@@ -149,6 +150,8 @@ int DBManager::CreateNewTransactions(Transaction *newTransactions,
                 return 0;
             }
 
+            numAffectedRows += mysql_stmt_affected_rows(stmt);     
+
             // free the statement
             if (mysql_stmt_close(stmt)) {
                 std::cout << "\nERROR: Failed to free the INSERT statement";
@@ -164,6 +167,10 @@ int DBManager::CreateNewTransactions(Transaction *newTransactions,
     }
 
     return 0;
+}
+
+int DBManager::GetNumAffectedRows() {
+    return numAffectedRows;
 }
 
 /**

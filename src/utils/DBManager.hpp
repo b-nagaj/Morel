@@ -17,6 +17,7 @@ class DBManager {
         MYSQL * connection;
         MYSQL_STMT * stmt;
         int numQueryParams;
+        int numAffectedRows;
         const int STRING_SIZE = 50;
 
     //methods
@@ -27,6 +28,7 @@ class DBManager {
         DBManager();
         bool Connect();
         int CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
+        int GetNumAffectedRows();
         MYSQL_RES * GetTransactionByAmount(std::string transactionAmount);
         void DeleteTransaction(std::string transactionID);
         void Disconnect();
