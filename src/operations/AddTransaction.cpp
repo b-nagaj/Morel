@@ -35,7 +35,7 @@ Date GetCurrentDate() {
 void AddTransaction::GetNewTransactions() {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
-    numNewTransactions = -1;
+    numNewTransactions = 0;
 
     // display instructions
     std::cout << "\nPlease give a list of new transactions"
@@ -45,19 +45,21 @@ void AddTransaction::GetNewTransactions() {
     // prompt user for a transaction's amount & category until "end" is typed
     while (uncheckedTransactionAmount != "end") {
         std::cout << "Transaction" << " #" << (numNewTransactions + 2);
+
         std::cout << "\nAmount: ";
-        std::cin >> uncheckedTransactionAmount;
-        numNewTransactions++;
+        std::getline(std::cin, uncheckedTransactionAmount);
+
         if (uncheckedTransactionAmount == "end") {
             break;
         }
+
         std::cout << "Category: ";
-        std::cin >> uncheckedTransactionCategory;
+        std::getline(std::cin, uncheckedTransactionCategory);
         std::cout << "\n";
 
         // given the input is valid, instantiate a new transaction
-        if (ValidateNewTransactionAmount(uncheckedTransactionAmount) 
-            && ValidateNewTransactionCategory(uncheckedTransactionCategory)) {
+        if (ValidateNewTransactionAmount(uncheckedTransactionAmount) && 
+            ValidateNewTransactionCategory(uncheckedTransactionCategory)) {
             transactionAmount = uncheckedTransactionAmount;
             transactionCategory = uncheckedTransactionCategory;
 
@@ -67,7 +69,9 @@ void AddTransaction::GetNewTransactions() {
                                        transactionAmount, 
                                        transactionCategory, 
                                        GetCurrentDate());
-            newTransactions[numNewTransactions] = newTransaction;
+            numNewTransactions++;
+            // insert into array index 0 when numNewTransactions = 1, etc. etc.
+            newTransactions[numNewTransactions - 1] = newTransaction;
         }
     }
 }
@@ -90,15 +94,14 @@ bool AddTransaction::ValidateNewTransactionAmount(std::string uncheckedTransacti
     
     // check if the users input is empty
     if (uncheckedTransactionAmount.empty()) {
-        std::cout << "\nERROR: You entered an empty value for a transaction" 
-                  << "amount\n\n";
+        std::cout << "ERROR: You entered an empty value for a transaction amount\n\n";
         return false;
     }
     // check if the users input is numeric
     else if (std::all_of(transactionAmountWithoutDecimal.begin(), 
                          transactionAmountWithoutDecimal.end(), 
                          ::isdigit) == false) {
-        std::cout << "\nERROR: '" 
+        std::cout << "ERROR: '" 
                   << uncheckedTransactionAmount 
                   << "' is not a numerical value\n\n";
         return false;
@@ -119,16 +122,19 @@ bool AddTransaction::ValidateNewTransactionAmount(std::string uncheckedTransacti
 bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransactionCategory) {
     // check if the users input is empty
     if (uncheckedTransactionCategory.empty()) {
+        std::cout << "ERROR: You entered an empty value for a transaction category\n\n";
         return false;
     }
-    // check if the users input contains anything other than letters
+
+    // check if the users input contains anything other than letters or spaces
     for (char ch : uncheckedTransactionCategory) {
-        if (!std::isalpha(ch)) {
+        if (!std::isalpha(ch) && ch != ' ') {
+            std::cout << "ERROR: Category names must only contain letters or spaces\n\n";
             return false;
         }
     }
 
-    return true; 
+    return true;
 }
 
 /**
@@ -139,11 +145,9 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
 bool AddTransaction::ConfirmOperation() {
     std::string confirmationResponse = "";
 
-    // check that a user has entered at least 1 transaction, then display a
-    // confirmation message
+    // check that a user has entered at least 1 transaction
     if (numNewTransactions != 0) {
-        // grab each transaction's amount & category from the array of new transactions
-        // then display them to the user in a readable format
+        // display each transaction to the user in a readable format
         std::cout << "\n";
         for (int i = 0; i < numNewTransactions; i++) {
             std::cout << "$" 
@@ -154,7 +158,7 @@ bool AddTransaction::ConfirmOperation() {
         }
 
         std::cout << "\nAdd the above transactions? (Y/N): ";
-        std::cin >> confirmationResponse;
+        std::getline(std::cin, confirmationResponse);
 
         if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
             return true;

@@ -25,7 +25,7 @@ void DeleteTransaction::Delete() {
 void DeleteTransaction::GetTransaction() {
     std::cout << "\nPlease enter the amount for a transaction you'd like to delete\n\n";
     std::cout << "Transaction Amount: ";
-    std::cin >> transactionAmount;
+    std::getline(std::cin, transactionAmount);
 }
 
 /**
@@ -64,7 +64,7 @@ bool DeleteTransaction::ConfirmOperation() {
     std::string confirmationResponse = "";
 
     std::cout << "\nDelete the above transaction? (Y/N): ";
-    std::cin >> confirmationResponse;
+    std::getline(std::cin, confirmationResponse);
 
     if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
         return true;
