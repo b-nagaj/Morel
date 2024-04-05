@@ -81,7 +81,7 @@ void Calculator::DisplayOperations() {
 void Calculator::GetOperationFromUser() {
     std::cout << "\n\nOperation: ";
     std::string uncheckedOperation;
-    std::cin >> uncheckedOperation;
+    std::getline(std::cin, uncheckedOperation);
 
     if (ValidateOperation(uncheckedOperation)) {
         std::string checkedOperation = uncheckedOperation;

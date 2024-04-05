@@ -50,7 +50,7 @@ void Setup::WelcomeBanner() {
 void Setup::GetUsername() {
 
     std::cout << "\n\nUsername: ";
-    std::cin >> username;
+    std::getline(std::cin, username);
 
 }
 
@@ -62,7 +62,7 @@ void Setup::GetExpenseList() {
 
     while (expense != "end" && numExpenses < 20) {
         std::cout << "Expense" << "[" << (numExpenses + 1) << "]: ";
-        std::cin >> expense;
+        std::getline(std::cin, expense);
         expenses[numExpenses] = expense;
         numExpenses++;
     }

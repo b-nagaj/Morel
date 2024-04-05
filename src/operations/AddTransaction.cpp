@@ -46,13 +46,13 @@ void AddTransaction::GetNewTransactions() {
     while (uncheckedTransactionAmount != "end") {
         std::cout << "Transaction" << " #" << (numNewTransactions + 2);
         std::cout << "\nAmount: ";
-        std::cin >> uncheckedTransactionAmount;
+        std::getline(std::cin, uncheckedTransactionAmount);
         numNewTransactions++;
         if (uncheckedTransactionAmount == "end") {
             break;
         }
         std::cout << "Category: ";
-        std::cin >> uncheckedTransactionCategory;
+        std::getline(std::cin, uncheckedTransactionCategory);
         std::cout << "\n";
 
         // given the input is valid, instantiate a new transaction
@@ -154,7 +154,7 @@ bool AddTransaction::ConfirmOperation() {
         }
 
         std::cout << "\nAdd the above transactions? (Y/N): ";
-        std::cin >> confirmationResponse;
+        std::getline(std::cin, confirmationResponse);
 
         if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
             return true;
