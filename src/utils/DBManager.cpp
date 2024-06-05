@@ -44,6 +44,13 @@ std::map<std::string, std::string> DBManager::GetDBSecrets() {
 }
 
 /**
+ * terminates a MySQL connection
+ */ 
+void DBManager::Disconnect() {
+    mysql_close(connection);
+}
+
+/**
  * initializes a MySQL connection & authenticates with the database
  * 
  * @return a boolean value based on if the connection was successful/unsuccessful
@@ -174,10 +181,6 @@ int DBManager::CreateNewTransactions(Transaction *newTransactions,
 
 int DBManager::GetNumAffectedRows() {
     return numAffectedRows;
-}
-
-int DBManager::GetnumRowsReturned() {
-    return numRowsReturned;
 }
 
 /**
@@ -357,6 +360,10 @@ Transaction * DBManager::StoreFoundTransaction(MYSQL_STMT * stmt, MYSQL_RES * re
     return transactions;
 }
 
+int DBManager::GetnumRowsReturned() {
+    return numRowsReturned;
+}
+
 /**
  * Deletes a transaction or transactions
  * 
@@ -382,11 +389,4 @@ void DBManager::DeleteTransaction(std::string transactionID) {
     else {
         std::cout << "\nERROR: Could not connect to database\n";
     }
-}
-
-/**
- * terminates a MySQL connection
- */ 
-void DBManager::Disconnect() {
-    mysql_close(connection);
 }
