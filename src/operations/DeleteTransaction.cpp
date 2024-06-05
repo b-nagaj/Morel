@@ -10,7 +10,9 @@ DeleteTransaction::DeleteTransaction() {
 }
 
 /**
- * handles invoking GetTransaction() and DeleteTheTransaction() methods
+ * handles invoking the appropriate functions to retrieve a transaction amount
+ * to search for, search the database for it, display found transactions to the 
+ * console, and delete it
 */
 void DeleteTransaction::Delete() {
     GetTransaction();
