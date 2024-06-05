@@ -209,7 +209,7 @@ bool DBManager::GetTransactionByAmount(std::string transactionAmount) {
         }
 
         // initialize parameter data bind
-        int numQueryParams = 1;
+        numQueryParams = 1;
         MYSQL_BIND paramBind[numQueryParams];
         memset(paramBind, 0, sizeof(paramBind));
 
