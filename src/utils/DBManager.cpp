@@ -4,8 +4,12 @@
  * Initializes # of query parameters
 */
 DBManager::DBManager() {
+    connection = nullptr;
     numQueryParams = 0;
     numAffectedRows = 0;
+    numRowsReturned = 0;
+    stmt = nullptr;
+    result = nullptr;
 }
 
 /**
