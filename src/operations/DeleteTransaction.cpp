@@ -48,7 +48,7 @@ bool DeleteTransaction::FindTransaction() {
 void DeleteTransaction::DisplayTransaction() {
     transactions = dbManager.StoreFoundTransaction(dbManager.stmt, dbManager.result);
 
-    // Display all transactions matching the user's input
+    // Display matching transactions
     for (int i = 0; i < dbManager.GetNumRows(); i++) {
         std::cout << "\nDate: " << transactions[i].GetDate();
         std::cout << "\nAmount: $" << transactions[i].GetAmount();
@@ -58,7 +58,7 @@ void DeleteTransaction::DisplayTransaction() {
         // store the transactionID of each transaction
         std::string transactionID = std::to_string(transactions[i].GetTransactionID());
 
-        // add to current transaction's ID to a list of transactionIDs
+        // add the current transaction's ID to the list of transactionIDs
         if (ConfirmOperation()) {
             transactionIDs[numTransactions] = transactionID;
             numTransactions++;
