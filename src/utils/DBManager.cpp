@@ -372,6 +372,8 @@ void DBManager::DeleteTransaction(std::string transactionID) {
         }
 
         Disconnect();
+        mysql_stmt_free_result(stmt);
+        mysql_free_result(result);
     }
     else {
         std::cout << "\nERROR: Could not connect to database\n";
