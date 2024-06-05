@@ -6,6 +6,7 @@
 DeleteTransaction::DeleteTransaction() {
     numTransactions = 0;
     transactionAmount = "";
+    result = nullptr;
 }
 
 /**
