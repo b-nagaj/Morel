@@ -90,7 +90,7 @@ bool DeleteTransaction::ConfirmOperation() {
  * by invoking the DeleteTransaction() DBManager function
 */
 void DeleteTransaction::DeleteTheTransaction() {
-    // delete each transaction based on the collection of transactionIDs
+    // delete each transaction the user has chosen to delete
     for (int i = 0; i < numTransactions; i++) {
         dbManager.DeleteTransaction(transactionIDs[i]);
     }
