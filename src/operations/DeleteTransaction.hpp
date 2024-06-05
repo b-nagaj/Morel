@@ -12,9 +12,11 @@ class DeleteTransaction {
     private:
         int numTransactions;
         std::string transactionAmount;
+        Transaction * transactions;
         std::string transactionIDs [50];
         MYSQL_RES * result;
-
+        DBManager dbManager;
+        
     //methods
     private:
         void GetTransaction();

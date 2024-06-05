@@ -35,24 +35,7 @@ void DeleteTransaction::GetTransaction() {
  * @return true or false based on if a transaction was found
 */
 bool DeleteTransaction::FindTransaction() {
-    DBManager dbManager;
-    long numRows;
-
-    // store the list of matching transactions
-    result = dbManager.GetTransactionByAmount(transactionAmount);
-    numRows = mysql_num_rows(result);
-    mysql_free_result(result);
-
-    // check to see if there are any matching transactions
-    if (numRows < 1) {
-        std::cout << "\nERROR: No transactions with an amount of $"
-                  << transactionAmount
-                  << " exist";
-        return false;
-    }
-    else {
-        return true;
-    }
+    return dbManager.GetTransactionByAmount(transactionAmount);
 }
 
 /**
@@ -79,17 +62,17 @@ bool DeleteTransaction::ConfirmOperation() {
  * then prompts the user by invoking ConfirmOperation() for each transaction found
 */
 void DeleteTransaction::DisplayTransaction() {
-    MYSQL_ROW row;
-    
-    // display each transaction that matches the transactionAmount
-    while ((row = mysql_fetch_row(result)) != NULL) {
-        std::cout << "\nDate: " << (row[4] ? row[4] : "NULL");
-        std::cout << "\nAmount: $" << (row[2] ? row[2] : "NULL");
-        std::cout << "\nCategory: " << (row[3] ? row[3] : "NULL");
+    transactions = dbManager.StoreFoundTransaction(dbManager.stmt, dbManager.result);
+
+    // Display all transactions matching the user's input
+    for (int i = 0; i < dbManager.GetNumRows(); i++) {
+        std::cout << "\nDate: " << transactions[i].GetDate();
+        std::cout << "\nAmount: $" << transactions[i].GetAmount();
+        std::cout << "\nCategory: " << transactions[i].GetCategory();
         std::cout << std::endl;
 
         // store the transactionID of each transaction
-        std::string transactionID = row[0];
+        std::string transactionID = std::to_string(transactions[i].GetTransactionID());
 
         // add to current transaction's ID to a list of transactionIDs
         if (ConfirmOperation()) {
@@ -104,8 +87,6 @@ void DeleteTransaction::DisplayTransaction() {
  * by invoking the DeleteTransaction() DBManager function
 */
 void DeleteTransaction::DeleteTheTransaction() {
-    DBManager dbManager;
-
     // delete each transaction based on the collection of transactionIDs
     for (int i = 0; i < numTransactions; i++) {
         dbManager.DeleteTransaction(transactionIDs[i]);
