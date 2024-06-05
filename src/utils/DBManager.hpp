@@ -2,6 +2,7 @@
 #define DB_MANAGER
 
 #include "../entities/Transaction.hpp"
+#include "../utils/Date.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -15,10 +16,15 @@ class DBManager {
     // attributes
     private:
         MYSQL * connection;
-        MYSQL_STMT * stmt;
         int numQueryParams;
         int numAffectedRows;
+        int numRows;
         const int STRING_SIZE = 50;
+        Transaction transactions[50];
+
+    public:
+        MYSQL_STMT * stmt;
+        MYSQL_RES * result;
 
     //methods
     private:
@@ -29,7 +35,9 @@ class DBManager {
         bool Connect();
         int CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
         int GetNumAffectedRows();
-        MYSQL_RES * GetTransactionByAmount(std::string transactionAmount);
+        int GetNumRows();
+        bool GetTransactionByAmount(std::string transactionAmount);
+        Transaction * StoreFoundTransaction(MYSQL_STMT * stmt, MYSQL_RES * result);
         void DeleteTransaction(std::string transactionID);
         void Disconnect();
 };
