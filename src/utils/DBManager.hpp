@@ -18,7 +18,7 @@ class DBManager {
         MYSQL * connection;
         int numQueryParams;
         int numAffectedRows;
-        int numRows;
+        int numRowsReturned;
         const int STRING_SIZE = 50;
         Transaction transactions[50];
 
@@ -29,17 +29,18 @@ class DBManager {
     //methods
     private:
         std::map<std::string, std::string> GetDBSecrets();
+        bool Connect();
+        void Disconnect();
+
 
     public:
         DBManager();
-        bool Connect();
         int CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
         int GetNumAffectedRows();
-        int GetNumRows();
+        int GetnumRowsReturned();
         bool GetTransactionByAmount(std::string transactionAmount);
         Transaction * StoreFoundTransaction(MYSQL_STMT * stmt, MYSQL_RES * result);
         void DeleteTransaction(std::string transactionID);
-        void Disconnect();
 };
 
 #endif

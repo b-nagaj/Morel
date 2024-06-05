@@ -49,7 +49,7 @@ void DeleteTransaction::DisplayTransaction() {
     transactions = dbManager.StoreFoundTransaction(dbManager.stmt, dbManager.result);
 
     // Display matching transactions
-    for (int i = 0; i < dbManager.GetNumRows(); i++) {
+    for (int i = 0; i < dbManager.GetnumRowsReturned(); i++) {
         std::cout << "\nDate: " << transactions[i].GetDate();
         std::cout << "\nAmount: $" << transactions[i].GetAmount();
         std::cout << "\nCategory: " << transactions[i].GetCategory();

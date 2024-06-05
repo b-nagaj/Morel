@@ -172,8 +172,8 @@ int DBManager::GetNumAffectedRows() {
     return numAffectedRows;
 }
 
-int DBManager::GetNumRows() {
-    return numRows;
+int DBManager::GetnumRowsReturned() {
+    return numRowsReturned;
 }
 
 /**
@@ -239,7 +239,7 @@ bool DBManager::GetTransactionByAmount(std::string transactionAmount) {
         StoreFoundTransaction(stmt, result);
 
         // check that matching transactions were found
-        if (numRows > 0) {
+        if (numRowsReturned > 0) {
             return true;
         }
         else {
@@ -314,8 +314,8 @@ Transaction * DBManager::StoreFoundTransaction(MYSQL_STMT * stmt, MYSQL_RES * re
     mysql_stmt_store_result(stmt);
 
     // Fetch the row(s) to print the result data
-    numRows = mysql_stmt_num_rows(stmt);
-    if (numRows > 0) {   
+    numRowsReturned = mysql_stmt_num_rows(stmt);
+    if (numRowsReturned > 0) {   
         int status;
         int i = 0;
         while ((status = mysql_stmt_fetch(stmt)) == 0) {
