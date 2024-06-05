@@ -37,7 +37,7 @@ class DBManager {
 
     public:
         DBManager();
-        int CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
+        bool CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
         int GetNumAffectedRows();
         bool GetTransactionByAmount(std::string transactionAmount);
         int GetnumRowsReturned();
