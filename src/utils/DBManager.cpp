@@ -181,12 +181,20 @@ int DBManager::CreateNewTransactions(Transaction *newTransactions,
     return 0;
 }
 
+/* 
+ * returns the number of rows affected by an INSERT/DELETE/UPDATE query
+ *
+ * @return numAffectedRows
+*/
 int DBManager::GetNumAffectedRows() {
     return numAffectedRows;
 }
 
 /*
  * prepares a query
+ *
+ * @param query
+ * @return boolean value that represents success/failure
 */
 bool DBManager::PrepareQuery(const char * query) {
     // Prepare the SELECT query
@@ -206,6 +214,13 @@ bool DBManager::PrepareQuery(const char * query) {
     return true;
 }
 
+/*
+ * binds parameter data for a prepared SQL statement
+ * 
+ * @param a pointer to an array of MYSQL_BIND parameters
+ * @param a pointer to an string array of parameter data
+ * @return boolean value that represents success/failure
+*/
 bool DBManager::BindParameters(MYSQL_BIND * paramBind, std::string * parameters) {
     memset(paramBind, 0, sizeof(paramBind));
 
@@ -226,6 +241,11 @@ bool DBManager::BindParameters(MYSQL_BIND * paramBind, std::string * parameters)
     return true;
 }
 
+/*
+ * executes a prepared SQL statement
+ * 
+ * @return boolean value that represents success/failure
+*/
 bool DBManager::ExecuteQuery() {
     if (mysql_stmt_execute(stmt)) {
         std::cout << "\nERROR: SQL statement execution has failed";
@@ -391,11 +411,16 @@ Transaction * DBManager::StoreFoundTransaction(MYSQL_STMT * stmt, MYSQL_RES * re
     return transactions;
 }
 
+/*
+ * returns the number of rows retrieved from a SELECT query
+ *
+ * @return numRowsReturned
+*/
 int DBManager::GetnumRowsReturned() {
     return numRowsReturned;
 }
 
-/**
+/*
  * Deletes a transaction or transactions
  * 
  * @param transactionID represents a transactions unique identifier
