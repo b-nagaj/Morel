@@ -42,25 +42,6 @@ bool DeleteTransaction::FindTransaction() {
 }
 
 /**
- * asks the user to proceed with deletion of a transaction or list of transactions
- * 
- * @return boolean value that represent's the user's input (yes or no)
- */
-bool DeleteTransaction::ConfirmOperation() {
-    std::string confirmationResponse = "";
-
-    std::cout << "\nDelete the above transaction? (Y/N): ";
-    std::getline(std::cin, confirmationResponse);
-
-    if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-/**
  * displays each transaction that matches the user provided transaction amount,
  * then prompts the user by invoking ConfirmOperation() for each transaction found
 */
@@ -82,6 +63,25 @@ void DeleteTransaction::DisplayTransaction() {
             transactionIDs[numTransactions] = transactionID;
             numTransactions++;
         }
+    }
+}
+
+/**
+ * asks the user to proceed with deletion of a transaction or list of transactions
+ * 
+ * @return boolean value that represent's the user's input (yes or no)
+ */
+bool DeleteTransaction::ConfirmOperation() {
+    std::string confirmationResponse = "";
+
+    std::cout << "\nDelete the above transaction? (Y/N): ";
+    std::getline(std::cin, confirmationResponse);
+
+    if (confirmationResponse == "Y" || confirmationResponse == "y" ) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
 

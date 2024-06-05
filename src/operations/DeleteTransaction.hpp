@@ -21,8 +21,8 @@ class DeleteTransaction {
     private:
         void GetTransaction();
         bool FindTransaction();
-        bool ConfirmOperation();
         void DisplayTransaction();
+        bool ConfirmOperation();
         void DeleteTheTransaction();
 
     public:
