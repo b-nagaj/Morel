@@ -31,7 +31,9 @@ class DBManager {
         std::map<std::string, std::string> GetDBSecrets();
         bool Connect();
         void Disconnect();
-
+        bool PrepareQuery(const char * query);
+        bool BindParameters(MYSQL_BIND * paramBind, std::string * parameters);
+        bool ExecuteQuery();
 
     public:
         DBManager();

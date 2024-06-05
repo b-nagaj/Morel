@@ -185,6 +185,57 @@ int DBManager::GetNumAffectedRows() {
     return numAffectedRows;
 }
 
+/*
+ * prepares a query
+*/
+bool DBManager::PrepareQuery(const char * query) {
+    // Prepare the SELECT query
+    stmt = mysql_stmt_init(connection);
+    if (!stmt) {
+        std::cout << "\nERROR: Could not prepare the SQL statement, "
+                  << "out of memory\n\n";
+        std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
+        return false;
+    }
+    if (mysql_stmt_prepare(stmt, query, strlen(query))) {
+        std::cout << "\nERROR: Could not prepare the SQL statement";
+        std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
+        return false;
+    }
+
+    return true;
+}
+
+bool DBManager::BindParameters(MYSQL_BIND * paramBind, std::string * parameters) {
+    memset(paramBind, 0, sizeof(paramBind));
+
+    for (int i = 0; i < numQueryParams; i++) {
+        paramBind[i].buffer_type = MYSQL_TYPE_STRING;
+        paramBind[i].buffer = const_cast<char *>(parameters[i].c_str());
+        paramBind[i].buffer_length = STRING_SIZE;
+        paramBind[i].is_null = 0;
+    }
+
+    if (mysql_stmt_bind_param(stmt, paramBind)) {
+        std::cout << "\nERROR: Could not prepare the SQL statement, "
+                  << "the buffers could not be bound";
+        std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
+        return false;
+    };
+
+    return true;
+}
+
+bool DBManager::ExecuteQuery() {
+    if (mysql_stmt_execute(stmt)) {
+        std::cout << "\nERROR: SQL statement execution has failed";
+        std::cout << "\n" << mysql_stmt_error(stmt);
+        return false;
+    }
+
+    return true;
+}
+
 /**
  * searches for a transaction or transactions matching a specific amount
  * 
@@ -197,42 +248,21 @@ bool DBManager::GetTransactionByAmount(std::string transactionAmount) {
         const char * query = "SELECT * FROM Transactions WHERE amount = ?";
 
         // Prepare the SELECT query
-        stmt = mysql_stmt_init(connection);
-        if (!stmt) {
-            std::cout << "\nERROR: Could not prepare the SELECT statement, "
-                      << "out of memory\n\n";
-            std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
-            return false;
-        }
-        if (mysql_stmt_prepare(stmt, query, strlen(query))) {
-            std::cout << "\nERROR: Could not prepare the SELECT statement";
-            std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
+        if (!PrepareQuery(query)) {
             return false;
         }
 
-        // initialize parameter data bind
+        // bind parameter data
         numQueryParams = 1;
         MYSQL_BIND paramBind[numQueryParams];
-        memset(paramBind, 0, sizeof(paramBind));
-
-        // amount parameter
-        paramBind[0].buffer_type = MYSQL_TYPE_STRING;
-        paramBind[0].buffer = const_cast<char *>(transactionAmount.c_str());
-        paramBind[0].buffer_length = STRING_SIZE;
-        paramBind[0].is_null = 0;
-
-        // bind the buffer for the amount parameter
-        if (mysql_stmt_bind_param(stmt, paramBind)) {
-            std::cout << "\nERROR: Could not prepare the SELECT statement, "
-                      << "the buffers could not be bound";
-            std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
+        std::string parameters[numQueryParams];
+        parameters[0] = transactionAmount;
+        if (!BindParameters(paramBind, parameters)) {
             return false;
-        };
+        }
 
         // execute the SELECT statement
-        if (mysql_stmt_execute(stmt)) {
-            std::cout << "\nERROR: SELECT statement execution has failed";
-            std::cout << "\n" << mysql_stmt_error(stmt);
+        if (!ExecuteQuery()) {
             return false;
         }
 
@@ -252,7 +282,6 @@ bool DBManager::GetTransactionByAmount(std::string transactionAmount) {
             return true;
         }
         else {
-            std::cout << "0 transaction(s) deleted";
             return false;
         }
     }
@@ -264,7 +293,7 @@ bool DBManager::GetTransactionByAmount(std::string transactionAmount) {
 }
 
 /*
-* displays the result that's captured by GetTransactionByAmount()
+* displays the result set that's captured by GetTransactionByAmount()
 *
 * @param stmt the statement that was used to execute the SELECT query from
 * GetTransactionByAmount();
