@@ -20,7 +20,9 @@ DBManager::DBManager() {
 std::map<std::string, std::string> DBManager::GetDBSecrets() {
     // map to store key/value pairs of DB secrets
     std::map<std::string, std::string> dbSecrets;
-    std::string line, key, value;
+    std::string line;
+    std::string key;
+    std::string value;
     std::string pathToEnvFile = "dbSecrets.env";
     std::ifstream envFile(pathToEnvFile);
 
@@ -41,13 +43,6 @@ std::map<std::string, std::string> DBManager::GetDBSecrets() {
     }
 
     return dbSecrets;
-}
-
-/**
- * terminates a MySQL connection
- */ 
-void DBManager::Disconnect() {
-    mysql_close(connection);
 }
 
 /**
@@ -84,6 +79,13 @@ bool DBManager::Connect() {
     else {
         return true;
     }
+}
+
+/**
+ * terminates a MySQL connection
+ */ 
+void DBManager::Disconnect() {
+    mysql_close(connection);
 }
 
 /**
