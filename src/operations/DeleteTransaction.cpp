@@ -32,13 +32,13 @@ void DeleteTransaction::GetTransactions() {
 }
 
 /**
- * invokes the GetTransactionByAmount DBManager function to search the list of
+ * invokes the GetTransactionsByAmount DBManager function to search the list of
  * transactions based on the user provided transaction amount
  * 
  * @return true or false based on if a transaction was found
 */
 bool DeleteTransaction::FindTransactions() {
-    return dbManager.GetTransactionByAmount(transactionAmount);
+    return dbManager.GetTransactionsByAmount(transactionAmount);
 }
 
 /**
@@ -46,7 +46,7 @@ bool DeleteTransaction::FindTransactions() {
  * then prompts the user by invoking ConfirmOperation() for each transaction found
 */
 void DeleteTransaction::DisplayTransactions() {
-    transactions = dbManager.StoreFoundTransaction(dbManager.stmt, dbManager.result);
+    transactions = dbManager.StoreFoundTransactions(dbManager.stmt, dbManager.result);
 
     // Display matching transactions
     for (int i = 0; i < dbManager.GetnumRowsReturned(); i++) {
@@ -94,7 +94,7 @@ void DeleteTransaction::DeleteTheTransactions() {
 
     // delete each transaction the user has chosen to delete
     for (int i = 0; i < numTransactions; i++) {
-        if (dbManager.DeleteTransaction(transactionIDs[i])) {
+        if (dbManager.DeleteTransactions(transactionIDs[i])) {
             numTransactionsDeleted++;
         }
     }

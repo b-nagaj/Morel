@@ -231,7 +231,7 @@ bool DBManager::ExecuteQuery() {
  * @param transactionAmount the specific amount to search for
  * @return a result from an executed MySQL query
 */
-bool DBManager::GetTransactionByAmount(std::string transactionAmount) {
+bool DBManager::GetTransactionsByAmount(std::string transactionAmount) {
     if (Connect()) {
         // define the SELECT query
         const char * query = "SELECT * FROM Transactions WHERE amount = ?";
@@ -264,8 +264,8 @@ bool DBManager::GetTransactionByAmount(std::string transactionAmount) {
             return false;
         }
 
-        // invoke the StoreFoundTransaction() function to store the result
-        StoreFoundTransaction(stmt, result);
+        // invoke the StoreFoundTransactions() function to store the result
+        StoreFoundTransactions(stmt, result);
 
         // check that matching transactions were found
         if (numRowsReturned > 0) {
@@ -283,13 +283,13 @@ bool DBManager::GetTransactionByAmount(std::string transactionAmount) {
 }
 
 /*
-* displays the result set that's captured by GetTransactionByAmount()
+* displays the result set that's captured by GetTransactionsByAmount()
 *
 * @param stmt the statement that was used to execute the SELECT query from
-* GetTransactionByAmount();
-* @param result the result captured by GetTransactionByAmount()
+* GetTransactionsByAmount();
+* @param result the result captured by GetTransactionsByAmount()
 */
-Transaction * DBManager::StoreFoundTransaction(MYSQL_STMT * stmt, MYSQL_RES * result) {
+Transaction * DBManager::StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * result) {
     // column data
     int transaction_id;
     int user_id;
@@ -394,7 +394,7 @@ int DBManager::GetnumRowsReturned() {
  * 
  * @param transactionID represents a transactions unique identifier
 */
-bool DBManager::DeleteTransaction(std::string transactionID) {
+bool DBManager::DeleteTransactions(std::string transactionID) {
     if (Connect()) {
         // define the DELETE query
         const char * query = "DELETE FROM Transactions WHERE transaction_id = ?";
