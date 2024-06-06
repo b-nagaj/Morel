@@ -32,7 +32,7 @@ void DeleteTransaction::GetTransactions() {
 }
 
 /**
- * invokes the GetTransactionsByAmount DBManager function to search the list of
+ * invokes the GetTransactionsByAmount() from DBManager to search the list of
  * transactions based on the user provided transaction amount
  * 
  * @return true or false based on if a transaction was found
@@ -67,7 +67,7 @@ void DeleteTransaction::DisplayTransactions() {
 }
 
 /**
- * asks the user to proceed with deletion of a transaction or list of transactions
+ * confirms whether the user would like to delete the transaction
  * 
  * @return boolean value that represent's the user's input (yes or no)
  */

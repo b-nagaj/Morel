@@ -162,13 +162,12 @@ int DBManager::GetNumAffectedRows() {
 }
 
 /*
- * prepares a query
+ * prepares a query statement
  *
  * @param query
  * @return boolean value that represents success/failure
 */
 bool DBManager::PrepareQuery(const char * query) {
-    // Prepare the SELECT query
     stmt = mysql_stmt_init(connection);
     if (!stmt) {
         std::cout << "\nERROR: Could not prepare the SQL statement, "
@@ -226,7 +225,7 @@ bool DBManager::ExecuteQuery() {
 }
 
 /**
- * searches for a transaction or transactions matching a specific amount
+ * searches for transactions in the Transactions table that match a specific amount
  * 
  * @param transactionAmount the specific amount to search for
  * @return a result from an executed MySQL query
@@ -283,11 +282,11 @@ bool DBManager::GetTransactionsByAmount(std::string transactionAmount) {
 }
 
 /*
-* displays the result set that's captured by GetTransactionsByAmount()
+* stores the result set that's captured by GetTransactionsByAmount()
 *
 * @param stmt the statement that was used to execute the SELECT query from
 * GetTransactionsByAmount();
-* @param result the result captured by GetTransactionsByAmount()
+* @param a pointer to an array of Transaction objects containing result data
 */
 Transaction * DBManager::StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * result) {
     // column data
@@ -393,6 +392,7 @@ int DBManager::GetnumRowsReturned() {
  * Deletes a transaction or transactions
  * 
  * @param transactionID represents a transactions unique identifier
+ * @return the success/failure of the deletion
 */
 bool DBManager::DeleteTransactions(std::string transactionID) {
     if (Connect()) {

@@ -136,7 +136,7 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
 }
 
 /**
- * Displays a summary of the user's input and asks them to confirm its correctness
+ * confirms whether the user would like to add the transaction
  * 
  * @return boolean value that represent's the user's input (yes or no)
  */
@@ -162,8 +162,11 @@ bool AddTransaction::ConfirmOperation() {
     }
 }
 
+/*
+ * displays the list of transactions entered by the user
+*/
 void AddTransaction::DisplayNewTransactions() {
-     // display each transaction to the user in a readable format
+    // display each transaction to the user in a readable format
     std::cout << "\n";
     for (int i = 0; i < numNewTransactions; i++) {
         std::cout << "$" 
@@ -177,8 +180,8 @@ void AddTransaction::DisplayNewTransactions() {
 }
 
 /**
- * Invokes the CreateNewTransactions() function from DBManager to delete a transaction
- * or list of transactions
+ * Invokes the CreateNewTransactions() function from DBManager to add a list
+ * of transactions
  */
 void AddTransaction::AddNewTransactions() {
     DBManager dbManager;
