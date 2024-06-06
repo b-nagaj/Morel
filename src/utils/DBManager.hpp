@@ -42,7 +42,7 @@ class DBManager {
         bool GetTransactionByAmount(std::string transactionAmount);
         int GetnumRowsReturned();
         Transaction * StoreFoundTransaction(MYSQL_STMT * stmt, MYSQL_RES * result);
-        void DeleteTransaction(std::string transactionID);
+        bool DeleteTransaction(std::string transactionID);
 };
 
 #endif

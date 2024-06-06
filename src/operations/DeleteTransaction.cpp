@@ -90,12 +90,13 @@ bool DeleteTransaction::ConfirmOperation() {
  * by invoking the DeleteTransaction() DBManager function
 */
 void DeleteTransaction::DeleteTheTransaction() {
+    int numTransactionsDeleted = 0;
+
     // delete each transaction the user has chosen to delete
     for (int i = 0; i < numTransactions; i++) {
-        dbManager.DeleteTransaction(transactionIDs[i]);
+        if (dbManager.DeleteTransaction(transactionIDs[i])) {
+            numTransactionsDeleted++;
+        }
     }
-    std::cout << "\n" << numTransactions << " transaction(s) deleted ✅";
-
-    numTransactions = 0;
-    transactionAmount = "";
+    std::cout << "\n" << numTransactionsDeleted << " transaction(s) deleted ✅";
 }

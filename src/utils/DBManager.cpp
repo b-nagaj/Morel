@@ -394,24 +394,40 @@ int DBManager::GetnumRowsReturned() {
  * 
  * @param transactionID represents a transactions unique identifier
 */
-void DBManager::DeleteTransaction(std::string transactionID) {
+bool DBManager::DeleteTransaction(std::string transactionID) {
     if (Connect()) {
-        // delete the transaction that matches the transactionID
-        std::string query = "DELETE FROM Transactions WHERE transaction_id = "
-                            + transactionID;
+        // define the DELETE query
+        const char * query = "DELETE FROM Transactions WHERE transaction_id = ?";
 
-        // execute the query
-        if (mysql_query(connection, query.c_str()) != 0) {
-            std::cerr << "Error executing SQL query: " 
-                    << mysql_error(connection) 
-                    << std::endl;
+        // prepare the DELETE query
+        if (!PrepareQuery(query)) {
+            return false;
         }
 
+        // bind parameter data
+        numQueryParams = 1;
+        MYSQL_BIND paramBind[numQueryParams];
+        std::string parameters[numQueryParams];
+        parameters[0] = transactionID;
+        memset(paramBind, 0, sizeof(paramBind));
+        if (!BindParameters(paramBind, parameters)) {
+            return false;
+        }
+
+        // execute the query
+        if (!ExecuteQuery()) {
+            return false;
+        }
+
+        // disconnect the session & free the statement/result
         Disconnect();
         mysql_stmt_free_result(stmt);
         mysql_free_result(result);
     }
     else {
         std::cout << "\nERROR: Could not connect to database\n";
+        return false;
     }
+
+    return true;
 }
