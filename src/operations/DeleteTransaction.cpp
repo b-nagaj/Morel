@@ -15,17 +15,17 @@ DeleteTransaction::DeleteTransaction() {
  * console, and delete it
 */
 void DeleteTransaction::Delete() {
-    GetTransaction();
-    if (FindTransaction()) {
-        DisplayTransaction();
-        DeleteTheTransaction();
+    GetTransactions();
+    if (FindTransactions()) {
+        DisplayTransactions();
+        DeleteTheTransactions();
     }
 }
 
 /**
  * accepts user input for a transaction's amount
 */
-void DeleteTransaction::GetTransaction() {
+void DeleteTransaction::GetTransactions() {
     std::cout << "\nPlease enter the amount for a transaction you'd like to delete\n\n";
     std::cout << "Transaction Amount: ";
     std::getline(std::cin, transactionAmount);
@@ -37,7 +37,7 @@ void DeleteTransaction::GetTransaction() {
  * 
  * @return true or false based on if a transaction was found
 */
-bool DeleteTransaction::FindTransaction() {
+bool DeleteTransaction::FindTransactions() {
     return dbManager.GetTransactionByAmount(transactionAmount);
 }
 
@@ -45,7 +45,7 @@ bool DeleteTransaction::FindTransaction() {
  * displays each transaction that matches the user provided transaction amount,
  * then prompts the user by invoking ConfirmOperation() for each transaction found
 */
-void DeleteTransaction::DisplayTransaction() {
+void DeleteTransaction::DisplayTransactions() {
     transactions = dbManager.StoreFoundTransaction(dbManager.stmt, dbManager.result);
 
     // Display matching transactions
@@ -89,7 +89,7 @@ bool DeleteTransaction::ConfirmOperation() {
  * Deletes the transaction or list of transactions the user has agreed to delete
  * by invoking the DeleteTransaction() DBManager function
 */
-void DeleteTransaction::DeleteTheTransaction() {
+void DeleteTransaction::DeleteTheTransactions() {
     int numTransactionsDeleted = 0;
 
     // delete each transaction the user has chosen to delete

@@ -19,11 +19,11 @@ class DeleteTransaction {
         
     //methods
     private:
-        void GetTransaction();
-        bool FindTransaction();
-        void DisplayTransaction();
+        void GetTransactions();
+        bool FindTransactions();
+        void DisplayTransactions();
         bool ConfirmOperation();
-        void DeleteTheTransaction();
+        void DeleteTheTransactions();
 
     public:
         DeleteTransaction();
