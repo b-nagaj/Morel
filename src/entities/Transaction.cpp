@@ -26,6 +26,15 @@ Transaction::Transaction(int id, std::string a, std::string c, Date td) {
     SetDate(td);
 }
 
+/** 
+ * Gets a transaction's id
+ * 
+ * @return id
+*/ 
+int Transaction::GetTransactionID() {
+    return id;
+}
+
 /**
  * Gets a transaction's userID
  * 
@@ -63,6 +72,13 @@ std::string Transaction::GetDate() {
 }
 
 // Setters
+
+/**
+ * Sets a transaction's id
+*/ 
+void Transaction::SetTransactionID(int transactionID) {
+    id = transactionID;
+}
 
 /**
  * Sets a transaction's userID

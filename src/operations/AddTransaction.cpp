@@ -5,10 +5,8 @@
  */
 void AddTransaction::Add() {
     GetNewTransactions();
-    // confirms with user before performing the create operation
-    if (ConfirmOperation()) {
-        AddNewTransactions();
-    }
+    DisplayNewTransactions();
+    AddNewTransactions();
 }
 
 /**
@@ -138,24 +136,14 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
 }
 
 /**
- * Displays a summary of the user's input and asks them to confirm its correctness
+ * confirms whether the user would like to add the transaction
  * 
  * @return boolean value that represent's the user's input (yes or no)
  */
 bool AddTransaction::ConfirmOperation() {
-    std::string confirmationResponse = "";
-
     // check that a user has entered at least 1 transaction
     if (numNewTransactions != 0) {
-        // display each transaction to the user in a readable format
-        std::cout << "\n";
-        for (int i = 0; i < numNewTransactions; i++) {
-            std::cout << "$" 
-                    << newTransactions[i].GetAmount() 
-                    << " -> " 
-                    << newTransactions[i].GetCategory() 
-                    << "\n";
-        }
+        std::string confirmationResponse = "";
 
         std::cout << "\nAdd the above transactions? (Y/N): ";
         std::getline(std::cin, confirmationResponse);
@@ -174,13 +162,30 @@ bool AddTransaction::ConfirmOperation() {
     }
 }
 
+/*
+ * displays the list of transactions entered by the user
+*/
+void AddTransaction::DisplayNewTransactions() {
+    // display each transaction to the user in a readable format
+    std::cout << "\n";
+    for (int i = 0; i < numNewTransactions; i++) {
+        std::cout << "$" 
+                  << newTransactions[i].GetAmount() 
+                  << " -> " 
+                  << newTransactions[i].GetCategory() 
+                  << "\n";
+    }
+
+    ConfirmOperation();
+}
+
 /**
- * Invokes the CreateNewTransactions() function from DBManager to delete a transaction
- * or list of transactions
+ * Invokes the CreateNewTransactions() function from DBManager to add a list
+ * of transactions
  */
 void AddTransaction::AddNewTransactions() {
     DBManager dbManager;
 
     dbManager.CreateNewTransactions(newTransactions, numNewTransactions);
-    std::cout << "\n" << numNewTransactions << " new Transaction(s) Added ✅";
+    std::cout << "\n" << dbManager.GetNumAffectedRows() << " new Transaction(s) Added ✅";
 }
