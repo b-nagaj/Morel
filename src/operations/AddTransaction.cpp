@@ -5,10 +5,8 @@
  */
 void AddTransaction::Add() {
     GetNewTransactions();
-    // confirms with user before performing the create operation
-    if (ConfirmOperation()) {
-        AddNewTransactions();
-    }
+    DisplayNewTransactions();
+    AddNewTransactions();
 }
 
 /**
@@ -143,19 +141,9 @@ bool AddTransaction::ValidateNewTransactionCategory(std::string uncheckedTransac
  * @return boolean value that represent's the user's input (yes or no)
  */
 bool AddTransaction::ConfirmOperation() {
-    std::string confirmationResponse = "";
-
     // check that a user has entered at least 1 transaction
     if (numNewTransactions != 0) {
-        // display each transaction to the user in a readable format
-        std::cout << "\n";
-        for (int i = 0; i < numNewTransactions; i++) {
-            std::cout << "$" 
-                    << newTransactions[i].GetAmount() 
-                    << " -> " 
-                    << newTransactions[i].GetCategory() 
-                    << "\n";
-        }
+        std::string confirmationResponse = "";
 
         std::cout << "\nAdd the above transactions? (Y/N): ";
         std::getline(std::cin, confirmationResponse);
@@ -172,6 +160,20 @@ bool AddTransaction::ConfirmOperation() {
         std::cout << "\n0 new Transaction(s) Added";
         return false;
     }
+}
+
+void AddTransaction::DisplayNewTransactions() {
+     // display each transaction to the user in a readable format
+    std::cout << "\n";
+    for (int i = 0; i < numNewTransactions; i++) {
+        std::cout << "$" 
+                  << newTransactions[i].GetAmount() 
+                  << " -> " 
+                  << newTransactions[i].GetCategory() 
+                  << "\n";
+    }
+
+    ConfirmOperation();
 }
 
 /**
