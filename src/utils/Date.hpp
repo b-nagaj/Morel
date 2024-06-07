@@ -16,6 +16,7 @@ class Date {
     public:
         Date(int m, int d, int y);
         std::string FormatToTimestamp(); 
+        Date GetCurrentDate();
 };
 
 #endif
