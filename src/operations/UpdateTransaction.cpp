@@ -91,8 +91,10 @@ bool UpdateTransaction::ConfirmOperation() {
 void UpdateTransaction::GetNewTransactionInformation() {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
-    updatedTransactionAmount = 0;
-    updatedTransactionCategory = 0;
+    Date date;
+    Date currentDate = date.GetCurrentDate();
+    updatedTransactionAmount = "";
+    updatedTransactionCategory = "";
 
     std::cout << "\nAmount: ";
     std::getline(std::cin, uncheckedTransactionAmount);
@@ -100,6 +102,74 @@ void UpdateTransaction::GetNewTransactionInformation() {
     std::cout << "Category: ";
     std::getline(std::cin, uncheckedTransactionCategory);
     std::cout << "\n";
+
+    // given the input is valid, instantiate a new transaction
+    if (ValidateNewTransactionAmount(uncheckedTransactionAmount) && 
+    ValidateNewTransactionCategory(uncheckedTransactionCategory)) {
+        updatedTransactionAmount = uncheckedTransactionAmount;
+        updatedTransactionCategory = uncheckedTransactionCategory;
+    }
+}
+
+/**
+ * validates that user input for a transaction's amount isn't empty and doesn't
+ * contain letters or special characters
+ * 
+ * @param uncheckedTransactionAmount an input value for a transaction's amount 
+ * that hasn't been checked
+ * @return a boolean value based on the correctness of a user's input
+ */ 
+bool UpdateTransaction::ValidateNewTransactionAmount(std::string uncheckedTransactionAmount) { 
+    // strip decimal character from transaction amount value   
+    std::string transactionAmountWithoutDecimal = uncheckedTransactionAmount;
+    transactionAmountWithoutDecimal.erase(remove(transactionAmountWithoutDecimal.begin(), 
+                                                 transactionAmountWithoutDecimal.end(), 
+                                                 '.'), 
+                                                 transactionAmountWithoutDecimal.end());
+    
+    // check if the users input is empty
+    if (uncheckedTransactionAmount.empty()) {
+        std::cout << "ERROR: You entered an empty value for a transaction amount\n\n";
+        return false;
+    }
+    // check if the users input is numeric
+    else if (std::all_of(transactionAmountWithoutDecimal.begin(), 
+                         transactionAmountWithoutDecimal.end(), 
+                         ::isdigit) == false) {
+        std::cout << "ERROR: '" 
+                  << uncheckedTransactionAmount 
+                  << "' is not a numerical value\n\n";
+        return false;
+    }
+    else {
+        return true; 
+    }
+}
+
+/**
+ * validates that user input for a transactions' category isn't empty and 
+ * doesn't contain numerical values 
+ * 
+ * @param uncheckedTransactionCategory an input value for a transaction's 
+ * category that hasn't been checked
+ * @return a boolean value based on the correctness of a user's input
+ */ 
+bool UpdateTransaction::ValidateNewTransactionCategory(std::string uncheckedTransactionCategory) {
+    // check if the users input is empty
+    if (uncheckedTransactionCategory.empty()) {
+        std::cout << "ERROR: You entered an empty value for a transaction category\n\n";
+        return false;
+    }
+
+    // check if the users input contains anything other than letters or spaces
+    for (char ch : uncheckedTransactionCategory) {
+        if (!std::isalpha(ch) && ch != ' ') {
+            std::cout << "ERROR: Category names must only contain letters or spaces\n\n";
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
