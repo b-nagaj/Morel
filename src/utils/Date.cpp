@@ -44,7 +44,7 @@ std::string Date::FormatToTimestamp() {
  * 
  * @return an instantiated date object with a month, day, and year value
  */
-Date GetCurrentDate() {
+Date Date::GetCurrentDate() {
     // get the current system time
     auto now = std::chrono::system_clock::now();
     // convert the system time to a time_t object
