@@ -86,6 +86,23 @@ bool UpdateTransaction::ConfirmOperation() {
 }
 
 /**
+ * prompts the user to enter new information about a transaction they'd like to update  
+ */
+void UpdateTransaction::GetNewTransactionInformation() {
+    std::string uncheckedTransactionAmount;
+    std::string uncheckedTransactionCategory;
+    updatedTransactionAmount = 0;
+    updatedTransactionCategory = 0;
+
+    std::cout << "\nAmount: ";
+    std::getline(std::cin, uncheckedTransactionAmount);
+
+    std::cout << "Category: ";
+    std::getline(std::cin, uncheckedTransactionCategory);
+    std::cout << "\n";
+}
+
+/**
  * updates the transaction or list of transactions the user has agreed to update
  * by invoking the ? DBManager function
 */

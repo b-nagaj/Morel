@@ -11,6 +11,8 @@ class UpdateTransaction {
     // attributes
         private:
             int numTransactions;
+            int updatedTransactionAmount;
+            int updatedTransactionCategory;
             std::string transactionAmount;
             Transaction * transactions;
             std::string transactionIDs [50];
