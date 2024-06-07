@@ -1,4 +1,4 @@
-#include "Update.hpp"
+#include "UpdateTransaction.hpp"
 
 /**
  * initializes class attributes
@@ -18,7 +18,7 @@ void UpdateTransaction::Update() {
     GetTransactions();
     if (FindTransactions()) {
         DisplayTransactions();
-        DeleteTheTransactions();
+        UpdateTheTransactions();
     }
 }
 
@@ -89,6 +89,6 @@ bool UpdateTransaction::ConfirmOperation() {
  * updates the transaction or list of transactions the user has agreed to update
  * by invoking the ? DBManager function
 */
-void UpdateTransaction::UpdateTheTransaction() {
+void UpdateTransaction::UpdateTheTransactions() {
     int numTransactionsUpdated = 0;
 }
