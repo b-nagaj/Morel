@@ -23,6 +23,7 @@ class UpdateTransaction {
             bool FindTransactions();
             void DisplayTransactions();
             bool ConfirmOperation();
+            void GetNewTransactionInformation();
             void UpdateTheTransactions();
 
         public:
