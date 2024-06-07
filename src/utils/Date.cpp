@@ -1,6 +1,15 @@
 #include "Date.hpp"
 
 /**
+ * initializes each class attribute to 0
+ */ 
+Date::Date() {
+    month = 0;
+    day = 0;
+    year = 0;
+}
+
+/**
  * initializes each class attribute based on input parameters
  * 
  * @param m a date's month
