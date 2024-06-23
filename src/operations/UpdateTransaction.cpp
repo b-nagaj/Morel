@@ -95,8 +95,6 @@ bool UpdateTransaction::ConfirmOperation() {
 void UpdateTransaction::GetNewTransactionInformation(int index) {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
-    Date date;
-    updatedTransactionDate = date.GetCurrentDate();
     updatedTransactionAmount = "";
     updatedTransactionCategory = "";
 
@@ -116,7 +114,6 @@ void UpdateTransaction::GetNewTransactionInformation(int index) {
 
         transactions[index].SetAmount(updatedTransactionAmount); 
         transactions[index].SetCategory(updatedTransactionCategory);
-        transactions[index].SetDate(updatedTransactionDate);
     }
 }
 
