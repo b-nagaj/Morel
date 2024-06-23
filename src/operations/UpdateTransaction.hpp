@@ -23,8 +23,8 @@ class UpdateTransaction {
             std::string updatedTransactionAmount;
             std::string updatedTransactionCategory;
             std::string transactionAmount;
-            Transaction * transactions;
-            std::string transactionIDs [50];
+            Transaction * foundTransactions;
+            Transaction transactions [50];
             MYSQL_RES * result;
             DBManager dbManager;
 

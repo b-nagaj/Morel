@@ -46,26 +46,29 @@ bool UpdateTransaction::FindTransactions() {
  * then prompts the user by invoking ConfirmOperation() for each transaction found
 */
 void UpdateTransaction::DisplayTransactions() {
-    transactions = dbManager.StoreFoundTransactions(dbManager.stmt, dbManager.result);
+    foundTransactions = dbManager.StoreFoundTransactions(dbManager.stmt, dbManager.result);
 
     // Display matching transactions
     for (int i = 0; i < dbManager.GetnumRowsReturned(); i++) {
-        std::cout << "\nDate: " << transactions[i].GetDate();
-        std::cout << "\nAmount: $" << transactions[i].GetAmount();
-        std::cout << "\nCategory: " << transactions[i].GetCategory();
+        std::cout << "\nDate: " << foundTransactions[i].GetDate();
+        std::cout << "\nAmount: $" << foundTransactions[i].GetAmount();
+        std::cout << "\nCategory: " << foundTransactions[i].GetCategory();
         std::cout << std::endl;
 
         // store the transactionID of each transaction
-        std::string transactionID = std::to_string(transactions[i].GetTransactionID());
+        std::string transactionID = std::to_string(foundTransactions[i].GetTransactionID());
 
         // add the current transaction's ID to the list of transactionIDs
         if (ConfirmOperation()) {
-            transactionIDs[numTransactions] = transactionID;
+            //transactionIDs[numTransactions] = transactionID;
+
+            transactions[i].SetTransactionID(foundTransactions[i].GetTransactionID());
+            transactions[i].SetAmount(foundTransactions[i].GetAmount());
+            transactions[i].SetCategory(foundTransactions[i].GetCategory());
             numTransactions++;
 
             // prompt the user to enter new information about the transaction
             GetNewTransactionInformation(i);
-            UpdateTheTransactions();
         }
     }
 }
@@ -180,22 +183,13 @@ bool UpdateTransaction::ValidateNewTransactionCategory(std::string uncheckedTran
 
 /**
  * updates the transaction or list of transactions the user has agreed to update
- * by invoking the ? DBManager function
+ * by invoking the DBManager's UpdateTransaction() function
 */
 void UpdateTransaction::UpdateTheTransactions() {
-    int j = 0; // used to keep track of the current index in the transactionIDs array
-
-    // iterate through the list of transactions returned from FindTransactions()
-    // then invoke the DBManager's UpdateTransaction() function on it if its
-    // transactionID matches one of the IDs in transactionIDs
-    for (int i = 0; i < sizeof(transactions) / sizeof(transactions[i]); i++) {
-        if (std::to_string(transactions[i].GetTransactionID()) == transactionIDs[j]) {
-            if (dbManager.UpdateTransaction(std::to_string(transactions[i].GetTransactionID()),
-                                            transactions[i])) {
-                j++;
-            }
-        }
+    for (int i = 0; i < numTransactions; i++) {
+        dbManager.UpdateTransaction(std::to_string(transactions[i].GetTransactionID()), 
+                                    transactions[i]);
     }
 
-    std::cout << "\n" << dbManager.GetNumAffectedRows() << " transaction(s) deleted ✅";
+    std::cout << "\n" << dbManager.GetNumAffectedRows() << " transaction(s) updated ✅";
 }
