@@ -96,7 +96,7 @@ void UpdateTransaction::GetNewTransactionInformation(int index) {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
     Date date;
-    Date currentDate = date.GetCurrentDate();
+    updatedTransactionDate = date.GetCurrentDate();
     updatedTransactionAmount = "";
     updatedTransactionCategory = "";
 
@@ -107,11 +107,16 @@ void UpdateTransaction::GetNewTransactionInformation(int index) {
     std::getline(std::cin, uncheckedTransactionCategory);
     std::cout << "\n";
 
-    // given the input is valid, instantiate a new transaction
+    // given the input is valid, set the current transaction's attributes to
+    // match the updated amount, category, and date values
     if (ValidateNewTransactionAmount(uncheckedTransactionAmount) && 
     ValidateNewTransactionCategory(uncheckedTransactionCategory)) {
         updatedTransactionAmount = uncheckedTransactionAmount;
         updatedTransactionCategory = uncheckedTransactionCategory;
+
+        transactions[index].SetAmount(updatedTransactionAmount); 
+        transactions[index].SetCategory(updatedTransactionCategory);
+        transactions[index].SetDate(updatedTransactionDate);
     }
 }
 
