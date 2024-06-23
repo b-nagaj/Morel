@@ -479,7 +479,8 @@ bool DBManager::UpdateTransaction(std::string transactionID, Transaction transac
         }
 
         // get # of affected rows
-        numAffectedRows += mysql_stmt_affected_rows(stmt); 
+        SetNumAffectedRows(numAffectedRows += mysql_stmt_affected_rows(stmt));
+        //numAffectedRows += mysql_stmt_affected_rows(stmt); 
 
         // free the statement
         if (mysql_stmt_close(stmt)) {

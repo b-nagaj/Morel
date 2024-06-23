@@ -192,4 +192,5 @@ void UpdateTransaction::UpdateTheTransactions() {
     }
 
     std::cout << "\n" << dbManager.GetNumAffectedRows() << " transaction(s) updated ✅";
+    dbManager.SetNumAffectedRows(0);
 }
