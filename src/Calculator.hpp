@@ -3,6 +3,7 @@
 
 #include "operations/AddTransaction.hpp"
 #include "operations/DeleteTransaction.hpp"
+#include "operations/UpdateTransaction.hpp"
 
 #include <iostream>
 
@@ -12,6 +13,7 @@ class Calculator {
         int operation; // stores the calculator operation selected by the user
         AddTransaction addTransaction;
         DeleteTransaction deleteTransaction;
+        UpdateTransaction updateTransaction;
     public:
         const int NUM_OPERATIONS = 8;
     
