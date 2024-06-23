@@ -431,3 +431,60 @@ bool DBManager::DeleteTransactions(std::string transactionID) {
 
     return true;
 }
+
+/**
+ * Updates a transaction
+ *
+ * @param transactionID the ID of the transaction to update
+ * @param transaction a Transaction entity that represents the transaction to update
+ * @return the success/failure of the update
+ */
+bool DBManager::UpdateTransaction(std::string transactionID, Transaction transaction) {
+    if (Connect()) {
+        std::string amount = transaction.GetAmount();
+        std::string category = transaction.GetCategory();
+
+        // define the UPDATE query
+        const char * query = "UPDATE Transactions SET amount = ?, category = ? WHERE transaction_id = ?;";
+
+        // prepare the UPDATE query
+        if (!PrepareQuery(query)) {
+            return false;
+        }
+
+        // bind parameter data
+        numQueryParams = 3;
+        MYSQL_BIND paramBind[numQueryParams];
+        std::string parameters[numQueryParams];
+        parameters[0] = amount;
+        parameters[1] = category;
+        parameters[2] = transactionID;
+        memset(paramBind, 0, sizeof(paramBind));
+        if (!BindParameters(paramBind, parameters)) {
+            return false;
+        }
+
+        // execute the query
+        if (!ExecuteQuery()) {
+            return false;
+        }
+
+        // get # of affected rows
+        numAffectedRows += mysql_stmt_affected_rows(stmt); 
+
+        // free the statement
+        if (mysql_stmt_close(stmt)) {
+            std::cout << "\nERROR: Failed to free the UPDATE statement";
+            std::cout << "\n" << mysql_error(connection) << "\n\n";
+            return false;
+        }
+
+        Disconnect();
+    }
+    else {
+        std::cout << "\nERROR: Could not connect to database";
+        std::cout << "\n" << mysql_error(connection) << "\n\n";
+    }
+
+    return true;
+}
