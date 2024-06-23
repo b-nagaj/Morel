@@ -62,6 +62,10 @@ void UpdateTransaction::DisplayTransactions() {
         if (ConfirmOperation()) {
             transactionIDs[numTransactions] = transactionID;
             numTransactions++;
+
+            // prompt the user to enter new information about the transaction
+            GetNewTransactionInformation(i);
+            UpdateTheTransactions();
         }
     }
 }
@@ -88,7 +92,7 @@ bool UpdateTransaction::ConfirmOperation() {
 /**
  * prompts the user to enter new information about a transaction they'd like to update  
  */
-void UpdateTransaction::GetNewTransactionInformation() {
+void UpdateTransaction::GetNewTransactionInformation(int index) {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
     Date date;

@@ -34,7 +34,7 @@ class UpdateTransaction {
             bool FindTransactions();
             void DisplayTransactions();
             bool ConfirmOperation();
-            void GetNewTransactionInformation();
+            void GetNewTransactionInformation(int index);
             bool ValidateNewTransactionAmount(std::string uncheckedTransactionAmount);
             bool ValidateNewTransactionCategory(std::string uncheckedTransactionCategory);
             void UpdateTheTransactions();
