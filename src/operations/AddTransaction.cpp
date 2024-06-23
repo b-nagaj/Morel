@@ -172,4 +172,5 @@ void AddTransaction::AddNewTransactions() {
 
     dbManager.CreateNewTransactions(newTransactions, numNewTransactions);
     std::cout << "\n" << dbManager.GetNumAffectedRows() << " new Transaction(s) Added ✅";
+    dbManager.SetNumAffectedRows(0);
 }
