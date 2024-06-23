@@ -22,6 +22,7 @@ class UpdateTransaction {
             int numTransactions;
             std::string updatedTransactionAmount;
             std::string updatedTransactionCategory;
+            std::string updatedTransactionDate;
             std::string transactionAmount;
             Transaction * transactions;
             std::string transactionIDs [50];
