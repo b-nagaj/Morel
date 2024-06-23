@@ -43,6 +43,7 @@ class DBManager {
         int GetnumRowsReturned();
         Transaction * StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * result);
         bool DeleteTransactions(std::string transactionID);
+        bool UpdateTransaction(std::string transactionID, Transaction transaction);
 };
 
 #endif
