@@ -186,5 +186,19 @@ bool UpdateTransaction::ValidateNewTransactionCategory(std::string uncheckedTran
  * by invoking the ? DBManager function
 */
 void UpdateTransaction::UpdateTheTransactions() {
+    int j = 0; // used to keep track of the current index in the transactionIDs array
     int numTransactionsUpdated = 0;
+
+    // iterate through the list of transactions returned from FindTransactions()
+    // then invoke the DBManager's UpdateTransaction() function on it if its
+    // transactionID matches one of the IDs in transactionIDs
+    for (int i = 0; i < sizeof(transactions) / sizeof(transactions[i]); i++) {
+        if (std::to_string(transactions[i].GetTransactionID()) == transactionIDs[j]) {
+            // dbManager.UpdateTransaction();
+            j++;
+            numTransactionsUpdated++;
+        }
+    }
+
+    std::cout << "\n" << numTransactionsUpdated << " transaction(s) deleted ✅";
 }
