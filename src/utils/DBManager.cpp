@@ -161,6 +161,15 @@ int DBManager::GetNumAffectedRows() {
     return numAffectedRows;
 }
 
+/**
+ * sets the number of rows affected by an INSERT/DELETE/UPDATE query
+ * 
+ * @param numRows
+ */
+void DBManager::SetNumAffectedRows(int numRows) {
+    numAffectedRows = numRows;
+}
+
 /*
  * prepares a query statement
  *

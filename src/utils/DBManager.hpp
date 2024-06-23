@@ -39,7 +39,7 @@ class DBManager {
         DBManager();
         bool CreateNewTransactions(Transaction *newTransactions, int numNewTransactions);
         int GetNumAffectedRows();
-        void SetNumAffectedRows();
+        void SetNumAffectedRows(int numRows);
         bool GetTransactionsByAmount(std::string transactionAmount);
         int GetnumRowsReturned();
         Transaction * StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * result);
