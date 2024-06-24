@@ -5,7 +5,10 @@
 */
 UpdateTransaction::UpdateTransaction() {
     numTransactions = 0;
+    updatedTransactionAmount = "";
+    updatedTransactionCategory = "";
     transactionAmount = "";
+    foundTransactions = nullptr;
     result = nullptr;
 }
 
@@ -32,7 +35,7 @@ void UpdateTransaction::GetTransactions() {
 }
 
 /**
- * invokes the GetTransactionsByAmount() from DBManager to search the list of
+ * invokes GetTransactionsByAmount() from DBManager to search the list of
  * transactions based on the user provided transaction amount
  * 
  * @return true or false based on if a transaction was found
@@ -55,13 +58,8 @@ void UpdateTransaction::DisplayTransactions() {
         std::cout << "\nCategory: " << foundTransactions[i].GetCategory();
         std::cout << std::endl;
 
-        // store the transactionID of each transaction
-        std::string transactionID = std::to_string(foundTransactions[i].GetTransactionID());
-
-        // add the current transaction's ID to the list of transactionIDs
+        // add the current transaction to the list of transactions to be updated
         if (ConfirmOperation()) {
-            //transactionIDs[numTransactions] = transactionID;
-
             transactions[i].SetTransactionID(foundTransactions[i].GetTransactionID());
             transactions[i].SetAmount(foundTransactions[i].GetAmount());
             transactions[i].SetCategory(foundTransactions[i].GetCategory());
@@ -94,12 +92,12 @@ bool UpdateTransaction::ConfirmOperation() {
 
 /**
  * prompts the user to enter new information about a transaction they'd like to update  
+ * 
+ * @param index the index that references a transaction that needs to be updated
  */
 void UpdateTransaction::GetNewTransactionInformation(int index) {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
-    updatedTransactionAmount = "";
-    updatedTransactionCategory = "";
 
     std::cout << "\nAmount: ";
     std::getline(std::cin, uncheckedTransactionAmount);
@@ -118,6 +116,10 @@ void UpdateTransaction::GetNewTransactionInformation(int index) {
         transactions[index].SetAmount(updatedTransactionAmount); 
         transactions[index].SetCategory(updatedTransactionCategory);
     }
+
+    // reset placeholders
+    updatedTransactionAmount = "";
+    updatedTransactionCategory = "";
 }
 
 /**
@@ -187,8 +189,7 @@ bool UpdateTransaction::ValidateNewTransactionCategory(std::string uncheckedTran
 */
 void UpdateTransaction::UpdateTheTransactions() {
     for (int i = 0; i < numTransactions; i++) {
-        dbManager.UpdateTransaction(std::to_string(transactions[i].GetTransactionID()), 
-                                    transactions[i]);
+        dbManager.UpdateTransaction(transactions[i]);
     }
 
     std::cout << "\n" << dbManager.GetNumAffectedRows() << " transaction(s) updated ✅";

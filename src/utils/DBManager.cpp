@@ -444,14 +444,14 @@ bool DBManager::DeleteTransactions(std::string transactionID) {
 /**
  * Updates a transaction
  *
- * @param transactionID the ID of the transaction to update
  * @param transaction a Transaction entity that represents the transaction to update
  * @return the success/failure of the update
  */
-bool DBManager::UpdateTransaction(std::string transactionID, Transaction transaction) {
+bool DBManager::UpdateTransaction(Transaction transaction) {
     if (Connect()) {
         std::string amount = transaction.GetAmount();
         std::string category = transaction.GetCategory();
+        std::string transactionID = std::to_string(transaction.GetTransactionID());
 
         // define the UPDATE query
         const char * query = "UPDATE Transactions SET amount = ?, category = ? WHERE transaction_id = ?;";
