@@ -15,7 +15,7 @@ class Calculator {
         DeleteTransaction deleteTransaction;
         UpdateTransaction updateTransaction;
     public:
-        const int NUM_OPERATIONS = 8;
+        const int NUM_OPERATIONS = 7;
     
     // methods
     private:

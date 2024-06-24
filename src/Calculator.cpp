@@ -34,9 +34,6 @@ void Calculator::Calculate() {
             case 6:
                 std::cout << "\ncoming soon!";
                 break;
-            case 7:
-                std::cout << "\ncoming soon!";
-                break;
         }
     }
 }
@@ -67,12 +64,11 @@ void Calculator::DisplayOperations() {
 
     std::cout << "\n\t1. Add a Transaction"
               << "\n\t2. Delete a Transaction"
-              << "\n\t3. Edit a Transaction"
-              << "\n\t4. Modify a Transaction"
-              << "\n\t5. View Transactions"
-              << "\n\t6. Generate a Report"
-              << "\n\t7. View a Report"
-              << "\n\t8. Quit";
+              << "\n\t3. Modify a Transaction"
+              << "\n\t4. View Transactions"
+              << "\n\t5. Generate a Report"
+              << "\n\t6. View a Report"
+              << "\n\t7. Quit";
 }
 
 /**
