@@ -18,13 +18,6 @@ class Transaction {
         std::string transactionDate;
     
     // methods
-    private:
-        // Setters
-        void SetUserID(int id);
-        void SetAmount(std::string a);
-        void SetCategory(std::string c);
-        void SetDate(Date date);
-
     public:     
         Transaction();
         Transaction(int id, std::string a, std::string c, Date td);
@@ -38,6 +31,10 @@ class Transaction {
 
         // Setters
         void SetTransactionID(int transactionID);
+        void SetUserID(int id);
+        void SetAmount(std::string a);
+        void SetCategory(std::string c);
+        void SetDate(Date date);
 };
 
 #endif

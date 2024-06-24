@@ -10,29 +10,13 @@ void AddTransaction::Add() {
 }
 
 /**
- * gets the current date and instantiates a new Date object
- * 
- * @return an instantiated date object with a month, day, and year value
- */
-Date GetCurrentDate() {
-    // get the current system time
-    auto now = std::chrono::system_clock::now();
-    // convert the system time to a time_t object
-    std::time_t time_now = std::chrono::system_clock::to_time_t(now);
-    // convert the time_t object to a struct tm (broken down time)
-    std::tm *tm_now = std::localtime(&time_now);
-    // instantiate a new Date object
-    Date date((tm_now->tm_mon + 1), tm_now->tm_mday, (tm_now->tm_year + 1900));
-    
-    return date;
-}
-
-/**
  * accepts user input for new transactions, then adds them to an array once validated
  */ 
 void AddTransaction::GetNewTransactions() {
     std::string uncheckedTransactionAmount;
     std::string uncheckedTransactionCategory;
+    Date date;
+    Date currentDate = date.GetCurrentDate();
     numNewTransactions = 0;
 
     // display instructions
@@ -66,7 +50,7 @@ void AddTransaction::GetNewTransactions() {
             Transaction newTransaction(1, 
                                        transactionAmount, 
                                        transactionCategory, 
-                                       GetCurrentDate());
+                                       currentDate);
             numNewTransactions++;
             // insert into array index 0 when numNewTransactions = 1, etc. etc.
             newTransactions[numNewTransactions - 1] = newTransaction;
@@ -188,4 +172,5 @@ void AddTransaction::AddNewTransactions() {
 
     dbManager.CreateNewTransactions(newTransactions, numNewTransactions);
     std::cout << "\n" << dbManager.GetNumAffectedRows() << " new Transaction(s) Added ✅";
+    dbManager.SetNumAffectedRows(0);
 }
