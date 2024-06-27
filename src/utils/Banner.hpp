@@ -1,5 +1,5 @@
-#ifndef DIALOG_HPP
-#define DIALOG_HPP
+#ifndef BANNER_HPP
+#define BANNER_HPP
 
 #include <iostream> 
 #include <string>
@@ -8,7 +8,7 @@
 
 #include "Helper.hpp"
 
-class Dialog : public Helper {
+class Banner : public Helper {
 
     public:
 
@@ -17,7 +17,7 @@ class Dialog : public Helper {
 
     public:
     
-        Dialog();
+        Banner();
         void WelcomeBanner();
         void ReportBanner(std::ostream& stream);
 

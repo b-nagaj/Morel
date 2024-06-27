@@ -4,16 +4,16 @@
 #include <fstream>
 
 #include "Helper.hpp"
-#include "Dialog.hpp"
+#include "Banner.hpp"
 
-Dialog::Dialog() {
+Banner::Banner() {
 
     username = "";
     option = 0;
 
 }
 
-void Dialog::WelcomeBanner() {
+void Banner::WelcomeBanner() {
 
     GetUsername();
     std::cout << "\nHello, " << username << "!" << std::endl;
@@ -25,7 +25,7 @@ void Dialog::WelcomeBanner() {
 
 }
 
-void Dialog::ReportBanner(std::ostream& stream) {
+void Banner::ReportBanner(std::ostream& stream) {
 
     stream << " \t __  __                _" 
               << "\n\t|  \\/  | ___  _ __ ___| |"
