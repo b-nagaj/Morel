@@ -6,7 +6,7 @@ class InfisicalService {
     public:
         void Login();
         void GetDBSecrets();
-        void WriteToEnvFile();
+        void StoreDBSecrets();
 };
 
 #endif
