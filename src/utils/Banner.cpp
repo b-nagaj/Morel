@@ -1,6 +1,6 @@
 #include "Banner.hpp"
 
-void Banner::WelcomeBanner() {
+void Banner::DisplayWelcomeBanner() {
     GetUsername();
     std::cout << "\nHello, " << username << "!" << std::endl;
     std::cout << " __  __                _" 

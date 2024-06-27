@@ -12,7 +12,7 @@ int main() {
     Banner banner;
     Calculator calculator;
 
-    banner.WelcomeBanner();
+    banner.DisplayWelcomeBanner();
     calculator.Calculate();
 
     return 0;
