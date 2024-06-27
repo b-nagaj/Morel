@@ -1,5 +1,5 @@
 #include "setup/Setup.hpp"
-#include "utils/Dialog.hpp"
+#include "utils/Banner.hpp"
 #include "Calculator.hpp"
 
 #include <filesystem>
@@ -9,10 +9,10 @@
  */ 
 int main() {
     Setup setup;
-    Dialog dialog;
+    Banner banner;
     Calculator calculator;
 
-    dialog.WelcomeBanner();
+    banner.DisplayWelcomeBanner();
     calculator.Calculate();
 
     return 0;

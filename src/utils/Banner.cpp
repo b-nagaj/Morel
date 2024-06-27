@@ -1,20 +1,9 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <fstream>
+#include "Banner.hpp"
 
-#include "Helper.hpp"
-#include "Dialog.hpp"
-
-Dialog::Dialog() {
-
-    username = "";
-    option = 0;
-
-}
-
-void Dialog::WelcomeBanner() {
-
+/**
+ * Displays a welcome message to the user as well as the app logo
+ */ 
+void Banner::DisplayWelcomeBanner() {
     GetUsername();
     std::cout << "\nHello, " << username << "!" << std::endl;
     std::cout << " __  __                _" 
@@ -22,15 +11,17 @@ void Dialog::WelcomeBanner() {
               << "\n| |\\/| |/ _ \\| '__/ _ \\ |"
               << "\n| |  | | (_) | | |  __/ |"
               << "\n|_|  |_|\\___/|_|  \\___|_|";
-
 }
 
-void Dialog::ReportBanner(std::ostream& stream) {
-
+/**
+ * Displays the app logo on a generated report
+ * 
+ * @param stream an ostream object used to write to the report file
+ */ 
+void Banner::DisplayReportBanner(std::ostream& stream) {
     stream << " \t __  __                _" 
               << "\n\t|  \\/  | ___  _ __ ___| |"
               << "\n\t| |\\/| |/ _ \\| '__/ _ \\ |"
               << "\n\t| |  | | (_) | | |  __/ |"
               << "\n\t|_|  |_|\\___/|_|  \\___|_|";
-    
 }
