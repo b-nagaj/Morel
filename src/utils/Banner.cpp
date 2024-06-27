@@ -10,7 +10,7 @@ void Banner::DisplayWelcomeBanner() {
               << "\n|_|  |_|\\___/|_|  \\___|_|";
 }
 
-void Banner::ReportBanner(std::ostream& stream) {
+void Banner::DisplayReportBanner(std::ostream& stream) {
     stream << " \t __  __                _" 
               << "\n\t|  \\/  | ___  _ __ ___| |"
               << "\n\t| |\\/| |/ _ \\| '__/ _ \\ |"

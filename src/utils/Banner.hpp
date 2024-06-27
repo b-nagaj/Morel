@@ -11,7 +11,7 @@
 class Banner : public Helper{
     public:
         void DisplayWelcomeBanner();
-        void ReportBanner(std::ostream& stream);
+        void DisplayReportBanner(std::ostream& stream);
 };
 
 #endif
