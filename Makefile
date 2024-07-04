@@ -1,7 +1,7 @@
 # compile settings
 CXX = g++
 CXXFLAGS = -std=c++17 -Wno-deprecated-declarations
-LDFLAGS = -lboost_system -lboost_filesystem -I/usr/include/mysql -lmysqlclient
+LDFLAGS = -lboost_system -lboost_filesystem -I/usr/include/mysql -lmysqlclient -lcurl
 
 # binaries
 BUILD_BINARY = bin/morel
@@ -48,7 +48,7 @@ $(BUILD_DIR)/%.o: $(TEST_DIR)/%.cpp
 
 # create build directories
 $(MKDIR):
-	mkdir -p $(BUILD_DIR) $(BUILD_DIR)/entities $(BUILD_DIR)/operations $(BUILD_DIR)/setup $(BUILD_DIR)/utils bin
+	mkdir -p $(BUILD_DIR) $(BUILD_DIR)/entities $(BUILD_DIR)/operations $(BUILD_DIR)/setup $(BUILD_DIR)/utils $(BUILD_DIR)/services bin
 
 # cleans
 clean:
