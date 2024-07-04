@@ -14,6 +14,7 @@ class InfisicalService {
     public:
         std::map<std::string, std::string> GetSecrets();
         std::string Authenticate();
+        std::string GetDBSecrets(std::string token);
 };
 
 #endif
