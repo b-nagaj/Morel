@@ -1,7 +1,7 @@
 # compile settings
 CXX = g++
 CXXFLAGS = -std=c++17 -Wno-deprecated-declarations
-LDFLAGS = -lboost_system -lboost_filesystem -I/usr/include/mysql -lmysqlclient -lcurl
+LDFLAGS = -lboost_system -lboost_filesystem -I/usr/include/mysql -lmysqlclient -lcurl -ljsoncpp
 
 # binaries
 BUILD_BINARY = bin/morel
