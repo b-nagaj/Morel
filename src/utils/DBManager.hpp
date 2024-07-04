@@ -3,6 +3,7 @@
 
 #include "../entities/Transaction.hpp"
 #include "../utils/Date.hpp"
+#include "../services/InfisicalService.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -11,6 +12,7 @@
 #include <sstream>
 #include <cstring>
 #include <mysql/mysql.h>
+#include <jsoncpp/json/json.h>
 
 class DBManager {
     // attributes
@@ -28,7 +30,6 @@ class DBManager {
 
     //methods
     private:
-        std::map<std::string, std::string> GetDBSecrets();
         bool Connect();
         void Disconnect();
         bool PrepareQuery(const char * query);

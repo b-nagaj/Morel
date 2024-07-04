@@ -13,72 +13,59 @@ DBManager::DBManager() {
 }
 
 /**
- * gets DB secrets from a local .env file
- * 
- * @return a map containing key/value pairs of secret names & values
- */ 
-std::map<std::string, std::string> DBManager::GetDBSecrets() {
-    // map to store key/value pairs of DB secrets
-    std::map<std::string, std::string> dbSecrets;
-    std::string line;
-    std::string key;
-    std::string value;
-    std::string pathToEnvFile = "dbSecrets.env";
-    std::ifstream envFile(pathToEnvFile);
-
-    if (envFile.is_open()) {
-        // read each line from .env file
-        // split each line with a delimeter
-        // insert each side of the split into a new key/value pair inside dbSecrets
-        while ( getline (envFile, line) ) { 
-            std::istringstream iss(line);
-            std::getline(iss, key, '=');
-            std::getline(iss, value);
-            dbSecrets.insert({key, value});
-        }
-        envFile.close();
-    }
-    else {
-        std::cout << "Unable to open environment file";
-    }
-
-    return dbSecrets;
-}
-
-/**
  * initializes a MySQL connection & authenticates with the database
  * 
  * @return a boolean value based on if the connection was successful/unsuccessful
  */ 
 bool DBManager::Connect() {
-    // retrieve DB secrets
-    std::map<std::string, std::string> dbSecrets = GetDBSecrets();
+    // retrieve client ID & client secret for Infisical
+    InfisicalService i;
+    std::map<std::string, std::string> secrets = i.GetSecrets();
 
-    // establish a MySQL connection & report connection exceptions
-    connection = mysql_init(NULL);
-    if (connection == NULL) {
-        std::cerr << "Error initializing MySQL connection" << std::endl;
-        return false;
-    }
+    // retrieve an auth token from Infisical
+    std::string response = i.Authenticate();
     
-    // authenticate with database
-    if (!mysql_real_connect(connection, 
-                            dbSecrets["DB_HOST"].c_str(), 
-                            dbSecrets["DB_USER"].c_str(), 
-                            dbSecrets["DB_PASSWORD"].c_str(), 
-                            dbSecrets["DB_NAME"].c_str(), 
-                            stoi(dbSecrets["DB_PORT"]), 
-                            dbSecrets["DB_SOCKET"].c_str(), 
-                            stoi(dbSecrets["DB_CLIENT_FLAGS"]))) {
-        std::cerr << "Error connecting to MySQL database: " 
-                  << mysql_error(connection) 
-                  << std::endl;
-        mysql_close(connection);
-        return false;
+    // parse the response
+    Json::Value outputDataAsJson;
+    Json::CharReaderBuilder readerBuilder;
+    std::string err;
+    const std::unique_ptr<Json::CharReader> reader(readerBuilder.newCharReader());
+
+    // extract the access token from the response
+    std::string accessToken;
+    if (reader->parse(response.c_str(), response.c_str() + response.length(), &outputDataAsJson, &err)) {
+        accessToken = outputDataAsJson["accessToken"].asString();
     }
     else {
-        return true;
+        std::cout << "\nCould not retrieve access token";
+        return false;
     }
+
+    // establish a MySQL connection & report connection exceptions
+    // connection = mysql_init(NULL);
+    // if (connection == NULL) {
+    //     std::cerr << "Error initializing MySQL connection" << std::endl;
+    //     return false;
+    // }
+    
+    // authenticate with database
+    // if (!mysql_real_connect(connection, 
+    //                         dbSecrets["DB_HOST"].c_str(), 
+    //                         dbSecrets["DB_USER"].c_str(), 
+    //                         dbSecrets["DB_PASSWORD"].c_str(), 
+    //                         dbSecrets["DB_NAME"].c_str(), 
+    //                         stoi(dbSecrets["DB_PORT"]), 
+    //                         dbSecrets["DB_SOCKET"].c_str(), 
+    //                         stoi(dbSecrets["DB_CLIENT_FLAGS"]))) {
+    //     std::cerr << "Error connecting to MySQL database: " 
+    //               << mysql_error(connection) 
+    //               << std::endl;
+    //     mysql_close(connection);
+    //     return false;
+    // }
+    // else {
+    //     return true;
+    // }
 }
 
 /**
@@ -96,60 +83,61 @@ void DBManager::Disconnect() {
  */ 
 bool DBManager::CreateNewTransactions(Transaction *newTransactions, 
                                       int numNewTransactions) {
-    if (Connect()) {
-        // Create a new transaction
-        for (int i = 0; i < numNewTransactions; i++) {
-            std::string userID = std::to_string(newTransactions[i].GetUserID());
-            std::string amount = newTransactions[i].GetAmount();
-            std::string category = newTransactions[i].GetCategory();
-            std::string date = newTransactions[i].GetDate();
+    Connect(); 
+    // if (Connect()) {
+    //     // Create a new transaction
+    //     for (int i = 0; i < numNewTransactions; i++) {
+    //         std::string userID = std::to_string(newTransactions[i].GetUserID());
+    //         std::string amount = newTransactions[i].GetAmount();
+    //         std::string category = newTransactions[i].GetCategory();
+    //         std::string date = newTransactions[i].GetDate();
 
-            // define the INSERT query
-            const char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) \
-                            VALUES (?, ?, ?, ?)";
+    //         // define the INSERT query
+    //         const char * query = "INSERT INTO Transactions(user_id, amount, category, transaction_date) \
+    //                         VALUES (?, ?, ?, ?)";
 
-            // prepare the INSERT query
-            if (!PrepareQuery(query)) {
-                return false;
-            }
+    //         // prepare the INSERT query
+    //         if (!PrepareQuery(query)) {
+    //             return false;
+    //         }
 
-            // bind parameter data
-            numQueryParams = 4;
-            MYSQL_BIND paramBind[numQueryParams];
-            std::string parameters[numQueryParams];
-            parameters[0] = userID;
-            parameters[1] = amount;
-            parameters[2] = category;
-            parameters[3] = date;
-            memset(paramBind, 0, sizeof(paramBind));
-            if (!BindParameters(paramBind, parameters)) {
-                return false;
-            }
+    //         // bind parameter data
+    //         numQueryParams = 4;
+    //         MYSQL_BIND paramBind[numQueryParams];
+    //         std::string parameters[numQueryParams];
+    //         parameters[0] = userID;
+    //         parameters[1] = amount;
+    //         parameters[2] = category;
+    //         parameters[3] = date;
+    //         memset(paramBind, 0, sizeof(paramBind));
+    //         if (!BindParameters(paramBind, parameters)) {
+    //             return false;
+    //         }
 
-            // execute the query
-            if (!ExecuteQuery()) {
-                return false;
-            }
+    //         // execute the query
+    //         if (!ExecuteQuery()) {
+    //             return false;
+    //         }
 
-            // get # of affected rows
-            numAffectedRows += mysql_stmt_affected_rows(stmt); 
+    //         // get # of affected rows
+    //         numAffectedRows += mysql_stmt_affected_rows(stmt); 
 
-            // free the statement
-            if (mysql_stmt_close(stmt)) {
-                std::cout << "\nERROR: Failed to free the INSERT statement";
-                std::cout << "\n" << mysql_error(connection) << "\n\n";
-                return false;
-            }
-        }
+    //         // free the statement
+    //         if (mysql_stmt_close(stmt)) {
+    //             std::cout << "\nERROR: Failed to free the INSERT statement";
+    //             std::cout << "\n" << mysql_error(connection) << "\n\n";
+    //             return false;
+    //         }
+    //     }
         
-        Disconnect();
-    }
-    else {
-        std::cout << "\nERROR: Could not connect to database";
-        std::cout << "\n" << mysql_error(connection) << "\n\n";
-    }
+    //     Disconnect();
+    // }
+    // else {
+    //     std::cout << "\nERROR: Could not connect to database";
+    //     std::cout << "\n" << mysql_error(connection) << "\n\n";
+    // }
 
-    return true;
+    // return true;
 }
 
 /* 

@@ -84,11 +84,6 @@ std::string InfisicalService::Authenticate() {
         if (res != CURLE_OK) {
             std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
         } 
-        else {
-            // Request succeeded, print the fetched content
-            std::cout << "Response received: " << std::endl;
-            std::cout << response << std::endl;
-        }
 
         // clean up
         curl_slist_free_all(headers);
