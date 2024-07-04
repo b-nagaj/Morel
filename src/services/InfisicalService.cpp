@@ -96,3 +96,44 @@ std::string InfisicalService::Authenticate() {
 
     return response;
 }
+
+std::string InfisicalService::GetDBSecrets(std::string token) {
+    CURL* curl;
+    CURLcode res;
+    std::string response;
+
+    // initialize curl session
+    curl = curl_easy_init();
+    if (curl) {
+        // set the URL for the POST request
+        curl_easy_setopt(curl, CURLOPT_URL, "https://app.infisical.com/api/v3/secrets/raw?workspaceId=0f92f205-9682-4545-b3d4-306789c057f7&environment=dev");
+
+        // set the content type header
+        struct curl_slist* headers = NULL;
+        std::string authorizationHeader = "Authorization: Bearer " + token;
+        headers = curl_slist_append(headers, authorizationHeader.c_str());
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+        // set up callback function to capture the response
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+        // perform the POST request
+        res = curl_easy_perform(curl);
+
+        // check for errors
+        if (res != CURLE_OK) {
+            std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+        } 
+
+        // clean up
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(curl);
+    } 
+    else {
+        std::cerr << "Failed to initialize curl." << std::endl;
+        return "Error";
+    }
+
+    return response;
+}
