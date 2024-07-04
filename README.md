@@ -7,7 +7,7 @@ Revolutionize your budgeting experience with Morel -- an intuitive monthly expen
 What dependencies do I need to install & how do I install them?
 
 ```
-sudo apt-get install g++ make libboost-all-dev libmysqlclient-dev
+sudo apt-get install g++ make libboost-all-dev libmysqlclient-dev libcurl4-openssl-dev
 ```
 
 ## Building
