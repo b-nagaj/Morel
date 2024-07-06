@@ -19,23 +19,23 @@ DBManager::DBManager() {
  */ 
 bool DBManager::Connect() {
     // retrieve client ID & client secret for Infisical
-    InfisicalService i;
-    std::map<std::string, std::string> secrets = i.GetSecrets();
+    InfisicalService infisicalService;
+    std::map<std::string, std::string> secrets = infisicalService.GetSecrets();
     std::string response = "";
 
     // retrieve an auth token from Infisical
-    response = i.Authenticate();
+    response = infisicalService.Authenticate();
     
     // parse the response containing the access token
-    Json::Value outputDataAsJson;
+    Json::Value outputAsJson;
     Json::CharReaderBuilder readerBuilder;
     std::string err;
     const std::unique_ptr<Json::CharReader> reader(readerBuilder.newCharReader());
 
     // extract the access token from the response
     std::string accessToken;
-    if (reader->parse(response.c_str(), response.c_str() + response.length(), &outputDataAsJson, &err)) {
-        accessToken = outputDataAsJson["accessToken"].asString();
+    if (reader->parse(response.c_str(), response.c_str() + response.length(), &outputAsJson, &err)) {
+        accessToken = outputAsJson["accessToken"].asString();
     }
     else {
         std::cout << "\nCould not retrieve access token";
@@ -43,23 +43,23 @@ bool DBManager::Connect() {
     }
 
     // retrieve the DB secrets
-    response = i.GetDBSecrets(accessToken);
+    response = infisicalService.GetDBSecrets(accessToken);
 
     // parse the response
-    reader->parse(response.c_str(), response.c_str() + response.length(), &outputDataAsJson, &err);
+    reader->parse(response.c_str(), response.c_str() + response.length(), &outputAsJson, &err);
 
     // extract the list of secrets
-    Json::Value dbSecrets = outputDataAsJson["secrets"];
+    Json::Value listOfDBSecrets = outputAsJson["secrets"];
 
-    // extract each secretKey & secretValue from the list of secrets
-    std::map<std::string, std::string> databaseSecrets;
-    for (Json::Value::ArrayIndex i = 0; i < dbSecrets.size(); i++) {
-        Json::Value secret = dbSecrets[i];
+    // extract each secretKey & secretValue from the list of DB secrets
+    std::map<std::string, std::string> dbSecrets;
+    for (Json::Value::ArrayIndex i = 0; i < listOfDBSecrets.size(); i++) {
+        Json::Value secret = listOfDBSecrets[i];
         std::string secretName = secret["secretKey"].asString();
         std::string secretValue = secret["secretValue"].asString();
 
         // store the secrets
-        databaseSecrets.insert({secretName, secretValue});
+        dbSecrets.insert({secretName, secretValue});
     }
 
     // establish a MySQL connection & report connection exceptions
@@ -71,13 +71,13 @@ bool DBManager::Connect() {
     
     // authenticate with database
     if (!mysql_real_connect(connection, 
-                            databaseSecrets["DB_HOST"].c_str(), 
-                            databaseSecrets["DB_USER"].c_str(), 
-                            databaseSecrets["DB_PASSWORD"].c_str(), 
-                            databaseSecrets["DB_NAME"].c_str(), 
-                            stoi(databaseSecrets["DB_PORT"]), 
-                            databaseSecrets["DB_SOCKET"].c_str(), 
-                            stoi(databaseSecrets["DB_CLIENT_FLAGS"]))) {
+                            dbSecrets["DB_HOST"].c_str(), 
+                            dbSecrets["DB_USER"].c_str(), 
+                            dbSecrets["DB_PASSWORD"].c_str(), 
+                            dbSecrets["DB_NAME"].c_str(), 
+                            stoi(dbSecrets["DB_PORT"]), 
+                            dbSecrets["DB_SOCKET"].c_str(), 
+                            std::stoi(dbSecrets["DB_CLIENT_FLAGS"]))) {
         std::cerr << "Error connecting to MySQL database: " 
                   << mysql_error(connection) 
                   << std::endl;
