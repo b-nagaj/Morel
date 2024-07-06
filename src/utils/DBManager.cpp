@@ -13,46 +13,54 @@ DBManager::DBManager() {
 }
 
 /**
- * gets DB secrets from a local .env file
- * 
- * @return a map containing key/value pairs of secret names & values
- */ 
-std::map<std::string, std::string> DBManager::GetDBSecrets() {
-    // map to store key/value pairs of DB secrets
-    std::map<std::string, std::string> dbSecrets;
-    std::string line;
-    std::string key;
-    std::string value;
-    std::string pathToEnvFile = "dbSecrets.env";
-    std::ifstream envFile(pathToEnvFile);
-
-    if (envFile.is_open()) {
-        // read each line from .env file
-        // split each line with a delimeter
-        // insert each side of the split into a new key/value pair inside dbSecrets
-        while ( getline (envFile, line) ) { 
-            std::istringstream iss(line);
-            std::getline(iss, key, '=');
-            std::getline(iss, value);
-            dbSecrets.insert({key, value});
-        }
-        envFile.close();
-    }
-    else {
-        std::cout << "Unable to open environment file";
-    }
-
-    return dbSecrets;
-}
-
-/**
  * initializes a MySQL connection & authenticates with the database
  * 
  * @return a boolean value based on if the connection was successful/unsuccessful
  */ 
 bool DBManager::Connect() {
-    // retrieve DB secrets
-    std::map<std::string, std::string> dbSecrets = GetDBSecrets();
+    // retrieve client ID & client secret for Infisical
+    InfisicalService infisicalService;
+    std::map<std::string, std::string> secrets = infisicalService.GetSecrets();
+    std::string response = "";
+
+    // retrieve an auth token from Infisical
+    response = infisicalService.Authenticate();
+    
+    // parse the response containing the access token
+    Json::Value outputAsJson;
+    Json::CharReaderBuilder readerBuilder;
+    std::string err;
+    const std::unique_ptr<Json::CharReader> reader(readerBuilder.newCharReader());
+
+    // extract the access token from the response
+    std::string accessToken;
+    if (reader->parse(response.c_str(), response.c_str() + response.length(), &outputAsJson, &err)) {
+        accessToken = outputAsJson["accessToken"].asString();
+    }
+    else {
+        std::cout << "\nCould not retrieve access token";
+        return false;
+    }
+
+    // retrieve the DB secrets
+    response = infisicalService.GetDBSecrets(accessToken);
+
+    // parse the response
+    reader->parse(response.c_str(), response.c_str() + response.length(), &outputAsJson, &err);
+
+    // extract the list of secrets
+    Json::Value listOfDBSecrets = outputAsJson["secrets"];
+
+    // extract each secretKey & secretValue from the list of DB secrets
+    std::map<std::string, std::string> dbSecrets;
+    for (Json::Value::ArrayIndex i = 0; i < listOfDBSecrets.size(); i++) {
+        Json::Value secret = listOfDBSecrets[i];
+        std::string secretName = secret["secretKey"].asString();
+        std::string secretValue = secret["secretValue"].asString();
+
+        // store the secrets
+        dbSecrets.insert({secretName, secretValue});
+    }
 
     // establish a MySQL connection & report connection exceptions
     connection = mysql_init(NULL);
@@ -69,7 +77,7 @@ bool DBManager::Connect() {
                             dbSecrets["DB_NAME"].c_str(), 
                             stoi(dbSecrets["DB_PORT"]), 
                             dbSecrets["DB_SOCKET"].c_str(), 
-                            stoi(dbSecrets["DB_CLIENT_FLAGS"]))) {
+                            std::stoi(dbSecrets["DB_CLIENT_FLAGS"]))) {
         std::cerr << "Error connecting to MySQL database: " 
                   << mysql_error(connection) 
                   << std::endl;

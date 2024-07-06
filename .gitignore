@@ -1,4 +1,4 @@
 /bin
 /build
 config.txt
-dbSecrets.env
+*.env
