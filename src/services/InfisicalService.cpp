@@ -70,7 +70,7 @@ std::string InfisicalService::Authenticate() {
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
         // specify the POST data
-        std::string postFields = "clientId=c4028deb-324d-4fb7-9f3a-26f79c3f8fe2&clientSecret=687ba4d072363ae6635f7f95e27dc98993aef5b74b5c6557e062e3445355e302";
+        std::string postFields = "clientId=" + clientID + "&clientSecret=" + clientSecret;
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postFields.c_str());
 
         // set up callback function to capture the response
