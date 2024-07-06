@@ -36,7 +36,6 @@ bool DBManager::Connect() {
     std::string accessToken;
     if (reader->parse(response.c_str(), response.c_str() + response.length(), &outputDataAsJson, &err)) {
         accessToken = outputDataAsJson["accessToken"].asString();
-        std::cout << "\nAccess Token: " << accessToken << std::endl;
     }
     else {
         std::cout << "\nCould not retrieve access token";
