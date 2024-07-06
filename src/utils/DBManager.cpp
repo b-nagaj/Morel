@@ -104,7 +104,6 @@ void DBManager::Disconnect() {
  */ 
 bool DBManager::CreateNewTransactions(Transaction *newTransactions, 
                                       int numNewTransactions) {
-    Connect(); 
     if (Connect()) {
         // Create a new transaction
         for (int i = 0; i < numNewTransactions; i++) {
