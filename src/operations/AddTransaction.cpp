@@ -6,7 +6,10 @@
 void AddTransaction::Add() {
     GetNewTransactions();
     DisplayNewTransactions();
-    AddNewTransactions();
+    // once the user has confirmed the operation, add the transactions
+    if (confirmed) {
+        AddNewTransactions();
+    }
 }
 
 /**
@@ -160,7 +163,7 @@ void AddTransaction::DisplayNewTransactions() {
                   << "\n";
     }
 
-    ConfirmOperation();
+    confirmed = ConfirmOperation();
 }
 
 /**
