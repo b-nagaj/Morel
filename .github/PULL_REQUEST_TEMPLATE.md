@@ -1,13 +1,15 @@
-Obsidian Tag #
+# {Title}
+
+[Trello Card](www.trello.com)
 
 ## Context
 
-Background & explanation about why the changes are necessary
+Why were the changes made?
 
 ## Description
 
-What changes were made
+What changes were made?
 
 ## Additional Info
 
-Anything else
+Anything else?
