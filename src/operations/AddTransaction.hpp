@@ -23,6 +23,7 @@ class AddTransaction {
         Transaction newTransactions [50];
         std::string transactionAmount;
         std::string transactionCategory;
+        bool confirmed; // flag for when a user has confirmed the operation
 
     // methods
     private:  
