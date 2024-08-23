@@ -26,7 +26,7 @@ void Calculator::Calculate() {
                 updateTransaction.Update();
                 break;
             case 4:
-                std::cout << "\ncoming soon!";
+                viewTransaction.View();
                 break;
             case 5:
                 std::cout << "\ncoming soon!";

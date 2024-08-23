@@ -4,6 +4,7 @@
 #include "operations/AddTransaction.hpp"
 #include "operations/DeleteTransaction.hpp"
 #include "operations/UpdateTransaction.hpp"
+#include "operations/ViewTransaction.hpp"
 
 #include <iostream>
 
@@ -14,6 +15,7 @@ class Calculator {
         AddTransaction addTransaction;
         DeleteTransaction deleteTransaction;
         UpdateTransaction updateTransaction;
+        ViewTransaction viewTransaction;
     public:
         const int NUM_OPERATIONS = 7;
     
