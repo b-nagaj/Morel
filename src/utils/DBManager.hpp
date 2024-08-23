@@ -42,6 +42,7 @@ class DBManager {
         int GetNumAffectedRows();
         void SetNumAffectedRows(int numRows);
         bool GetTransactionsByAmount(std::string transactionAmount);
+        bool GetTransactionsByDate(std::string lesserDate, std::string greaterDate);
         int GetnumRowsReturned();
         Transaction * StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * result);
         bool DeleteTransactions(std::string transactionID);
