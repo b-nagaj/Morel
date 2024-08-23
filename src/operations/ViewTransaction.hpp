@@ -9,8 +9,6 @@
 
 class ViewTransaction {
     // attributes
-    public:
-        Transaction transactions[50];
     private:
         std::string lesserDate;
         std::string greaterDate;
