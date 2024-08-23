@@ -298,6 +298,65 @@ bool DBManager::GetTransactionsByAmount(std::string transactionAmount) {
     }
 }
 
+/**
+ * Searches for transactions in the Transactions table that fall within a date range
+ * 
+ * @param lesserDate the start date in a date range
+ * @param greaterDate the end date in a date rangeamount
+ * @return a boolean value that represents the success/failure of the operation
+ */
+bool DBManager::GetTransactionsByDate(std::string lesserDate, std::string greaterDate) {
+    if (Connect()) {
+        // define the SELECT query
+        const char * query = "SELECT * FROM Transactions WHERE transaction_date >= ? and transaction_date <= ?";
+
+        // Prepare the SELECT query
+        if (!PrepareQuery(query)) {
+            return false;
+        }
+
+        // bind parameter data
+        numQueryParams = 2;
+        MYSQL_BIND paramBind[numQueryParams];
+        std::string parameters[numQueryParams];
+        memset(paramBind, 0, sizeof(paramBind));
+        parameters[0] = lesserDate;
+        parameters[1] = greaterDate;
+        if (!BindParameters(paramBind, parameters)) {
+            return false;
+        }
+
+        // execute the SELECT statement
+        if (!ExecuteQuery()) {
+            return false;
+        }
+
+        // store the result
+        result = mysql_stmt_result_metadata(stmt);
+        if (!result) {
+            std::cout << "\nERROR: no meta information was returned";
+            std::cout << "\n" << mysql_stmt_error(stmt);
+            return false;
+        }
+
+        // invoke the StoreFoundTransactions() function to store the result
+        StoreFoundTransactions(stmt, result);
+
+        // check that matching transactions were found
+        if (numRowsReturned > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        std::cout << "\nERROR: Could not connect to database";
+        std::cout << "\n" << mysql_error(connection) << "\n\n";
+        return false;
+    }
+}
+
 /*
 * stores the result set that's captured by GetTransactionsByAmount()
 *
