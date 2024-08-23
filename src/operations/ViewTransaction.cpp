@@ -26,11 +26,12 @@ void ViewTransaction::View() {
 bool ViewTransaction::GetDateRange() {
     // Prompt for the first date
     std::cout << "\nPlease enter a date range for transactions you'd like to see"
-              << "\n\nSearch for transactions from: ";
+            
+              << "\ngSearch for transactions from: ";
     std::getline(std::cin, lesserDate);
 
     // Prompt the user for the second date
-    std::cout << "\n                          to: ";
+    std::cout << "                          to: ";
     std::getline(std::cin, greaterDate);
 
     if (ConfirmOperation()) {
