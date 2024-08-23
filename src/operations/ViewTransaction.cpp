@@ -27,7 +27,7 @@ bool ViewTransaction::GetDateRange() {
     // Prompt for the first date
     std::cout << "\nPlease enter a date range for transactions you'd like to see"
             
-              << "\ngSearch for transactions from: ";
+              << "\n\nSearch for transactions from: ";
     std::getline(std::cin, lesserDate);
 
     // Prompt the user for the second date
@@ -67,7 +67,7 @@ bool ViewTransaction::ConfirmOperation() {
  * date range provided by the user
  */
 bool ViewTransaction::FindTransactions() {
-    //return dbManager.GetTransactionsByDate()
+    return dbManager.GetTransactionsByDate(lesserDate, greaterDate);
 }
 
 /**
