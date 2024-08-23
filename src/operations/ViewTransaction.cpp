@@ -86,5 +86,3 @@ void ViewTransaction::DisplayTransactions() {
         std::cout << std::endl;
     }
 }
-
-
