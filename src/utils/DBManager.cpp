@@ -107,8 +107,8 @@ bool DBManager::CreateNewTransactions(Transaction *newTransactions,
     if (Connect()) {
         // Create a new transaction
         for (int i = 0; i < numNewTransactions; i++) {
-            std::string userID = std::to_string(newTransactions[i].GetUserID());
-            std::string amount = newTransactions[i].GetAmount();
+            int userID = newTransactions[i].GetUserID();
+            double amount = std::stod(newTransactions[i].GetAmount());
             std::string category = newTransactions[i].GetCategory();
             std::string date = newTransactions[i].GetDate();
 
@@ -121,16 +121,38 @@ bool DBManager::CreateNewTransactions(Transaction *newTransactions,
                 return false;
             }
 
-            // bind parameter data
+            // Set up prameter bind
             numQueryParams = 4;
             MYSQL_BIND paramBind[numQueryParams];
-            std::string parameters[numQueryParams];
-            parameters[0] = userID;
-            parameters[1] = amount;
-            parameters[2] = category;
-            parameters[3] = date;
             memset(paramBind, 0, sizeof(paramBind));
-            if (!BindParameters(paramBind, parameters)) {
+
+            // Bind userId parameter
+            paramBind[0].buffer_type = MYSQL_TYPE_LONG;
+            paramBind[0].buffer = &userID;
+            paramBind[0].is_null = 0;
+            
+            // Bind amount parameter
+            paramBind[1].buffer_type = MYSQL_TYPE_DOUBLE;
+            paramBind[1].buffer = &amount;
+            paramBind[1].is_null = 0;
+            
+            // Bind category parameter
+            paramBind[2].buffer_type = MYSQL_TYPE_STRING;
+            paramBind[2].buffer = const_cast<char *>(category.c_str());
+            paramBind[2].buffer_length = category.size();
+            paramBind[2].is_null = 0;
+            
+            // Bind transaction_date parameter
+            paramBind[3].buffer_type = MYSQL_TYPE_STRING;
+            paramBind[3].buffer = const_cast<char *>(date.c_str());
+            paramBind[3].buffer_length = date.size();
+            paramBind[3].is_null = 0;
+
+            // bind the parameter data
+            if (mysql_stmt_bind_param(stmt, paramBind)) {
+                std::cout << "\nERROR: Could not prepare the SQL statement, "
+                          << "the buffers could not be bound";
+                std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
                 return false;
             }
 
@@ -150,6 +172,8 @@ bool DBManager::CreateNewTransactions(Transaction *newTransactions,
             }
         }
         
+        mysql_stmt_free_result(stmt);
+        mysql_free_result(result);
         Disconnect();
     }
     else {
@@ -202,31 +226,6 @@ bool DBManager::PrepareQuery(const char * query) {
 }
 
 /*
- * binds parameter data for a prepared SQL statement
- * 
- * @param a pointer to an array of MYSQL_BIND parameters
- * @param a pointer to an string array of parameter data
- * @return boolean value that represents success/failure
-*/
-bool DBManager::BindParameters(MYSQL_BIND * paramBind, std::string * parameters) {
-    for (int i = 0; i < numQueryParams; i++) {
-        paramBind[i].buffer_type = MYSQL_TYPE_STRING;
-        paramBind[i].buffer = const_cast<char *>(parameters[i].c_str());
-        paramBind[i].buffer_length = STRING_SIZE;
-        paramBind[i].is_null = 0;
-    }
-
-    if (mysql_stmt_bind_param(stmt, paramBind)) {
-        std::cout << "\nERROR: Could not prepare the SQL statement, "
-                  << "the buffers could not be bound";
-        std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
-        return false;
-    };
-
-    return true;
-}
-
-/*
  * executes a prepared SQL statement
  * 
  * @return boolean value that represents success/failure
@@ -247,7 +246,7 @@ bool DBManager::ExecuteQuery() {
  * @param transactionAmount the specific amount to search for
  * @return a result from an executed MySQL query
 */
-bool DBManager::GetTransactionsByAmount(std::string transactionAmount) {
+bool DBManager::GetTransactionsByAmount(double transactionAmount) {
     if (Connect()) {
         // define the SELECT query
         const char * query = "SELECT * FROM Transactions WHERE amount = ?";
@@ -257,13 +256,22 @@ bool DBManager::GetTransactionsByAmount(std::string transactionAmount) {
             return false;
         }
 
-        // bind parameter data
+        // Set up prameter bind
         numQueryParams = 1;
         MYSQL_BIND paramBind[numQueryParams];
-        std::string parameters[numQueryParams];
         memset(paramBind, 0, sizeof(paramBind));
-        parameters[0] = transactionAmount;
-        if (!BindParameters(paramBind, parameters)) {
+
+        // Bind amount parameter
+        paramBind[0].buffer_type = MYSQL_TYPE_DOUBLE;
+        paramBind[0].buffer = &transactionAmount;
+        paramBind[0].is_null = 0;
+
+
+        // bind the parameter data
+        if (mysql_stmt_bind_param(stmt, paramBind)) {
+            std::cout << "\nERROR: Could not prepare the SQL statement, "
+                        << "the buffers could not be bound";
+            std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
             return false;
         }
 
@@ -309,8 +317,8 @@ Transaction * DBManager::StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * r
     // column data
     int transaction_id;
     int user_id;
-    double amount;
-    char category[51];
+    char amount[12] = {};
+    char category[51] = {};
     MYSQL_TIME transaction_date;
 
     // bind result data
@@ -318,40 +326,45 @@ Transaction * DBManager::StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * r
     MYSQL_BIND resultBind[numQueryResultColumns];
     memset(resultBind, 0, sizeof(resultBind));
 
-    // transaction_id
+    // transaction_id column
     resultBind[0].buffer_type = MYSQL_TYPE_LONG;
     resultBind[0].buffer = (char *)&transaction_id;
-    resultBind[0].buffer_length = sizeof(int);
+    resultBind[0].buffer_length = sizeof(transaction_id);
     resultBind[0].is_null = 0; 
 
-    // user_id
+    // user_id column
     resultBind[1].buffer_type = MYSQL_TYPE_LONG;
     resultBind[1].buffer = (char *)&user_id;
-    resultBind[1].buffer_length = sizeof(int);
+    resultBind[1].buffer_length = sizeof(user_id);
     resultBind[1].is_null = 0;
 
-    // amount
-    resultBind[2].buffer_type = MYSQL_TYPE_DOUBLE;
-    resultBind[2].buffer = (char *)&amount;
-    resultBind[2].buffer_length = sizeof(double);
-    resultBind[2].is_null = 0; 
+    // amount column
+    resultBind[2].buffer_type = MYSQL_TYPE_STRING;
+    resultBind[2].buffer = amount;
+    resultBind[2].buffer_length = sizeof(amount) - 1;
 
-    // category
+    // category column
     resultBind[3].buffer_type = MYSQL_TYPE_STRING;
-    resultBind[3].buffer = (char *)&category;
-    resultBind[3].buffer_length = 51;
-    resultBind[3].is_null = 0;
+    resultBind[3].buffer = category;
+    resultBind[3].buffer_length = sizeof(category) - 1;
 
-    // transaction_date
+    // transaction_date column[0].b
     resultBind[4].buffer_type = MYSQL_TYPE_TIMESTAMP;
-    resultBind[4].buffer = (char *)&transaction_date;
-    resultBind[4].buffer_length = sizeof(MYSQL_TIME);
-    resultBind[4].is_null = 0;
+    resultBind[4].buffer = (char*)&transaction_date;
+    resultBind[4].buffer_length = sizeof(transaction_date);
 
-    if (mysql_stmt_bind_result(stmt, resultBind)) {
-        std::cout << "\nERROR: mysql_store_result() failed"
-                  << "\n" << mysql_stmt_error(stmt);
+    // Bind result buffers
+    if (mysql_stmt_bind_result(stmt, resultBind) != 0) {
+        std::cerr << "Error binding results: " << mysql_stmt_error(stmt) << std::endl;
+        return nullptr;
     }
+
+    // bind the result data
+    // if (mysql_stmt_bind_param(stmt, resultBind)) {
+    //     std::cout << "\nERROR: Could not store the result, "
+    //               << "the buffers could not be bound";
+    //     std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
+    // }
 
     // store the result
     mysql_stmt_store_result(stmt);
@@ -363,9 +376,9 @@ Transaction * DBManager::StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * r
         int i = 0;
         while ((status = mysql_stmt_fetch(stmt)) == 0) {
             // format the transaction amount data into a string
-            std::ostringstream strs;
-            strs << amount;
-            std::string amountStr = strs.str();
+            std::ostringstream amountStream;
+            amountStream << std::fixed << std::setprecision(2) << amount;
+            std::string amountStr = amountStream.str();
 
             // format the transaction category data into a string
             std::string categoryStr(category);
@@ -373,26 +386,23 @@ Transaction * DBManager::StoreFoundTransactions(MYSQL_STMT * stmt, MYSQL_RES * r
             // instantiate a new Date object based on the transaction's timestamp data
             Date date(transaction_date.month, 
                       transaction_date.day, 
-                      transaction_date.year); 
+                      transaction_date.year);
 
-            // instantiate a new Transaction object for the row
-            Transaction transaction(user_id, 
-                                    amountStr, 
-                                    categoryStr, 
-                                    date);
-
-            // store the transaction's ID
-            transaction.SetTransactionID(transaction_id);
-
+            // store the data in a new Transaction object
+            Transaction newTransaction(user_id, 
+                                       amountStr, 
+                                       categoryStr, 
+                                       date);
+            newTransaction.SetTransactionID(transaction_id);
+            
             // add the new transaction to the list of all matching transactions
-            transactions[i] = transaction;
+            transactions[i] = newTransaction;
             i++;
         }
-    }
-    else {
+    } else {
         std::cout << "\n0 transactions matching that amount were found\n\n";
     }
-
+    
     return transactions;
 }
 
@@ -411,7 +421,9 @@ int DBManager::GetnumRowsReturned() {
  * @param transactionID represents a transactions unique identifier
  * @return the success/failure of the deletion
 */
-bool DBManager::DeleteTransactions(std::string transactionID) {
+bool DBManager::DeleteTransaction(std::string transactionID) {
+    int transactionIDInt = std::stoi(transactionID);
+
     if (Connect()) {
         // define the DELETE query
         const char * query = "DELETE FROM Transactions WHERE transaction_id = ?";
@@ -421,13 +433,22 @@ bool DBManager::DeleteTransactions(std::string transactionID) {
             return false;
         }
 
-        // bind parameter data
+        // Set up prameter bind
         numQueryParams = 1;
         MYSQL_BIND paramBind[numQueryParams];
-        std::string parameters[numQueryParams];
-        parameters[0] = transactionID;
         memset(paramBind, 0, sizeof(paramBind));
-        if (!BindParameters(paramBind, parameters)) {
+
+        // transaction_id column
+        paramBind[0].buffer_type = MYSQL_TYPE_LONG;
+        paramBind[0].buffer = (char *)&transactionIDInt;
+        paramBind[0].buffer_length = sizeof(transactionIDInt);
+        paramBind[0].is_null = 0; 
+
+        // bind the parameter data
+        if (mysql_stmt_bind_param(stmt, paramBind)) {
+            std::cout << "\nERROR: Could not prepare the SQL statement, "
+                        << "the buffers could not be bound";
+            std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
             return false;
         }
 
@@ -435,11 +456,6 @@ bool DBManager::DeleteTransactions(std::string transactionID) {
         if (!ExecuteQuery()) {
             return false;
         }
-
-        // disconnect the session & free the statement/result
-        Disconnect();
-        mysql_stmt_free_result(stmt);
-        mysql_free_result(result);
     }
     else {
         std::cout << "\nERROR: Could not connect to database\n";
@@ -457,9 +473,13 @@ bool DBManager::DeleteTransactions(std::string transactionID) {
  */
 bool DBManager::UpdateTransaction(Transaction transaction) {
     if (Connect()) {
-        std::string amount = transaction.GetAmount();
+        double amount = std::stod(transaction.GetAmount());
         std::string category = transaction.GetCategory();
-        std::string transactionID = std::to_string(transaction.GetTransactionID());
+        int transactionID = transaction.GetTransactionID();
+
+        std::cout << "\nAmount: " << amount;
+        std::cout << "\nCategory: " << category;
+        std::cout << "\nID: " << transactionID;
 
         // define the UPDATE query
         const char * query = "UPDATE Transactions SET amount = ?, category = ? WHERE transaction_id = ?;";
@@ -472,12 +492,29 @@ bool DBManager::UpdateTransaction(Transaction transaction) {
         // bind parameter data
         numQueryParams = 3;
         MYSQL_BIND paramBind[numQueryParams];
-        std::string parameters[numQueryParams];
-        parameters[0] = amount;
-        parameters[1] = category;
-        parameters[2] = transactionID;
         memset(paramBind, 0, sizeof(paramBind));
-        if (!BindParameters(paramBind, parameters)) {
+
+        // amount parameter
+        paramBind[0].buffer_type = MYSQL_TYPE_DOUBLE;
+        paramBind[0].buffer = &amount;
+        paramBind[0].is_null = 0;
+        
+        // category parameter
+        paramBind[1].buffer_type = MYSQL_TYPE_STRING;
+        paramBind[1].buffer = const_cast<char *>(category.c_str());
+        paramBind[1].buffer_length = category.size();
+        paramBind[1].is_null = 0;
+
+        // Bind transaction_id parameter
+        paramBind[2].buffer_type = MYSQL_TYPE_LONG;
+        paramBind[2].buffer = &transactionID;
+        paramBind[2].is_null = 0;
+
+        // bind the parameter data
+        if (mysql_stmt_bind_param(stmt, paramBind)) {
+            std::cout << "\nERROR: Could not prepare the SQL statement, "
+                        << "the buffers could not be bound";
+            std::cout << "\n" << mysql_stmt_error(stmt) << "\n\n";
             return false;
         }
 
@@ -486,9 +523,6 @@ bool DBManager::UpdateTransaction(Transaction transaction) {
             return false;
         }
 
-        // get # of affected rows
-        numAffectedRows += mysql_stmt_affected_rows(stmt); 
-
         // free the statement
         if (mysql_stmt_close(stmt)) {
             std::cout << "\nERROR: Failed to free the UPDATE statement";
@@ -496,6 +530,8 @@ bool DBManager::UpdateTransaction(Transaction transaction) {
             return false;
         }
 
+        mysql_stmt_free_result(stmt);
+        mysql_free_result(result);
         Disconnect();
     }
     else {
