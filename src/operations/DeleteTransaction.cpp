@@ -38,7 +38,7 @@ void DeleteTransaction::GetTransactions() {
  * @return true or false based on if a transaction was found
 */
 bool DeleteTransaction::FindTransactions() {
-    return dbManager.GetTransactionsByAmount(transactionAmount);
+    return dbManager.GetTransactionsByAmount(std::stod(transactionAmount));
 }
 
 /**
@@ -94,9 +94,11 @@ void DeleteTransaction::DeleteTheTransactions() {
 
     // delete each transaction the user has chosen to delete
     for (int i = 0; i < numTransactions; i++) {
-        if (dbManager.DeleteTransactions(transactionIDs[i])) {
-            numTransactionsDeleted++;
-        }
+        dbManager.DeleteTransaction(transactionIDs[i]);
+        numTransactionsDeleted++;
     }
+
+    numTransactions = 0;
     std::cout << "\n" << numTransactionsDeleted << " transaction(s) deleted ✅";
+    
 }
