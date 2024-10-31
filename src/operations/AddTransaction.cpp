@@ -29,7 +29,7 @@ void AddTransaction::GetNewTransactions() {
 
     // prompt user for a transaction's amount & category until "end" is typed
     while (uncheckedTransactionAmount != "end") {
-        std::cout << "Transaction" << " #" << (numNewTransactions + 2);
+        std::cout << "Transaction" << " #" << (numNewTransactions + 1);
 
         std::cout << "\nAmount: ";
         std::getline(std::cin, uncheckedTransactionAmount);
